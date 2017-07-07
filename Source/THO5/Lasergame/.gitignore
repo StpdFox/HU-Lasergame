@@ -736,3 +736,7 @@ __pycache__/
 
 
 bmptk_fixed_size_stack.c
+
+
+# project files to exclude
+libs/bmptk/Makefile.inc
