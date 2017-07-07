@@ -22,8 +22,6 @@
       <File Name="src/main.cpp"/>
       <File Name="src/OLEDBoundary.hpp"/>
       <File Name="src/OLEDBoundary.cpp"/>
-      <File Name="src/RunGameController.hpp"/>
-      <File Name="src/RunGameController.cpp"/>
       <VirtualDirectory Name="ir">
         <File Name="src/ir/gameParameters.hpp"/>
         <File Name="src/ir/messageLogic.hpp"/>
@@ -32,6 +30,13 @@
         <File Name="src/ir/transmitter.hpp"/>
         <File Name="src/ir/transmitterController.hpp"/>
       </VirtualDirectory>
+      <File Name="src/keypadhandler.cpp"/>
+      <File Name="src/keypadhandler.hpp"/>
+      <File Name="src/keypadListener.hpp"/>
+      <File Name="src/RunGameController.cpp"/>
+      <File Name="src/RunGameController.hpp"/>
+      <File Name="src/InitGameController.hpp"/>
+      <File Name="src/InitGameController.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libs">
       <VirtualDirectory Name="hwlib">

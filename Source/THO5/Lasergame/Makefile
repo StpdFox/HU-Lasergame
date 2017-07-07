@@ -28,6 +28,15 @@ SOURCES           += coroutine.cpp switch_to.asm
 HEADERS           += rtos.hpp
 SOURCES           += rtos.cpp
 
+HEADERS			+= src/RunGameController.hpp
+SOURCES			+= src/RunGameController.cpp
+
+HEADERS			+= src/keypadhandler.hpp
+SOURCES			+= src/keypadhandler.cpp
+
+HEADERS			+= src/InitGameController.hpp
+SOURCES			+= src/InitGameController.cpp
+
 # the source and header files
 #HEADERS				+= OLEDBoundary.hpp
 #SOURCES				+= OLEDBoundary.cpp
