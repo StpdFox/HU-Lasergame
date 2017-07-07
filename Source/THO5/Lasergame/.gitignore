@@ -740,3 +740,5 @@ bmptk_fixed_size_stack.c
 
 # project files to exclude
 libs/bmptk/Makefile.inc
+libs/bmptk/Makefile.local
+libs/bmptk/Makefile.custom
