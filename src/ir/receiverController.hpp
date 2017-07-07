@@ -1,5 +1,7 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
+#include "messageLogic.hpp"
+
 #ifndef RECEIVERCONTROLLER_HPP
 #define RECEIVERCONTROLLER_HPP
 
@@ -9,14 +11,15 @@ private:
 	hwlib::pin_in & rPin;
 	hwlib::pin_out & gnd;
 	hwlib::pin_out & vcc;
-
+	
 	void main(void){
 		while(1){
 			poolReceiverTimer.set(400*rtos::us);
 			wait(poolReceiverTimer);
 			if(getStartBit() != -1){
-				 hwlib::cout << "get message\n";
-				 sleep(5000*rtos::ms);
+				
+				hwlib::cout << getMessage() << "\n";
+				sleep(100*rtos::ms);
 
 			}
 		}
@@ -28,7 +31,7 @@ public:
 	rPin(rPin),
 	gnd(gnd),
 	vcc(vcc)
-	// runGame(runGame)
+	
 	{
 		gnd.set(0);
 		vcc.set(1);

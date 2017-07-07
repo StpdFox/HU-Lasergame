@@ -3,8 +3,8 @@
 #include "gameParameters.hpp"
 #include "transmitter.hpp"
 
- class transmitterController : public rtos::task<>{
- private:
+class transmitterController : public rtos::task<>{
+private:
  	transmitter irTransmit;
  	playerInformation & messageToSend;
  	rtos::flag sendMessageFlag;
@@ -22,12 +22,12 @@
  		hwlib::cout << message << "\n";
  		irTransmit.sendMessage(message);
  	}
- 	public:
 
- 		transmitterController():
+public:
+	transmitterController(playerInformation & playerInformation):
  		task(3, "sendTask"),
  		irTransmit(),
- 		messageToSend(messageToSend),
+ 		messageToSend(playerInformation),
  		sendMessageFlag(this, "sendMessageFlag")
  		{}
 

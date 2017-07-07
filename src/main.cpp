@@ -6,6 +6,7 @@
 #include "ir/gameParameters.hpp"
 #include "ir/messageLogic.hpp"
 #include "ir/receiverController.hpp"
+
 #include "rtos.hpp"
 
 int main( void ){
@@ -23,12 +24,13 @@ int main( void ){
     hwlib::target::pin_in data = hwlib::target::pin_in(hwlib::target::pins::d8);
 
     auto receiver = receiverController(data,gnd,vcc);
-   transmitterController transmitter;
+ 
    
    messageLogic messageLogic;
    playerInformation playerInformation;
   
-   transmitter.enableFlag();
+   transmitterController transmitterController(playerInformation);
+   transmitterController.enableFlag();
 
    rtos::run();
 }

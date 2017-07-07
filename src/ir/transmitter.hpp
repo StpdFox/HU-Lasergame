@@ -26,8 +26,6 @@ public:
 		sendPin.set(0);
 	}
 	void sendMessage(char16_t message){
-		sendOne();
-		hwlib::cout << "sendingOne\n";
 		for(int nMessage = 0; nMessage < 2; nMessage++){
 			for(int i = 15; i >= 0; i--){
 				if((message & (1 <<i)) !=0){
