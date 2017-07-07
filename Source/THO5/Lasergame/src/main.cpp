@@ -8,7 +8,7 @@
 #include "ir/receiverController.hpp"
 
 #include "InitGameController.hpp"
-#include "keypadhandler.hpp"
+#include "KeypadController.hpp"
 #include "RunGameController.hpp"
 #include <array>
 
@@ -37,24 +37,11 @@ int main( void ){
 	auto matrix   = hwlib::matrix_of_switches( out_port, in_port );
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
 
-	KeypadHandler kpH = KeypadHandler(keypad);
-	auto rGC = RunGameController(kpH);
-	auto iGC = InitGameController(kpH, &rGC);
-	kpH.registerNext(&iGC);
+	KeypadController kpC = KeypadController(keypad);
+	auto rGC = RunGameController(kpC);
+	auto iGC = InitGameController(kpC, &rGC);
+	kpC.registerNext(&iGC);
 	
-   /* hwlib::target::pin_out vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
-    hwlib::target::pin_out gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
-    hwlib::target::pin_in data = hwlib::target::pin_in(hwlib::target::pins::d8);
-
-    auto receiver = receiverController(data,gnd,vcc);
- 
-   
-   messageLogic messageLogic;
-   playerInformation playerInformation;
-  
-   transmitterController transmitterController(playerInformation);
-   transmitterController.enableFlag();*/
-
    rtos::run();
 }
 

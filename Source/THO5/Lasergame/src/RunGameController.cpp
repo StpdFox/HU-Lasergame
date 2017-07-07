@@ -1,7 +1,7 @@
 #include "RunGameController.hpp"
-RunGameController::RunGameController(KeypadHandler& kpH) : 
+RunGameController::RunGameController(KeypadController& kpC) : 
 task("initGame task"), 
-kpH{kpH}, 
+kpC{kpC}, 
 registerFlag(this, "registerFlag")
 {}
 
@@ -9,7 +9,7 @@ void RunGameController::main() {
     for(;;) {
         auto w = wait(registerFlag);
         if(w == registerFlag)   {
-            kpH.registerNext(this);
+            kpC.registerNext(this);
         }
     }
 }

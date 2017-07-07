@@ -1,7 +1,7 @@
 #include "InitGameController.hpp"
 
-InitGameController::InitGameController(KeypadHandler& kpH, keypadListener* nextListener) : 
-    task("initGame task"), keypadHandler{kpH} , msg("keypad char"), nextListener{nextListener}  {
+InitGameController::InitGameController(KeypadController& kpC, keypadListener* nextListener) : 
+    task("initGame task"), keypadController{kpC} , msg("keypad char"), nextListener{nextListener}  {
     }
 
 void InitGameController::handleMessageKey(char c)  {
@@ -66,5 +66,5 @@ void InitGameController::parseKeypad(char s)    {
         void InitGameController::sendStartMessage() {
         // Send the start message + start timer over the air with apple update system
         // Deregisters self and registers other keypadlistener
-        keypadHandler.registerNext(nextListener);
+        keypadController.registerNext(nextListener);
     }
