@@ -16,7 +16,7 @@ private:
 		while(1){
 			poolReceiverTimer.set(400*rtos::us);
 			wait(poolReceiverTimer);
-			// hwlib::cout << "reveicer\n";
+ 			//hwlib::cout << "receiverController poolReceiverTimer\n";
 			if(getStartBit() != -1){
 				getMessage();
 				sleep(400*rtos::ms);
@@ -38,21 +38,21 @@ public:
 	}
 
 	int getStartBit(){
-		if(!rPin.get()){
-			hwlib::wait_us(1100);
-			if(!rPin.get()){
-				hwlib:cout<<  1;
-				hwlib::wait_us(700);
-				return 1;
-			}else{
-				hwlib::wait_us(700);
-				return 0;
-			}
-		}
+		 if(!rPin.get()){
+            hwlib::wait_us(1100);
+            if(!rPin.get()){
+                hwlib::wait_us(700);
+                return 1;
+            }else{
+                hwlib::wait_us(700);
+                return 0;
+            }
+        }
 		return -1;
 	}
 
 	int getBit(){
+ 		
 		int begin = hwlib::now_us();
 		while(rPin.get()){
 			sleep(100 * rtos::us);
@@ -75,6 +75,7 @@ public:
         return -1;
     }
     char16_t getMessage(){
+ 		
         char16_t bitstream = 0;
         bitstream = bitstream << 1;
         for(int i = 0; i < 15; i++){

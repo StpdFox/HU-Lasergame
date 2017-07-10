@@ -28,7 +28,7 @@ private:
 			if(!buttonSet){
 				receive.suspend();
 				trans.enableFlag();
-				
+				receive.resume();
 				sleep(1000);
 
 
