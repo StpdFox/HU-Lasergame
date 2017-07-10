@@ -32,6 +32,9 @@
         <File Name="src/ir/transmitter.hpp"/>
         <File Name="src/ir/transmitterController.hpp"/>
       </VirtualDirectory>
+      <File Name="src/TestTask.cpp"/>
+      <File Name="src/TestTask.hpp"/>
+      <File Name="src/defines.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libs">
       <VirtualDirectory Name="hwlib">

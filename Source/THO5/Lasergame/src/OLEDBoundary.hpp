@@ -2,6 +2,7 @@
 #define OLEDBOUNDARY_HPP
 
 #include "rtos.hpp"
+#include "defines.h"
 
 class OLEDBoundary;
 
@@ -53,7 +54,8 @@ private:
 			address, 
 			data, 
 			sizeof(data) / sizeof(byte) 
-		);      
+		);
+		rtos::current_task()->release();
 	} 	
 
 	void command(byte d0, byte d1){
@@ -62,7 +64,8 @@ private:
 			address, 
 			data, 
 			sizeof(data) / sizeof(byte) 
-		);    
+		);
+		rtos::current_task()->release();
 	} 	
 
 	void command(byte d0, byte d1, byte d2){
@@ -71,7 +74,8 @@ private:
 			address, 
 			data, 
 			sizeof(data) / sizeof(byte) 
-		);   
+		);
+		rtos::current_task()->release();
 	}
 
    void write_implementation(hwlib::location pos, hwlib::color col) override {
@@ -144,11 +148,11 @@ public:
     void flush();
     void flushParts();
 	hwlib::glcd_oled_buffered& getBufferedLCD();
-	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT>& getPlayerNumberInput();
-	glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT>& getFirePowerInput();
-	glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT>& getGameDurationInput();
-	glcd_oled_part_buffered<GAMETIME_WIDTH * 8, GAMETIME_HEIGHT>& getGameTime();
-	glcd_oled_part_buffered<SCORE_WIDTH * 8, SCORE_HEIGHT>& getScore();
+	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8>& getPlayerNumberInputField();
+	glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT * 8>& getFirePowerInputField();
+	glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT * 8>& getGameDurationInputField();
+	glcd_oled_part_buffered<GAMETIME_WIDTH * 8, GAMETIME_HEIGHT * 8>& getGameTimeField();
+	glcd_oled_part_buffered<SCORE_WIDTH * 8, SCORE_HEIGHT * 8>& getScoreField();
 
 private:
     void main() override;
@@ -160,11 +164,11 @@ private:
     rtos::flag flushFlag, flushPartsFlag;
 	
 	//these will be default initialized to nullptr's
-	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT> playerNumberInput;
-	glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT> firePowerInput;
-	glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT> gameDurationInput;
-	glcd_oled_part_buffered<GAMETIME_WIDTH * 8, GAMETIME_HEIGHT> gameTime;
-	glcd_oled_part_buffered<SCORE_WIDTH * 8, SCORE_HEIGHT> score;
+	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8> playerNumberInputField;
+	glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT * 8> firePowerInputField;
+	glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT * 8> gameDurationInputField;
+	glcd_oled_part_buffered<GAMETIME_WIDTH * 8, GAMETIME_HEIGHT * 8> gameTimeField;
+	glcd_oled_part_buffered<SCORE_WIDTH * 8, SCORE_HEIGHT * 8> scoreField;
 };
 
 #endif // OLEDBOUNDARY_HPP
