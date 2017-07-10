@@ -31,8 +31,8 @@ SOURCES           += rtos.cpp
 HEADERS			+= src/RunGameController.hpp
 SOURCES			+= src/RunGameController.cpp
 
-HEADERS			+= src/keypadhandler.hpp
-SOURCES			+= src/keypadhandler.cpp
+HEADERS			+= src/KeypadController.hpp
+SOURCES			+= src/KeypadController.cpp
 
 HEADERS			+= src/InitGameController.hpp
 SOURCES			+= src/InitGameController.cpp

@@ -6,14 +6,14 @@
 #include "rtos.hpp"
 #include "hwlib.hpp"
 #include "keypadlistener.hpp"
-class KeypadHandler : public rtos::task<>   {
+class KeypadController : public rtos::task<>   {
 public:
     int waitTime = 100; // 100 ms
     hwlib::keypad<16> &keypad;
 
     keypadListener* kp;
     
-    KeypadHandler(hwlib::keypad< 16 >& keypad);
+    KeypadController(hwlib::keypad< 16 >& keypad);
     void main();
     void registerNext(keypadListener* nextListener);
 };

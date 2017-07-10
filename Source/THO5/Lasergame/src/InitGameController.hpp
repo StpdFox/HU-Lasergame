@@ -4,16 +4,16 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 #include "keypadlistener.hpp"
-#include "keypadhandler.hpp"
+#include "KeypadController.hpp"
 #include <array>
 /// \author Ferdi Stoeltie
 /// \brief Controller class that handles the initialize of the game settings
 class InitGameController : public rtos::task<>, public keypadListener  {
 public:
-    KeypadHandler& keypadHandler; // The owner
+    KeypadController& keypadController; // The owner
     rtos::mailbox<char> msg;
     keypadListener* nextListener;
-    InitGameController(KeypadHandler& kpH, keypadListener* nextListener);
+    InitGameController(KeypadController& kpC, keypadListener* nextListener);
     void main();
 
     void handleMessageKey(char c);
