@@ -1,21 +1,23 @@
 /// \author Marianne Delmaar
 /// \brief Rtos task that handles the input given by a keypad. This is then passed in to a keypadlistener
-#ifndef KEYPAD_HANDLER_HPP
-#define KEYPAD_HANDLER_HPP
+#ifndef KEYPAD_CONTROLLER_HPP
+#define KEYPAD_CONTROLLER_HPP
 
 #include "rtos.hpp"
 #include "hwlib.hpp"
-#include "keypadlistener.hpp"
-class KeypadController : public rtos::task<>   {
-public:
-    int waitTime = 100; // 100 ms
-    hwlib::keypad<16> &keypad;
+#include "KeypadListener.hpp"
 
-    keypadListener* kp;
+class KeypadController : public rtos::task<>   {
+private:
+	int waitTime = 100; // 100 ms
+    hwlib::keypad<16> &keypad;
+	
+public:
+    KeypadListener* kp;
     
     KeypadController(hwlib::keypad< 16 >& keypad);
     void main();
-    void registerNext(keypadListener* nextListener);
+    void registerNext(KeypadListener* nextListener);
 };
 
 #endif //KEYPAD_HANDLER_HPP
