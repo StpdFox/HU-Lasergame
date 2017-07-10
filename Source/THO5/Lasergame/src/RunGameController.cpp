@@ -1,7 +1,7 @@
 #include "RunGameController.hpp"
-RunGameController::RunGameController(KeypadController& kpC) : 
+RunGameController::RunGameController(KeypadController& kpC, ISound& sound) : 
 task("initGame task"), 
-kpC{kpC}, 
+kpC{kpC}, sound{sound}, 
 registerFlag(this, "registerFlag")
 {}
 
@@ -15,4 +15,10 @@ void RunGameController::main() {
 }
 void RunGameController::handleMessageKey(char c)  {
     hwlib::cout << c << " was written in testTask \n";
+	switch(c)	{
+		case '#':
+			// Speakercontroller set flag for sound
+			sound.setSound(Sounds::HIT);
+		break;
+	}
 }
