@@ -34,12 +34,11 @@ void RunGameController::main()
 	hwlib::window_ostream gameTimeStream{ oledBoundary.getGameTimeField(), f };
 	while(true)
 	{	
-		auto w = wait(registerFlag);
-      if(w == registerFlag)   {
-         kpC.registerNext(this);
-      }
 		const rtos::event& event = wait();
-		if(event == gameTimeSecondsClock)
+		  if(event == registerFlag)   {
+			 kpC.registerNext(this);
+		  }
+		else if(event == gameTimeSecondsClock)
 		{
 			int remainingTimeSec = gameDurationMin * 60 - (hwlib::now_us() - startOfGameTimestamp) / 1'000'000;
 			gameTimeStream << "\f" << remainingTimeSec / 60 << ":" << remainingTimeSec % 60;
