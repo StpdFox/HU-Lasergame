@@ -98,7 +98,7 @@
       </Compiler>
       <Linker Options="" Required="yes"/>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="" IntermediateDirectory="./Debug" Command="$(WorkspacePath)\cmake-build-$(WorkspaceConfiguration)\output\$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <General OutputFile="" IntermediateDirectory="./Debug" Command="mingw32-make" CommandArguments="run" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="CMake"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
@@ -111,9 +111,9 @@
       <PreBuild/>
       <PostBuild/>
       <CustomBuild Enabled="yes">
-        <Target Name="Load">mingw32-make run</Target>
-        <RebuildCommand/>
-        <CleanCommand>mingw32-make clean build</CleanCommand>
+        <Target Name="Load"/>
+        <RebuildCommand>mingw32-make clean build</RebuildCommand>
+        <CleanCommand>mingw32-make clean</CleanCommand>
         <BuildCommand>mingw32-make build</BuildCommand>
         <PreprocessFileCommand/>
         <SingleFileCommand/>

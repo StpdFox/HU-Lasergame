@@ -29,19 +29,14 @@ HEADERS           += rtos.hpp
 SOURCES           += rtos.cpp
 
 # the source and header files
-<<<<<<< HEAD
 SEARCH				+= ./src/
-HEADERS				+= defines.hpp
+HEADERS				+= defines.h
 HEADERS				+= OLEDBoundary.hpp
 SOURCES				+= OLEDBoundary.cpp
 HEADERS				+= RunGameController.hpp
 SOURCES				+= RunGameController.cpp
 HEADERS				+= TestTask.hpp
 SOURCES				+= TestTask.cpp
-=======
-HEADERS				+= OLEDBoundary.hpp
-SOURCES				+= OLEDBoundary.cpp
->>>>>>> 3b5a5c834c4232ecda0f58041035d835c7d5be5b
 
 SEARCH				+= ./src/ir/
 HEADERS				+= receiverController.hpp
