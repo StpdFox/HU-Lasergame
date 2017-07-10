@@ -13,6 +13,6 @@ void KeypadController::main() {
         }
     }
 }
-void KeypadController::registerNext(keypadListener* nextListener) {
+void KeypadController::registerNext(KeypadListener* nextListener) {
     kp = nextListener;
 }

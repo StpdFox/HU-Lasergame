@@ -7,7 +7,7 @@
 #include "KeypadController.hpp"
 /// \Author Ferdi Stoeltie
 /// \brief Controller for the runnable game logic
-class RunGameController : public rtos::task<>, public keypadListener {
+class RunGameController : public rtos::task<>, public KeypadListener {
 public:
     KeypadController& kpC;
     rtos::flag registerFlag;

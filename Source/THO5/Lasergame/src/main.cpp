@@ -10,6 +10,7 @@
 #include "InitGameController.hpp"
 #include "KeypadController.hpp"
 #include "RunGameController.hpp"
+#include "SpeakerController.hpp"
 #include <array>
 
 #include "rtos.hpp"
@@ -21,7 +22,8 @@ int main( void ){
    hwlib::wait_ms(1000);
 
    namespace target = hwlib::target;
-   
+   auto lsp = target::pin_out( target::pins::d7);
+
 	auto out0 = target::pin_oc( target::pins::a0 );
 	auto out1 = target::pin_oc( target::pins::a1 );
 	auto out2 = target::pin_oc( target::pins::a2 );
@@ -38,9 +40,12 @@ int main( void ){
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
 
 	KeypadController kpC = KeypadController(keypad);
+	auto sC = SpeakerController(lsp);
 	auto rGC = RunGameController(kpC);
 	auto iGC = InitGameController(kpC, &rGC);
 	kpC.registerNext(&iGC);
+	
+	
 	
    rtos::run();
 }
