@@ -16,11 +16,11 @@ OLEDBoundary::OLEDBoundary(unsigned int priority) :
 		},
 	flushFlag{ this, "flushFlag" },
 	flushPartsFlag{ this, "flushPartsFlag" },
-	playerNumberInput{ i2c_bus, 0x3c },
-	firePowerInput{ i2c_bus, 0x3c },
-	gameDurationInput{ i2c_bus, 0x3c },
-	gameTime{ i2c_bus, 0x3c },
-	score{ i2c_bus, 0x3c }
+	playerNumberInputField{ i2c_bus, 0x3c },
+	firePowerInputField{ i2c_bus, 0x3c },
+	gameDurationInputField{ i2c_bus, 0x3c },
+	gameTimeField{ i2c_bus, 0x3c },
+	scoreField{ i2c_bus, 0x3c }
 {
 }
 
@@ -43,29 +43,29 @@ hwlib::glcd_oled_buffered& OLEDBoundary::getBufferedLCD()
 	return bufferedLCD;
 }
 
-glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT>& OLEDBoundary::getPlayerNumberInput()
+glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8>& OLEDBoundary::getPlayerNumberInputField()
 {
-	return playerNumberInput;
+	return playerNumberInputField;
 }
 
-glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT>& OLEDBoundary::getFirePowerInput()
+glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT * 8>& OLEDBoundary::getFirePowerInputField()
 {
-	return firePowerInput;
+	return firePowerInputField;
 }
 
-glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT>& OLEDBoundary::getGameDurationInput()
+glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT * 8>& OLEDBoundary::getGameDurationInputField()
 {
-	return gameDurationInput;
+	return gameDurationInputField;
 }
 
-glcd_oled_part_buffered<GAMETIME_WIDTH * 8, GAMETIME_HEIGHT>& OLEDBoundary::getGameTime()
+glcd_oled_part_buffered<GAMETIME_WIDTH * 8, GAMETIME_HEIGHT * 8>& OLEDBoundary::getGameTimeField()
 {
-	return gameTime;
+	return gameTimeField;
 }
 
-glcd_oled_part_buffered<SCORE_WIDTH * 8, SCORE_HEIGHT>& OLEDBoundary::getScore()
+glcd_oled_part_buffered<SCORE_WIDTH * 8, SCORE_HEIGHT * 8>& OLEDBoundary::getScoreField()
 {
-	return score;
+	return scoreField;
 }
 
 void OLEDBoundary::main()
@@ -79,11 +79,11 @@ void OLEDBoundary::main()
 		}
 		else if(event == flushPartsFlag)
 		{
-			playerNumberInput.flush();
-			firePowerInput.flush();
-			gameDurationInput.flush();
-			gameTime.flush();
-			score.flush();
+			playerNumberInputField.flush();
+			firePowerInputField.flush();
+			gameDurationInputField.flush();
+			gameTimeField.flush();
+			scoreField.flush();
 		}
 	}
 }

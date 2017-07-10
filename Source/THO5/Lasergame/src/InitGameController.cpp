@@ -1,7 +1,7 @@
 #include "InitGameController.hpp"
 
-InitGameController::InitGameController(KeypadController& kpC, KeypadListener* nextListener) : 
-    task("initGame task"), keypadController{kpC} , msg("keypad char"), nextListener{nextListener}  {
+InitGameController::InitGameController(KeypadController& kpC, KeypadListener* nextListener, unsigned int priority) : 
+    task(priority, "initGame task"), keypadController{kpC} , msg("keypad char"), nextListener{nextListener}  {
     }
 
 void InitGameController::handleMessageKey(char c)  {

@@ -1,5 +1,4 @@
 // simple IR signal detector
-
 #include "hwlib.hpp"
 #include "ir/transmitterController.hpp"
 #include "ir/transmitter.hpp"
@@ -14,13 +13,15 @@
 #include <array>
 
 #include "rtos.hpp"
+#include "OLEDBoundary.hpp"
+//#include "TestTask.hpp"
 
 int main( void ){
    
    // kill the watchdog
    WDT->WDT_MR = WDT_MR_WDDIS;
    hwlib::wait_ms(1000);
-
+   
    namespace target = hwlib::target;
    auto lsp = target::pin_out( target::pins::d7);
 
@@ -39,14 +40,18 @@ int main( void ){
 	auto matrix   = hwlib::matrix_of_switches( out_port, in_port );
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
 
-	KeypadController kpC = KeypadController(keypad);
-	auto sC = SpeakerController(lsp);
-	auto rGC = RunGameController(kpC, sC);
-	auto iGC = InitGameController(kpC, &rGC);
+	KeypadController kpC = KeypadController(keypad, 5);
+	OLEDBoundary oledBoundary{ 1 };
+	auto sC = SpeakerController(lsp, 4);
+	auto rGC = RunGameController(kpC, sC, oledBoundary, 2);
+	auto iGC = InitGameController(kpC, &rGC, 3);
 	kpC.registerNext(&iGC);
 	
-	
-	
+   
+//   TestTask tt{ 2 };
+//   tt.setOledBoundary(&oledBoundary);
+   //RunGameController runGameController{ 2, oledBoundary };
+
    rtos::run();
 }
 

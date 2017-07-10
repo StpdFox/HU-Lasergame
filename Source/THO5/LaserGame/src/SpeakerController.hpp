@@ -35,7 +35,7 @@ private:
 	int duration = 0;
 	
 public:	
-	SpeakerController(hwlib::pin_out& lsp);
+	SpeakerController(hwlib::pin_out& lsp, unsigned int priority);
 	void main();
 	void setSound(Sounds soundType); // inherit from ISound
 	void playSound(Sounds soundType);

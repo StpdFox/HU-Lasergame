@@ -15,7 +15,7 @@ private:
 public:
     KeypadListener* kp;
     
-    KeypadController(hwlib::keypad< 16 >& keypad);
+    KeypadController(hwlib::keypad< 16 >& keypad, unsigned int priority);
     void main();
     void registerNext(KeypadListener* nextListener);
 };

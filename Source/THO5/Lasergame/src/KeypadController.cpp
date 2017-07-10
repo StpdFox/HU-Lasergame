@@ -1,7 +1,7 @@
 #include "KeypadController.hpp"
 
-KeypadController::KeypadController(hwlib::keypad< 16 >& keypad) : 
-task("KeypadController task"), keypad{keypad} {
+KeypadController::KeypadController(hwlib::keypad< 16 >& keypad, unsigned int priority) : 
+task(priority, "KeypadController task"), keypad{keypad} {
 
 }
 void KeypadController::main() {

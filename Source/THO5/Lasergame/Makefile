@@ -37,14 +37,19 @@ SOURCES			+= src/KeypadController.cpp
 HEADERS			+= src/InitGameController.hpp
 SOURCES			+= src/InitGameController.cpp
 
-HEADERS			+=src/KeypadListener.hpp
+HEADERS			+= src/KeypadListener.hpp
 
-HEADERS			+=src/SpeakerController.hpp
-SOURCES			+=src/SpeakerController.cpp
+HEADERS			+= src/SpeakerController.hpp
+SOURCES			+= src/SpeakerController.cpp
 
 # the source and header files
-#HEADERS				+= OLEDBoundary.hpp
-#SOURCES				+= OLEDBoundary.cpp
+SEARCH				+= ./src/
+HEADERS				+= defines.h
+HEADERS				+= OLEDBoundary.hpp
+SOURCES				+= OLEDBoundary.cpp
+
+#HEADERS				+= TestTask.hpp
+#SOURCES				+= TestTask.cpp
 
 SEARCH				+= ./src/ir/
 HEADERS				+= receiverController.hpp

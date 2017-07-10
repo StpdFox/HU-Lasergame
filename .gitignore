@@ -1,8 +1,9 @@
 Source/THO5/Lasergame/src/TestTask.hpp
 Source/THO5/Lasergame/src/TestTask.cpp
 Source/THO5/Lasergame/src/ir/runGame.hpp
-Source/THO5/Lasergame/src/RunGameController.hpp
-Source/THO5/Lasergame/src/RunGameController.cpp
 Source/THO5/cmake-build-Debug/
 Source/THO5/Lasergame/libs/bmptk/Makefile.custom
 Source/THO5/Lasergame/libs/bmptk/Makefile.inc
+Source/THO5/Lasergame/Makefile
+*.workspace
+Source/THO5/cmake-build-Release/

@@ -13,7 +13,7 @@ public:
     KeypadController& keypadController; // The owner
     rtos::mailbox<char> msg;
     KeypadListener* nextListener;
-    InitGameController(KeypadController& kpC, KeypadListener* nextListener);
+    InitGameController(KeypadController& kpC, KeypadListener* nextListener, unsigned int priority);
     void main();
 
     void handleMessageKey(char c);

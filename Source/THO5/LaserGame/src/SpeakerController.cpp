@@ -1,7 +1,7 @@
 #include "SpeakerController.hpp"
 #include "hwlib.hpp"
 
-SpeakerController::SpeakerController(hwlib::pin_out &lsp) : task("SpeakerController task"), playSoundFlag(this, "flag"), lsp{lsp} {
+SpeakerController::SpeakerController(hwlib::pin_out &lsp, unsigned int priority) : task(priority, "SpeakerController task"), playSoundFlag(this, "flag"), lsp{lsp} {
 }
 
 void SpeakerController::setSound(Sounds soundType)	{
