@@ -12,14 +12,14 @@ private:
  	void main(){
  		for(;;){
  			wait(sendMessageFlag);
- 			 hwlib::cout << "sendmessageTest\n";
+ 			
  			sendMessage();
  		}
  	}
 
  	void sendMessage(){
  		auto message = messageToSend.getCompiledBits();
- 		hwlib::cout << message << "\n";
+ 		
  		irTransmit.sendMessage(message);
  	}
 

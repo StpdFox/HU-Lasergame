@@ -10,7 +10,7 @@
 
 # settings for Arduino Due projects
 TARGET            ?= arduino_due
-SERIAL_PORT       ?= COM3
+SERIAL_PORT       ?= COM4
 CONSOLE_BAUDRATE  ?= 38400
 STACK_SIZE        ?= 81920
 HEAP              ?= BMPTK
@@ -29,8 +29,8 @@ HEADERS           += rtos.hpp
 SOURCES           += rtos.cpp
 
 # the source and header files
-HEADERS				+= OLEDBoundary.hpp
-SOURCES				+= OLEDBoundary.cpp
+# HEADERS				+= OLEDBoundary.hpp
+# SOURCES				+= OLEDBoundary.cpp
 
 SEARCH				+= ./src/ir/
 HEADERS				+= receiverController.hpp
