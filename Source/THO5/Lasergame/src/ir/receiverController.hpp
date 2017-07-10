@@ -2,7 +2,6 @@
 #include "rtos.hpp"
 #include "messageLogic.hpp"
 
-
 #ifndef RECEIVERCONTROLLER_HPP
 #define RECEIVERCONTROLLER_HPP
 
@@ -12,27 +11,27 @@ private:
 	hwlib::pin_in & rPin;
 	hwlib::pin_out & gnd;
 	hwlib::pin_out & vcc;
-	messageLogic & logic;
-
+	
 	void main(void){
 		while(1){
 			poolReceiverTimer.set(400*rtos::us);
 			wait(poolReceiverTimer);
 			if(getStartBit() != -1){
-				getMessage();
-				sleep(5000*rtos::ms);
+				
+				hwlib::cout << getMessage() << "\n";
+				sleep(100*rtos::ms);
 
 			}
 		}
 	}
 public:
-	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic):
+	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc ):
 	task(0,"receiverController"),
 	poolReceiverTimer(this,"poolReceiverTimer"),
 	rPin(rPin),
 	gnd(gnd),
-	vcc(vcc),
-	logic(logic)
+	vcc(vcc)
+	
 	{
 		gnd.set(0);
 		vcc.set(1);
@@ -43,11 +42,9 @@ public:
 			hwlib::wait_us(1100);
 			if(!rPin.get()){
 				hwlib::wait_us(700);
-				hwlib::cout << 1;
 				return 1;
 			}else{
 				hwlib::wait_us(700);
-				hwlib::cout << 0;
 				return 0;
 			}
 		}
@@ -65,18 +62,14 @@ public:
             sleep(1100*rtos::us);
             if(!rPin.get()){
                 sleep(700*rtos::us);
-                hwlib::cout << 1;
                 return 1;
             }else{
                 sleep(700*rtos::us);
-                hwlib::cout << 0;
                 return 0;
             }
-            
         return -1;
     }
     char16_t getMessage(){
-
         char16_t bitstream = 0;
         bitstream = bitstream << 1;
         for(int i = 0; i < 15; i++){
@@ -91,8 +84,7 @@ public:
             }          
         }
         bitstream = bitstream | (1 << 15);
-         hwlib::cout << "\n";
-        //hwlib::cout << bitstream << '\n';
+        hwlib::cout << bitstream << '\n';
         return bitstream;
     }
 };

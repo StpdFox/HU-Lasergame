@@ -1,5 +1,4 @@
 #include "hwlib.hpp"
-
 #ifndef GAMEPARAMETERS_HPP
 #define GAMEPARAMETERS_HPP
 

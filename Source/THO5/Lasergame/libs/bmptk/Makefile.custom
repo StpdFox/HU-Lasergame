@@ -27,8 +27,8 @@ ifeq ($(OS),Windows_NT)
    # select the windows toolchain: SysProgs (=default) or Nuwen
    # GCC-WIN         ?= C:/SysGCC/MinGW64
    #GCC-WIN         ?= C:\mingw64
-   GCC-WIN         ?= C:/MinGW
-   #GCC-WIN         ?= C:/TDM-GCC-64
+   #GCC-WIN         ?= C:/MinGW
+   GCC-WIN         ?= C:/TDM-GCC-64
 
    # select the AVR toolchain: Atmel (=default) or Arduino
    GCC-AVR         ?= $(WPF32)/Arduino/hardware/tools/avr
@@ -57,7 +57,7 @@ ifeq ($(OS),Windows_NT)
    CONSOLE_BAUDRATE ?= 38400 
    
    # python interpreter
-   PYTHON          ?= "C:/Python27/Python.exe"
+   PYTHON          ?= "C:/Users/Peter/AppData/Local/Programs/Python/Python36-32/Python.exe"
    
 else
 

@@ -29,8 +29,8 @@ HEADERS           += rtos.hpp
 SOURCES           += rtos.cpp
 
 # the source and header files
-#HEADERS				+= OLEDBoundary.hpp
-#SOURCES				+= OLEDBoundary.cpp
+HEADERS				+= OLEDBoundary.hpp
+SOURCES				+= OLEDBoundary.cpp
 
 SEARCH				+= ./src/ir/
 HEADERS				+= receiverController.hpp
