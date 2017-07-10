@@ -10,13 +10,14 @@ private:
 
 public:
 	void sendOne(){
-
+		
 		sendPin.set(1);
 		hwlib::wait_us(1600);
 		sendPin.set(0);
 		hwlib::wait_us(800);
 	}
 	void sendZero(){
+		
 		sendPin.set(1);
 		hwlib::wait_us(800);
 		sendPin.set(0);
@@ -26,6 +27,7 @@ public:
 		sendPin.set(0);
 	}
 	void sendMessage(char16_t message){
+
 		for(int nMessage = 0; nMessage < 2; nMessage++){
 			for(int i = 15; i >= 0; i--){
 				if((message & (1 <<i)) !=0){
@@ -35,7 +37,7 @@ public:
 					sendZero();
 				}
 			}
-			setZero();
+			sendPin.set(0);
 			hwlib::wait_ms(3);
 		}
 	}

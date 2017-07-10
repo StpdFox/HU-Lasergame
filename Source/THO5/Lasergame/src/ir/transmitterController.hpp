@@ -10,16 +10,15 @@ private:
  	rtos::flag sendMessageFlag;
 
  	void main(){
- 		for(;;){
+ 		while(1){
  			wait(sendMessageFlag);
- 			 hwlib::cout << "sendmessageTest\n";
  			sendMessage();
  		}
  	}
 
  	void sendMessage(){
  		auto message = messageToSend.getCompiledBits();
- 		hwlib::cout << message << "\n";
+ 		//hwlib::cout << "sending" << message << "\n";
  		irTransmit.sendMessage(message);
  	}
 
