@@ -1,9 +1,16 @@
 #include "SpeakerController.hpp"
+#include "hwlib.hpp"
 
 SpeakerController::SpeakerController(hwlib::pin_out &lsp) : task("SpeakerController task"), playSoundFlag(this, "flag"), lsp{lsp} {
 }
 
-
+void SpeakerController::setSound(Sounds soundType)	{
+	// write a sound to play in the speakercontroller pool and set flag to start playing
+	hwlib::cout << "writing in sound pool...\n";
+	hwlib::cout << "setting flag...\n";
+	soundPool.write(soundType);
+	playSoundFlag.set();
+}
 void await (long long int t){
 	while(t > hwlib::now_us()){}
 }
@@ -79,12 +86,16 @@ void click( hwlib::pin_out & lsp ){
 
 void SpeakerController::main(){
 	for(;;) {
-        //wait(playSoundFlag);
-		setSound(Sounds::SHOOT);
+        auto s = wait(playSoundFlag);
+		if(s == playSoundFlag)	{
+			hwlib::cout << "reading sound flag...\n";
+			playSound(soundPool.read());
+		}
+		
     }
 }
 
-void SpeakerController::setSound(Sounds sounds){
+void SpeakerController::playSound(Sounds sounds){
 	switch(sounds){
 		case Sounds::HIT : ohhh(lsp);   break;
 		case Sounds::SHOOT : peew(lsp); break;

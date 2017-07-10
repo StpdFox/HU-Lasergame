@@ -8,9 +8,22 @@
 #include "hwlib.hpp"
 #include <array>
 
+/// \author Marianne Delmaar en Ferdi Stoeltie
+/// \brief Enum for sound types
 enum class Sounds {HIT = 0x01, END_GAME = 0x02, START_GAME = 0x04, SHOOT = 0x08};
 
-class SpeakerController : public rtos::task<>{
+/// \author Marianne Delmaar en Ferdi Stoeltie
+/// \brief Interface to provide the setSound method
+class ISound  {
+public:
+    ISound() {};
+    virtual void setSound(Sounds s) = 0;
+private:
+};
+
+/// \author Marianne Delmaar en Ferdi Stoeltie
+/// \brief SpeakerController that handles the playing of sounds
+class SpeakerController : public rtos::task<>, public ISound{
 private:
 	
 	rtos::pool<Sounds> soundPool;
@@ -24,8 +37,8 @@ private:
 public:	
 	SpeakerController(hwlib::pin_out& lsp);
 	void main();
-	void play(int frequency, int duration);
-	void setSound(Sounds sounds);
+	void setSound(Sounds soundType); // inherit from ISound
+	void playSound(Sounds soundType);
 
 };
 

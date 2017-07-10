@@ -41,7 +41,7 @@ int main( void ){
 
 	KeypadController kpC = KeypadController(keypad);
 	auto sC = SpeakerController(lsp);
-	auto rGC = RunGameController(kpC);
+	auto rGC = RunGameController(kpC, sC);
 	auto iGC = InitGameController(kpC, &rGC);
 	kpC.registerNext(&iGC);
 	
