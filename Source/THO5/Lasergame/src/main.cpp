@@ -15,7 +15,6 @@ int main( void ){
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);
    RunGameController runGameController{ 2, oledBoundary };
-
    rtos::run();
 }
 

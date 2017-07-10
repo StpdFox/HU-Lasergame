@@ -17,9 +17,8 @@ private:
 	
 	OLEDBoundary& oledBoundary;
 	
-	rtos::timer gameTimeTimer;
 	rtos::clock gameTimeSecondsClock;
-	int startOfGameTimestampMin;
+	int startOfGameTimestamp;
 	int gameDurationMin;
 	//hwlib::window_ostream gameTimeStream;
 };
