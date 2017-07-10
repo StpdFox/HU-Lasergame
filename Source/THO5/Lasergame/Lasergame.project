@@ -155,7 +155,7 @@
       <CustomBuild Enabled="yes">
         <RebuildCommand>mingw32-make clean build</RebuildCommand>
         <CleanCommand>mingw32-make build clean</CleanCommand>
-        <BuildCommand>mingw32-make build</BuildCommand>
+        <BuildCommand>bmptk-make build</BuildCommand>
         <PreprocessFileCommand/>
         <SingleFileCommand/>
         <MakefileGenerationCommand/>
