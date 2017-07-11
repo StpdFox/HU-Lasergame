@@ -31,12 +31,16 @@ public:
 		for(int nMessage = 0; nMessage < 2; nMessage++){
 			for(int i = 15; i >= 0; i--){
 				if((message & (1 <<i)) !=0){
-					sendOne();
-				}else{
+					sendOne();}
+				else{
 					sendZero();
 				}
 			}
 			setZero();
+<<<<<<< HEAD
+=======
+			hwlib::wait_ms(3);
+>>>>>>> parent of 12b1a78... ?
 		}
 	}
 };

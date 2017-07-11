@@ -15,11 +15,17 @@ private:
 	rtos::clock receiverClock;
 	void main(void){
 		while(1){
+<<<<<<< HEAD
 
 			//poolReceiverTimer.set(400*rtos::us);	
 			//wait(poolReceiverTimer);
  			
  			wait();
+=======
+			poolReceiverTimer.set(400*rtos::us);
+			wait(poolReceiverTimer);
+			// hwlib::cout << "reveicer\n";
+>>>>>>> parent of 12b1a78... ?
 			if(getStartBit() != -1){
 				getMessage();
 				sleep(400*rtos::ms);
@@ -42,6 +48,7 @@ public:
 	}
 
 	int getStartBit(){
+<<<<<<< HEAD
 		int begin = hwlib::now_us();
 		 if(!rPin.get()){
             while(hwlib::now_us() <= begin+1200){};
@@ -51,11 +58,23 @@ public:
                 return 1;
             }
         }
+=======
+		if(!rPin.get()){
+			hwlib::wait_us(1100);
+			if(!rPin.get()){
+				hwlib:cout<<  1;
+				hwlib::wait_us(700);
+				return 1;
+			}else{
+				hwlib::wait_us(700);
+				return 0;
+			}
+		}
+>>>>>>> parent of 12b1a78... ?
 		return -1;
 	}
 
 	int getBit(){
- 		
 		int begin = hwlib::now_us();
 		while(rPin.get()){
 			hwlib::wait_us(400 * rtos::us);
@@ -75,7 +94,6 @@ public:
         return -1;
     }
     char16_t getMessage(){
- 		
         char16_t bitstream = 0;
         bitstream = bitstream << 1;
         for(int i = 0; i < 15; i++){

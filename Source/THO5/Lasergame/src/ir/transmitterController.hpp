@@ -35,7 +35,6 @@ public:
  		{}
 
  		void enableFlag(){
- 			
  			sendMessageFlag.set();
  		}
  };
