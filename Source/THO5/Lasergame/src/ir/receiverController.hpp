@@ -22,7 +22,7 @@ private:
  			wait();
 			if(getStartBit() != -1){
 				getMessage();
-				//sleep(400*rtos::ms);
+				sleep(400*rtos::ms);
 
 			}
 		}
@@ -42,10 +42,12 @@ public:
 	}
 
 	int getStartBit(){
+		int begin = hwlib::now_us();
 		 if(!rPin.get()){
-            hwlib::wait_us(1200);
+            while(hwlib::now_us() <= begin+1200){};
             if(!rPin.get()){
-                hwlib::wait_us(1200);
+            	begin = hwlib::now_us();
+                while(hwlib::now_us() <= begin+1200){};
                 return 1;
             }
         }
@@ -58,16 +60,16 @@ public:
 		while(rPin.get()){
 			hwlib::wait_us(400 * rtos::us);
 			if(begin-hwlib::now_us() >= 4000){
+				hwlib::cout<<"timeout";
 				return -1;
 			}
 		}
-            hwlib::wait_us(1200*rtos::us);
             if(!rPin.get()){
-            		hwlib::wait_us(1200*rtos::us);
+            		while(hwlib::now_us() <= begin+1200){};
             		return 1;
             	}
             	else{
-            		hwlib::wait_us(1200*rtos::us);
+            		while(hwlib::now_us() <= begin+1200){};
             		return 0;
             	}
         return -1;
