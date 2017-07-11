@@ -6,7 +6,6 @@
 /// Date Last Update:
 /// \date 11-07-2017
 
-
 #ifndef RUNGAME_HPP
 #define RUNGAME_HPP
 

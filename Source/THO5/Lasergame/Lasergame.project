@@ -40,6 +40,8 @@
       <File Name="src/KeypadController.hpp"/>
       <File Name="src/SpeakerController.cpp"/>
       <File Name="src/SpeakerController.hpp"/>
+      <File Name="src/GameParamsController.hpp"/>
+      <File Name="src/GameParamsController.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libs">
       <VirtualDirectory Name="hwlib">
