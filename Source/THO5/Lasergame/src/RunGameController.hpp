@@ -20,7 +20,7 @@ class OLEDBoundary;
 /// \Author Ferdi Stoeltie
 /// \brief Controller for the runnable game logic
 /// \date 11-07-2017
-class RunGameController : public rtos::task<>, public KeypadListener {
+class RunGameController : public rtos::task<>, public KeypadListener, public KeyConsume {
 private:
 	// A reference to the keypad controller. This is required to register itself as a listener
    KeypadController& kpC;
@@ -32,7 +32,8 @@ private:
    OLEDBoundary& oledBoundary;
    
    // RTOS
-   rtos::flag registerFlag;
+   rtos::pool<char> keypadMsgPool;
+   rtos::flag keypadFlag;
    rtos::clock gameTimeSecondsClock;
    
    // Primitive data types
@@ -58,6 +59,11 @@ public:
    /// \brief Method that is inherited from interface \c KeypadListener \c.
    /// 			In here the key that is being pressed by the KeypadController will be handled.
    void handleMessageKey(char c);
+   
+   	void consumeChar(char c);
+	void consumeHashTag();
+	void consumeWildcard();
+	void consumeDigits(char c);
 };
 
 #endif //RUNGAMECONTROLLER_HPP

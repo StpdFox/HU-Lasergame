@@ -8,10 +8,8 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	rtos::task<>{ priority, "RunGameController" },
 	kpC{kpC}, sound{sound}, 
 	oledBoundary{ oledBoundary },
-	registerFlag(this, "registerFlag"),
+	keypadFlag(this, "keypadInputFlag"),
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" }
-	
-	//gameTimeStream{ oledBoundary.getGameTimeField(), hwlib::font_default_8x8() }
 {
 	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 6 * 8 });
 }
@@ -35,9 +33,10 @@ void RunGameController::main()
 	while(true)
 	{	
 		const rtos::event& event = wait();
-		  if(event == registerFlag)   {
-			 kpC.registerNext(this);
-		  }
+		
+		if(event == keypadFlag)	{
+			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());
+		}
 		else if(event == gameTimeSecondsClock)
 		{
 			int remainingTimeSec = gameDurationMin * 60 - (hwlib::now_us() - startOfGameTimestamp) / 1'000'000;
@@ -50,15 +49,18 @@ void RunGameController::main()
 				while(true) sleep(1);
 			}
 		}
+
 	}
 }
 
 void RunGameController::handleMessageKey(char c)  {
-    hwlib::cout << c << " was written in testTask \n";
-	switch(c)	{
-		case '#':
-			// Speakercontroller set flag for sound
-			sound.setSound(Sounds::HIT);
-		break;
-	}
+	keypadMsgPool.write(c);
+	keypadFlag.set();
 }
+
+void RunGameController::consumeChar(char c) {}
+void RunGameController::consumeHashTag() {
+	sound.setSound(Sounds::HIT);
+}
+void RunGameController::consumeWildcard() {}
+void RunGameController::consumeDigits(char c) {}
