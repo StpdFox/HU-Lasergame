@@ -7,3 +7,8 @@ Source/THO5/Lasergame/libs/bmptk/Makefile.inc
 Source/THO5/Lasergame/Makefile
 *.workspace
 Source/THO5/cmake-build-Release/
+
+#codelite files to be ignored
+Source/THO5/.codelite/.tern-port
+Source/THO5/.codelite/THO5.tags
+Source/THO5/.codelite/refactoring.db
