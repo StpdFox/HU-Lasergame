@@ -7,16 +7,19 @@
 
 class receiverController : public rtos::task<>{
 private:
-	rtos::timer poolReceiverTimer;
+	//rtos::timer poolReceiverTimer;
 	hwlib::pin_in & rPin;
 	hwlib::pin_out & gnd;
 	hwlib::pin_out & vcc;
 	messageLogic & logic;
+	rtos::clock receiverClock;
 	void main(void){
 		while(1){
-			poolReceiverTimer.set(400*rtos::us);
-			wait(poolReceiverTimer);
- 			//hwlib::cout << "receiverController poolReceiverTimer\n";
+
+			//poolReceiverTimer.set(400*rtos::us);	
+			//wait(poolReceiverTimer);
+ 			
+ 			wait();
 			if(getStartBit() != -1){
 				getMessage();
 				sleep(400*rtos::ms);
@@ -27,11 +30,12 @@ private:
 public:
 	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic ):
 	task(0,"receiverController"),
-	poolReceiverTimer(this,"poolReceiverTimer"),
+	//poolReceiverTimer(this,"poolReceiverTimer"),
 	rPin(rPin),
 	gnd(gnd),
 	vcc(vcc),
-	logic(logic)
+	logic(logic),
+	receiverClock(this,400*rtos::us,"receiverClock")
 	{
 		gnd.set(0);
 		vcc.set(1);
@@ -39,13 +43,10 @@ public:
 
 	int getStartBit(){
 		 if(!rPin.get()){
-            hwlib::wait_us(1100);
+            hwlib::wait_us(1200);
             if(!rPin.get()){
-                hwlib::wait_us(700);
+                hwlib::wait_us(1200);
                 return 1;
-            }else{
-                hwlib::wait_us(700);
-                return 0;
             }
         }
 		return -1;
@@ -55,23 +56,20 @@ public:
  		
 		int begin = hwlib::now_us();
 		while(rPin.get()){
-			sleep(100 * rtos::us);
+			hwlib::wait_us(400 * rtos::us);
 			if(begin-hwlib::now_us() >= 4000){
 				return -1;
 			}
 		}
-            sleep(1100*rtos::us);
+            hwlib::wait_us(1200*rtos::us);
             if(!rPin.get()){
-                sleep(700*rtos::us);
-               
-
-                return 1;
-            }else{
-                sleep(700*rtos::us);
-               
-
-                return 0;
-            }
+            		hwlib::wait_us(1200*rtos::us);
+            		return 1;
+            	}
+            	else{
+            		hwlib::wait_us(1200*rtos::us);
+            		return 0;
+            	}
         return -1;
     }
     char16_t getMessage(){

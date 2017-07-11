@@ -18,8 +18,6 @@ private:
 	rtos::channel<char16_t,10> receiverMessageChannel;
 	
 	void main(void){
-	
-
 		hwlib::cout << "starting gamecontroller\n";
 		for(;;){
 
@@ -30,8 +28,6 @@ private:
 				trans.enableFlag();
 				receive.resume();
 				sleep(1000);
-
-
 			};
 			release();
 			

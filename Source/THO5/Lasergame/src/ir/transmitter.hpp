@@ -37,7 +37,7 @@ public:
 				}
 			}
 			
-			hwlib::wait_ms(3);
+			
 		}
 	}
 };
