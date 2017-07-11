@@ -22,7 +22,7 @@ private:
  			wait();
 			if(getStartBit() != -1){
 				getMessage();
-				sleep(400*rtos::ms);
+				//sleep(400*rtos::ms);
 
 			}
 		}

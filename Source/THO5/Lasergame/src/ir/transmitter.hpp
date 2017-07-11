@@ -36,8 +36,7 @@ public:
 					sendZero();
 				}
 			}
-			
-			
+			setZero();
 		}
 	}
 };

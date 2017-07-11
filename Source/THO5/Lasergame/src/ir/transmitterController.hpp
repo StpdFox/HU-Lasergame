@@ -14,13 +14,16 @@ private:
  			wait(sendMessageFlag);
  			
  			sendMessage();
+ 			
  		}
  	}
 
  	void sendMessage(){
  		auto message = messageToSend.getCompiledBits();
  		
- 		irTransmit.sendMessage(message);
+ 			irTransmit.sendMessage(message);
+ 			hwlib::wait_ms(3);
+ 			irTransmit.sendMessage(message);
  	}
 
 public:
