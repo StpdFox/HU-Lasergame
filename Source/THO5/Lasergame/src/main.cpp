@@ -20,6 +20,7 @@
 
 int main( void ){
    
+
    	// kill the watchdog
   	WDT->WDT_MR = WDT_MR_WDDIS;
 
@@ -36,6 +37,7 @@ int main( void ){
     auto vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
     auto gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
     auto data = hwlib::target::pin_in(hwlib::target::pins::d8);
+
 
     //Set speaker pin
     auto lsp = target::pin_out( target::pins::d7);
@@ -55,6 +57,7 @@ int main( void ){
 	auto in_port  = hwlib::port_in_from_pins( in0,  in1,  in2,  in3  );
 	auto matrix   = hwlib::matrix_of_switches( out_port, in_port );
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
+
 	
 	//Create a test message and encode it
 	messageLogic messageLogic;
@@ -102,7 +105,7 @@ int main( void ){
 	auto gPC = GameParamsController(kpC, &iGC, &rGC, 16);
 	//gameController game = gameController(button,led,playerInformation,messageLogic, IRE ,receiver);
 	kpC.registerNext(&gPC);
-/*>>>>>>> mergeWithIR*/
+
    
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);

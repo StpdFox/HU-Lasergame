@@ -34,10 +34,14 @@ private:
 	receiverController & receive;
 	rtos::channel<char16_t,10> receiverMessageChannel;
 
-	void main(void) override;
+	void main(void);
 	
 public:
+<<<<<<< HEAD
+	gameController(hwlib::pin_in & button,hwlib::pin_out & led,playerInformation & playerInformation,messageLogic & logic,receiverController & receiver);
+=======
 	gameController(irentity irE);
+>>>>>>> 34791152ee1dfe183272b93c183bd80e0a103de9
 	~gameController();
 
 
