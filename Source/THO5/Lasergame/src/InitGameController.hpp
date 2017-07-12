@@ -9,7 +9,7 @@
 #include <array>
 /// \author Ferdi Stoeltie
 /// \brief Controller class that handles the initialize of the game settings
-class InitGameController : public rtos::task<>, public KeypadListener, public KeyConsume  {
+class InitGameController : public rtos::task<>, public KeypadListener, private KeyConsume  {
 public:
     KeypadController& keypadController; // The owner
     rtos::mailbox<char> msg;

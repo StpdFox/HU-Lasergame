@@ -76,7 +76,9 @@ ifeq ($(OS),Windows_NT)
    TERMINAL      ?= "$(BMPTK)/tools/Terminal.exe"
    BOSSAC        ?= "$(BMPTK)/tools/bmptk-bossac.exe"
 
+
    DUE_BOOTMODE  ?= cmd "/C C:/Users/matth/Desktop/Lasergame/Source/THO5/Lasergame/libs/bmptk/tools/due_bootmode.bat $(SERIAL_PORT) "
+
 
    # installed separately
    ATPROGRAM     ?= "$(AtmelToolchain)/../Atmel Studio 6.2/atbackend/atprogram.exe"

@@ -11,6 +11,7 @@
 #include "KeypadController.hpp"
 #include "RunGameController.hpp"
 #include "SpeakerController.hpp"
+#include "GameParamsController.hpp"
 #include <array>
 
 #include "rtos.hpp"
@@ -19,23 +20,48 @@
 
 int main( void ){
    
-   	// kill the watchdog
-  	WDT->WDT_MR = WDT_MR_WDDIS;
+// <<<<<<< HEAD
+//    	// kill the watchdog
+//   	WDT->WDT_MR = WDT_MR_WDDIS;
 
-  	test wtf;
+//   	test wtf;
 
-	namespace target = hwlib::target;
-   	//Wait for hell freezing over
-	hwlib::wait_ms(1000);
+// 	namespace target = hwlib::target;
+//    	//Wait for hell freezing over
+// 	hwlib::wait_ms(1000);
 
-   	//Set button and led pins
-	auto button = hwlib::target::pin_in(hwlib::target::pins::d22);
-	auto led = hwlib::target::pin_out(hwlib::target::pins::d24);
+//    	//Set button and led pins
+// 	auto button = hwlib::target::pin_in(hwlib::target::pins::d22);
+// 	auto led = hwlib::target::pin_out(hwlib::target::pins::d24);
    
-	//Set IR receiver pins
-    auto vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
-    auto gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
-    auto data = hwlib::target::pin_in(hwlib::target::pins::d8);
+// 	//Set IR receiver pins
+//     auto vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
+//     auto gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
+//     auto data = hwlib::target::pin_in(hwlib::target::pins::d8);
+// =======
+   // kill the watchdog
+   WDT->WDT_MR = WDT_MR_WDDIS;
+   hwlib::wait_ms(1000);
+
+  // hwlib::target::pin_in button = hwlib::target::pin_in(hwlib::target::pins::d22);
+   //hwlib::target::pin_out led = hwlib::target::pin_out(hwlib::target::pins::d24);
+
+   namespace target = hwlib::target;
+
+    /*hwlib::target::pin_out vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
+    hwlib::target::pin_out gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
+    hwlib::target::pin_in data = hwlib::target::pin_in(hwlib::target::pins::d8);
+
+    messageLogic messageLogic;
+    playerInformation playerInformation;
+    char16_t compiledMessage = messageLogic.encode(1,1);
+    playerInformation.setCompiledBits(compiledMessage);
+    auto receiver = receiverController(data,gnd,vcc,messageLogic);
+    
+    auto game = gameController(button,led,playerInformation,messageLogic,receiver);*/
+
+    namespace target = hwlib::target;
+	auto lsp = target::pin_out( target::pins::d7);
 
     //Set speaker pin
     auto lsp = target::pin_out( target::pins::d7);
@@ -56,28 +82,38 @@ int main( void ){
 	auto matrix   = hwlib::matrix_of_switches( out_port, in_port );
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
 
-    //Create a test message and encode it
-    messageLogic messageLogic;
-    char16_t compiledMessage = messageLogic.encode(1,1);
+// <<<<<<< HEAD
+//     //Create a test message and encode it
+//     messageLogic messageLogic;
+//     char16_t compiledMessage = messageLogic.encode(1,1);
 
-    //Set the playerInformation according to the message
-    playerInformation playerInformation;
-    playerInformation.setCompiledBits(compiledMessage);
+//     //Set the playerInformation according to the message
+//     playerInformation playerInformation;
+//     playerInformation.setCompiledBits(compiledMessage);
 
-    //Set receivercontroller
-    auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
+//     //Set receivercontroller
+//     auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
 
-    //Set gamecontroller
-    gameController game = gameController(button,led,playerInformation,messageLogic,receiver);
+//     //Set gamecontroller
+//     gameController game = gameController(button,led,playerInformation,messageLogic,receiver);
 
 
-	KeypadController kpC = KeypadController(keypad, 7);
-	OLEDBoundary oledBoundary{ 4 };
-	auto sC = SpeakerController(lsp, 8);
-	auto rGC = RunGameController(kpC, sC, oledBoundary, 5);
-	auto iGC = InitGameController(kpC, &rGC, 2);
-	kpC.registerNext(&iGC);
+// 	KeypadController kpC = KeypadController(keypad, 7);
+// 	OLEDBoundary oledBoundary{ 4 };
+// 	auto sC = SpeakerController(lsp, 8);
+// 	auto rGC = RunGameController(kpC, sC, oledBoundary, 5);
+// 	auto iGC = InitGameController(kpC, &rGC, 2);
+// 	kpC.registerNext(&iGC);
 	
+// =======
+	KeypadController kpC = KeypadController(keypad, 15);
+	OLEDBoundary oledBoundary{ 10 };
+	auto sC = SpeakerController(lsp, 14);
+	auto rGC = RunGameController(kpC, sC, oledBoundary, 12);
+	auto iGC = InitGameController(kpC, &rGC, 13);
+	auto gPC = GameParamsController(kpC, &iGC, &rGC, 16);
+	kpC.registerNext(&gPC);
+
    
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);
