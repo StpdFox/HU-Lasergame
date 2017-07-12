@@ -49,7 +49,6 @@ void RunGameController::main()
 				while(true) sleep(1);
 			}
 		}
-
 	}
 }
 
