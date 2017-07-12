@@ -14,13 +14,33 @@
 #include "keypadlistener.hpp"
 #include "KeypadController.hpp"
 #include "SpeakerController.hpp"
+#include "transmitterController.hpp"
+#include "receiverController.hpp"
+#include "messageLogic.hpp"
+#include "gameParameters.hpp"
 
 class OLEDBoundary;
+
+typedef struct IREntity {
+	//auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver
+	hwlib::pin_in & button;
+	hwlib::pin_out & led;
+	transmitterController trans;
+	messageLogic & logic;
+	receiverController & receive;
+	
+	IREntity(auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver) :
+	button{button},
+	led{led},
+	trans{playerInformation,1},
+	logic{logic},
+	receive{receiver} {}
+} &irentity;
 
 /// \Author Ferdi Stoeltie
 /// \brief Controller for the runnable game logic
 /// \date 11-07-2017
-class RunGameController : public rtos::task<>, public KeypadListener, public KeyConsume {
+class RunGameController : public rtos::task<>, public KeypadListener, private KeyConsume {
 private:
 	// A reference to the keypad controller. This is required to register itself as a listener
    KeypadController& kpC;
@@ -34,8 +54,11 @@ private:
    // RTOS
    rtos::pool<char> keypadMsgPool;
    rtos::flag keypadFlag;
+   irentity irE;
+   rtos::channel<char16_t,10> receiverMessageChannel;
    rtos::clock gameTimeSecondsClock;
-   
+	
+	
    // Primitive data types
    int startOfGameTimestamp;
    int gameDurationMin;
@@ -50,7 +73,7 @@ public:
    /// \param[in] sound A handle to the ISound interface.
    /// \param[in] oledBoundary a reference to the oledBoundary object.
    /// \param Priority of this rtos::task.
-   RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, unsigned int priority );
+   RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority );
    ~RunGameController();
 
    void main() override;

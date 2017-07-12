@@ -1,12 +1,8 @@
-#include "game.hpp"
+/*#include "game.hpp"
 
-gameController::gameController(auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver):
+gameController::gameController(irentity irE):
 	task{5,"game"},
-	button{button},
-	led{led},
-	trans{playerInformation,1},
-	logic{logic},
-	receive{receiver},
+	irE{irE},
 	receiverMessageChannel(this,"receiverMessage")
 	{}
 	
@@ -18,14 +14,14 @@ void gameController::main()
 	hwlib::cout << "starting gamecontroller\n";
 	for(;;)
 	{
-		bool buttonSet = button.get();
-		led.set(!buttonSet);
+		bool buttonSet = irE.button.get();
+		irE.led.set(!buttonSet);
 		if(!buttonSet)
 		{
-			receive.suspend();
-			trans.enableFlag();
+			irE.receive.suspend();
+			irE.trans.enableFlag();
 			sleep(1200*rtos::ms);
 		};
-		receive.resume();
+		irE.receive.resume();
 	};
-}
+}*/

@@ -1,12 +1,8 @@
-#include "game.hpp"
+/*#include "game.hpp"
 
-gameController::gameController(auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver):
+gameController::gameController(irentity irE):
 	task{5,"game"},
-	button{button},
-	led{led},
-	trans{playerInformation,1},
-	logic{logic},
-	receive{receiver},
+	irE{irE},
 	receiverMessageChannel(this,"receiverMessage")
 	{}
 	
@@ -28,4 +24,4 @@ void gameController::main()
 		};
 		receive.resume();
 	};
-}
+}*/

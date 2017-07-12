@@ -11,6 +11,7 @@
 #include "KeypadController.hpp"
 #include "RunGameController.hpp"
 #include "SpeakerController.hpp"
+#include "GameParamsController.hpp"
 #include <array>
 
 #include "rtos.hpp"
@@ -22,12 +23,11 @@ int main( void ){
    	// kill the watchdog
   	WDT->WDT_MR = WDT_MR_WDDIS;
 
-  	test wtf;
 
 	namespace target = hwlib::target;
    	//Wait for hell freezing over
 	hwlib::wait_ms(1000);
-
+	
    	//Set button and led pins
 	auto button = hwlib::target::pin_in(hwlib::target::pins::d22);
 	auto led = hwlib::target::pin_out(hwlib::target::pins::d24);
@@ -55,7 +55,22 @@ int main( void ){
 	auto in_port  = hwlib::port_in_from_pins( in0,  in1,  in2,  in3  );
 	auto matrix   = hwlib::matrix_of_switches( out_port, in_port );
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
-
+	
+	//Create a test message and encode it
+	messageLogic messageLogic;
+    char16_t compiledMessage = messageLogic.encode(1,1);
+	
+	//Set the playerInformation according to the message
+    playerInformation playerInformation;
+    playerInformation.setCompiledBits(compiledMessage);
+	
+	//Set receivercontroller
+    auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
+	
+	struct IREntity IRE(button,led,playerInformation,messageLogic,receiver);
+	
+	//gameController game = gameController(IRE);
+/*<<<<<<< HEAD
     //Create a test message and encode it
     messageLogic messageLogic;
     char16_t compiledMessage = messageLogic.encode(1,1);
@@ -78,6 +93,16 @@ int main( void ){
 	auto iGC = InitGameController(kpC, &rGC, 2);
 	kpC.registerNext(&iGC);
 	
+=======*/
+	KeypadController kpC = KeypadController(keypad, 15);
+	OLEDBoundary oledBoundary{ 10 };
+	auto sC = SpeakerController(lsp, 14);
+	auto rGC = RunGameController(kpC, sC, oledBoundary, IRE, 12);
+	auto iGC = InitGameController(kpC, &rGC, 13);
+	auto gPC = GameParamsController(kpC, &iGC, &rGC, 16);
+	//gameController game = gameController(button,led,playerInformation,messageLogic, IRE ,receiver);
+	kpC.registerNext(&gPC);
+/*>>>>>>> mergeWithIR*/
    
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);

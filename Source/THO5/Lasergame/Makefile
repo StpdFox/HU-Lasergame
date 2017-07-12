@@ -44,6 +44,9 @@ SOURCES				+= src/ir/game.cpp
 HEADERS			+= src/SpeakerController.hpp
 SOURCES			+= src/SpeakerController.cpp
 
+HEADERS			+= src/GameParamsController.hpp
+SOURCES			+=src/GameParamsController.cpp
+
 # the source and header files
 
 SEARCH				+= ./src/
