@@ -8,7 +8,6 @@ private:
 	char16_t compiledBits;
 public:
 	playerInformation():
-
 	compiledBits(0)
 	{}
 

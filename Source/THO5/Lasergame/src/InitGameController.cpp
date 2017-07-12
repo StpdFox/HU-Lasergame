@@ -2,7 +2,8 @@
 
 InitGameController::InitGameController(KeypadController& kpC, KeypadListener* nextListener, unsigned int priority) : 
     task(priority, "initGame task"), keypadController{kpC} , msg("keypad char"), nextListener{nextListener}  {
-    }
+		//kpC.registerNext(kC);
+}
 
 void InitGameController::handleMessageKey(char c)  {
    msg.write(c);
@@ -10,38 +11,11 @@ void InitGameController::handleMessageKey(char c)  {
 
 void InitGameController::main()  {
         for(;;) {
-            char s = msg.read();
-            parseKeypad(s);
+            char c = msg.read();
+			KeyConsumer::handleMessageKey(*this, c);
+            //parseKeypad(s);
         }
 }
-
-void InitGameController::parseKeypad(char s)    {
-        hwlib::cout << s << " pressed, handled in initgamecontroller \n";
-        switch(s)   {
-            case 'C':
-                // Start commando
-                initNewCommand();
-            break;
-            case '#':
-                // If the command has been validated, it can be executed
-                if(commandoIsValid) {
-                    sendMessage();
-                }else   {
-                    validateCommand();
-                }
-            break;
-            case '*':
-                // Send a start message
-                sendStartMessage();
-            break;
-            default:
-            // Should only be run if keycode is a number
-            if((int)commandCode.size() <= COMMANDSIZE - 1)    {
-                commandCode[commandCount++] = s;
-            }
-            break;
-        }
-    }
 
     void InitGameController::initNewCommand()   {
         incomingCommand = true;
@@ -66,5 +40,29 @@ void InitGameController::parseKeypad(char s)    {
         void InitGameController::sendStartMessage() {
         // Send the start message + start timer over the air with apple update system
         // Deregisters self and registers other keypadlistener
+		//hwlib::cout << "sending start message and registering next task for keypadcontroller\n";
         keypadController.registerNext(nextListener);
     }
+	
+	// Keypad Methods
+	void InitGameController::consumeChar(char c) {
+			initNewCommand();
+	}
+	void InitGameController::consumeHashTag() {
+		// If the command has been validated, it can be executed
+		if(commandoIsValid) {
+			sendMessage();
+		}else   {
+			validateCommand();
+		}
+	}
+	void InitGameController::consumeWildcard() {
+		// Send a start message
+		sendStartMessage();	
+	}
+	void InitGameController::consumeDigits(char c) {
+		// Should only be run if keycode is a number
+		if((int)commandCode.size() <= COMMANDSIZE - 1)    {
+			commandCode[commandCount++] = c;
+		}
+	}
