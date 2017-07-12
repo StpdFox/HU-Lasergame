@@ -1,3 +1,6 @@
+#ifndef TRANSMIT_HPP
+#define TRANSMIT_HPP
+
 #include "hwlib.hpp"
 #include "rtos.hpp"
 #include "gameParameters.hpp"
@@ -9,27 +12,13 @@ private:
  	playerInformation & messageToSend;
  	rtos::flag sendMessageFlag;
 
- 	void main(){
- 		for(;;){
- 			wait(sendMessageFlag);
- 			sendMessage();
- 		}
- 	}
+ 	void main();
 
- 	void sendMessage(){
- 		auto message = messageToSend.getCompiledBits();
- 			irTransmit.sendMessage(message);
- 	}
+ 	void sendMessage();
 
 public:
-	transmitterController(playerInformation & playerInformation,unsigned int priority):
- 		task(priority, "sendTask"),
- 		irTransmit(),
- 		messageToSend(playerInformation),
- 		sendMessageFlag(this, "sendMessageFlag")
- 		{}
+	transmitterController(playerInformation & playerInformation,unsigned int priority);
 
- 		void enableFlag(){
- 			sendMessageFlag.set();
- 		}
+ 		void enableFlag();
  };
+ #endif

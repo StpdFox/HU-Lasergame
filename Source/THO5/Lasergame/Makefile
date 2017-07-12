@@ -58,9 +58,11 @@ SOURCES				+= OLEDBoundary.cpp
 SEARCH				+= ./src/ir/
 
 HEADERS				+= receiverController.hpp
+SOURCES				+= receiverController.cpp
 HEADERS				+= gameParameters.hpp
 HEADERS				+= transmitter.hpp
 HEADERS				+= transmitterController.hpp
+SOURCES				+= transmitterController.cpp
 HEADERS				+= messageLogic.hpp
 
 OS ?= $(shell uname)
