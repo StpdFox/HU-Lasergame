@@ -34,6 +34,7 @@
         <File Name="src/ir/transmitter.hpp"/>
         <File Name="src/ir/transmitterController.hpp"/>
         <File Name="src/ir/game.hpp"/>
+        <File Name="src/game.cpp"/>
       </VirtualDirectory>
       <File Name="src/KeypadListener.hpp"/>
       <File Name="src/KeypadController.cpp"/>
