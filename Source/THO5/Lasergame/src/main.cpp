@@ -10,6 +10,7 @@
 #include "KeypadController.hpp"
 #include "RunGameController.hpp"
 #include "SpeakerController.hpp"
+#include "GameParamsController.hpp"
 #include <array>
 
 #include "rtos.hpp"
@@ -23,7 +24,7 @@ int main( void ){
    hwlib::wait_ms(1000);
    
    namespace target = hwlib::target;
-   auto lsp = target::pin_out( target::pins::d7);
+	auto lsp = target::pin_out( target::pins::d7);
 
 	auto out0 = target::pin_oc( target::pins::a0 );
 	auto out1 = target::pin_oc( target::pins::a1 );
@@ -45,8 +46,8 @@ int main( void ){
 	auto sC = SpeakerController(lsp, 4);
 	auto rGC = RunGameController(kpC, sC, oledBoundary, 2);
 	auto iGC = InitGameController(kpC, &rGC, 3);
-	kpC.registerNext(&iGC);
-	
+	auto gPC = GameParamsController(kpC, &iGC, &rGC, 6);
+	kpC.registerNext(&gPC);
    
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);

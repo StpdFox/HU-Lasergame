@@ -1,4 +1,4 @@
-///	\file GameParamsController.cpp
+///	\file GameParamsController.hpp
 /// The GameParamsController file,
 /// contains the GameParamsController class decleration only. 
 /// Date file created:
@@ -11,22 +11,45 @@
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
+#include "KeypadController.hpp"
+#include "KeypadListener.hpp"
 
+#include <array>
+
+///\author Marianne Delmaar
 /// \author Ferdi Stoeltie
 /// \date 11-07-2017
-/// \brief i havent got a clue
-class GameParamsController : public rtos::task<>
-{
+/// \brief Controller task for game params like player id and weapon damage. Waits for 'start game' signal from IRReceiver.
+class GameParamsController : public rtos::task<>, public KeypadListener{
 private:
 	//GameParamsController(const GameParamsController& rhs);
 	//GameParamsController& operator=(const GameParamsController& rhs);
+	void parseKeypad(char s);
 	
 public:
-   /// \author Ferdi Stoeltie
-   /// \brief i dont know :/.
-   /// \param Priority of this rtos::task.
-	GameParamsController(unsigned int priority);
+	/// \author Marianne Delmaar
+	/// \author Ferdi Stoeltie
+	/// \brief Controller task for game params like player id and weapon damage.
+	/// \param Priority of this rtos::task.
+	
+	GameParamsController(KeypadController& kpC, KeypadListener* initGameListener, KeypadListener* runGameListener, unsigned int priority);
 	~GameParamsController();
+	
+	KeypadController& kpC; // The owner
+    rtos::mailbox<char> msg;
+    KeypadListener* initGameListener;
+	KeypadListener* runGameListener;
+	
+	char commandCount = 0;
+    std::array<char, 2> commandCode { {'0', '0' } };
+    int COMMANDSIZE = 2; 
+	bool id = true;
+	
+	int playerID = 0;
+	int weaponDmg= 0;
+	void validateCommand();
+	void initNewCommand();
+	void handleMessageKey(char c);
 	void main();
 };
 

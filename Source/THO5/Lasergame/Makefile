@@ -42,6 +42,9 @@ HEADERS			+= src/KeypadListener.hpp
 HEADERS			+= src/SpeakerController.hpp
 SOURCES			+= src/SpeakerController.cpp
 
+HEADERS			+= src/GameParamsController.hpp
+SOURCES			+=src/GameParamsController.cpp
+
 # the source and header files
 SEARCH				+= ./src/
 HEADERS				+= defines.h
