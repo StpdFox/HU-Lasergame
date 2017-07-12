@@ -14,6 +14,7 @@
 # 
 #############################################################################
 
+
 # This string must contain neither spaces (problems on windows8)
 # nor periods (problems on xtensa)
 VERSION := V03_00_work_in_progress_2016_07_04
@@ -59,6 +60,7 @@ ifeq ($(OS),Windows_NT)
    # seems to be required in some circustances
    SHELL=C:/Windows/System32/cmd.exe
 
+
    # distributed with bmptk 
    MAKE          ?= "bmptk-make.exe"
    REMOVE        ?= "bmptk-rm.exe" -f
@@ -73,12 +75,12 @@ ifeq ($(OS),Windows_NT)
    AVRDUDEC      ?= "$(BMPTK)/tools/avrdude/avrdude.conf"
    TERMINAL      ?= "$(BMPTK)/tools/Terminal.exe"
    BOSSAC        ?= "$(BMPTK)/tools/bmptk-bossac.exe"
-   DUE_BOOTMODE  ?= cmd /C "C:/Users/matth/Desktop/Lasergame/Source/THO5/Lasergame/libs/bmptk/tools/due_bootmode.bat $(SERIAL_PORT)"
-   
+
+   DUE_BOOTMODE  ?= cmd "/C C:\Lazor\libs\bmptk\tools\due_bootmode.bat $(SERIAL_PORT) "
+
    # installed separately
    ATPROGRAM     ?= "$(AtmelToolchain)/../Atmel Studio 6.2/atbackend/atprogram.exe"
    STM32_CLI     ?= "$(STM32LU)/ST-LINK Utility/ST-LINK_CLI.exe"     
-   
    # windows
    PAUSE         ?= cmd /c pause     
    
