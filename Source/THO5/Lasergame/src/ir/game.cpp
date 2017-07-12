@@ -1,7 +1,7 @@
 #include "game.hpp"
 
-gameController::gameController(auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver):
-	task{5,"game"},
+gameController::gameController(hwlib::pin_in & button,hwlib::pin_out & led,playerInformation & playerInformation,messageLogic & logic,receiverController & receiver):
+	task{3,"game"},
 	button{button},
 	led{led},
 	trans{playerInformation,1},

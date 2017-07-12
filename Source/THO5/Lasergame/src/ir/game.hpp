@@ -18,10 +18,10 @@ private:
 	receiverController & receive;
 	rtos::channel<char16_t,10> receiverMessageChannel;
 
-	void main(void) override;
+	void main(void);
 	
 public:
-	gameController(auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver);
+	gameController(hwlib::pin_in & button,hwlib::pin_out & led,playerInformation & playerInformation,messageLogic & logic,receiverController & receiver);
 	~gameController();
 
 
