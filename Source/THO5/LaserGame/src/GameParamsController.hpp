@@ -20,11 +20,16 @@
 /// \author Ferdi Stoeltie
 /// \date 11-07-2017
 /// \brief Controller task for game params like player id and weapon damage. Waits for 'start game' signal from IRReceiver.
-class GameParamsController : public rtos::task<>, public KeypadListener{
+class GameParamsController : public rtos::task<>, public KeypadListener, private KeyConsume{
 private:
 	//GameParamsController(const GameParamsController& rhs);
 	//GameParamsController& operator=(const GameParamsController& rhs);
 	void parseKeypad(char s);
+	
+	void consumeChar(char c);
+	void consumeHashTag();
+	void consumeWildcard();
+	void consumeDigits(char c);
 	
 public:
 	/// \author Marianne Delmaar

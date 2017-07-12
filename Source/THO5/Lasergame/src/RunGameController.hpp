@@ -20,7 +20,7 @@ class OLEDBoundary;
 /// \Author Ferdi Stoeltie
 /// \brief Controller for the runnable game logic
 /// \date 11-07-2017
-class RunGameController : public rtos::task<>, public KeypadListener, public KeyConsume {
+class RunGameController : public rtos::task<>, public KeypadListener, private KeyConsume {
 private:
 	// A reference to the keypad controller. This is required to register itself as a listener
    KeypadController& kpC;

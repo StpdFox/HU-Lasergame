@@ -24,12 +24,12 @@ int main( void ){
    WDT->WDT_MR = WDT_MR_WDDIS;
    hwlib::wait_ms(1000);
 
-   hwlib::target::pin_in button = hwlib::target::pin_in(hwlib::target::pins::d22);
-   hwlib::target::pin_out led = hwlib::target::pin_out(hwlib::target::pins::d24);
+  // hwlib::target::pin_in button = hwlib::target::pin_in(hwlib::target::pins::d22);
+   //hwlib::target::pin_out led = hwlib::target::pin_out(hwlib::target::pins::d24);
 
    namespace target = hwlib::target;
 
-    hwlib::target::pin_out vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
+    /*hwlib::target::pin_out vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
     hwlib::target::pin_out gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
     hwlib::target::pin_in data = hwlib::target::pin_in(hwlib::target::pins::d8);
 
@@ -39,7 +39,7 @@ int main( void ){
     playerInformation.setCompiledBits(compiledMessage);
     auto receiver = receiverController(data,gnd,vcc,messageLogic);
     
-    auto game = gameController(button,led,playerInformation,messageLogic,receiver);
+    auto game = gameController(button,led,playerInformation,messageLogic,receiver);*/
 
     namespace target = hwlib::target;
 	auto lsp = target::pin_out( target::pins::d7);
