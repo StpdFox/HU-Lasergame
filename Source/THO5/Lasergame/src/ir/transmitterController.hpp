@@ -22,8 +22,8 @@ private:
  	}
 
 public:
-	transmitterController(playerInformation & playerInformation):
- 		task(1, "sendTask"),
+	transmitterController(playerInformation & playerInformation,unsigned int priority):
+ 		task(priority, "sendTask"),
  		irTransmit(),
  		messageToSend(playerInformation),
  		sendMessageFlag(this, "sendMessageFlag")
