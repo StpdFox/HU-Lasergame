@@ -1,8 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Session Name="C:\Users\Mier\Documents\Th06lasergame\Lasergame\Source\THO5\THO5.workspace">
-  <int Value="0" Name="m_selectedTab"/>
-  <wxString Value="C:\Users\Mier\Documents\Th06lasergame\Lasergame\Source\THO5\THO5.workspace" Name="m_workspaceName"/>
-  <TabInfoArray Name="TabInfoArray"/>
+<Session Name="C:\HBO\leerjaar_2\Lasergame\Source\THO5\THO5.workspace">
+  <int Value="5" Name="m_selectedTab"/>
+  <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\THO5.workspace" Name="m_workspaceName"/>
+  <TabInfoArray Name="TabInfoArray">
+    <TabInfo>
+      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\RunGameController.cpp" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\RunGameController.hpp" Name="FileName"/>
+      <int Value="42" Name="FirstVisibleLine"/>
+      <int Value="52" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\ir\receiverController.hpp" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\ir\transmitterController.hpp" Name="FileName"/>
+      <int Value="6" Name="FirstVisibleLine"/>
+      <int Value="17" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\KeypadController.cpp" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="12" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\ir\transmitter.hpp" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="7" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+  </TabInfoArray>
   <SerializedObject Name="m_breakpoints">
     <long Value="1" Name="Count"/>
     <SerializedObject Name="Breakpoint0">
