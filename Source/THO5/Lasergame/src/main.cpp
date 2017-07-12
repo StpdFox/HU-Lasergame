@@ -63,11 +63,11 @@ int main( void ){
 	auto matrix   = hwlib::matrix_of_switches( out_port, in_port );
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
 
-	KeypadController kpC = KeypadController(keypad, 5);
-	OLEDBoundary oledBoundary{ 1 };
-	auto sC = SpeakerController(lsp, 4);
-	auto rGC = RunGameController(kpC, sC, oledBoundary, 2);
-	auto iGC = InitGameController(kpC, &rGC, 3);
+	KeypadController kpC = KeypadController(keypad, 7);
+	OLEDBoundary oledBoundary{ 4 };
+	auto sC = SpeakerController(lsp, 8);
+	auto rGC = RunGameController(kpC, sC, oledBoundary, 5);
+	auto iGC = InitGameController(kpC, &rGC, 2);
 	kpC.registerNext(&iGC);
 	
    
