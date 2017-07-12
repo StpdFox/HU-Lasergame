@@ -61,9 +61,11 @@ HEADERS				+= receiverController.hpp
 SOURCES				+= receiverController.cpp
 HEADERS				+= gameParameters.hpp
 HEADERS				+= transmitter.hpp
+SOURCES 			+= transmitter.cpp
 HEADERS				+= transmitterController.hpp
 SOURCES				+= transmitterController.cpp
 HEADERS				+= messageLogic.hpp
+SOURCES 			+= messageLogic.cpp
 
 OS ?= $(shell uname)
 

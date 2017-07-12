@@ -19,6 +19,6 @@ private:
 public:
 	transmitterController(playerInformation & playerInformation,unsigned int priority);
 
- 		void enableFlag();
+ 	void enableFlag();
  };
  #endif
