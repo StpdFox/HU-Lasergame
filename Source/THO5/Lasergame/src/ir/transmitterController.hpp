@@ -12,20 +12,18 @@ private:
  	void main(){
  		for(;;){
  			wait(sendMessageFlag);
- 			 hwlib::cout << "sendmessageTest\n";
  			sendMessage();
  		}
  	}
 
  	void sendMessage(){
  		auto message = messageToSend.getCompiledBits();
- 		hwlib::cout << message << "\n";
- 		irTransmit.sendMessage(message);
+ 			irTransmit.sendMessage(message);
  	}
 
 public:
 	transmitterController(playerInformation & playerInformation):
- 		task(3, "sendTask"),
+ 		task(1, "sendTask"),
  		irTransmit(),
  		messageToSend(playerInformation),
  		sendMessageFlag(this, "sendMessageFlag")

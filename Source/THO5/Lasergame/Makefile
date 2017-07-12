@@ -43,10 +43,12 @@ HEADERS			+= src/SpeakerController.hpp
 SOURCES			+= src/SpeakerController.cpp
 
 # the source and header files
+
 SEARCH				+= ./src/
 HEADERS				+= defines.h
 HEADERS				+= OLEDBoundary.hpp
 SOURCES				+= OLEDBoundary.cpp
+
 
 #HEADERS				+= TestTask.hpp
 #SOURCES				+= TestTask.cpp
