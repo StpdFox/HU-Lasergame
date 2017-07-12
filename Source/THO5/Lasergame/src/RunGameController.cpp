@@ -4,11 +4,13 @@
 #include "RunGameController.hpp"
 #include "OLEDBoundary.hpp"
 
-RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, unsigned int priority ) :
+RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority ) :
 	rtos::task<>{ priority, "RunGameController" },
 	kpC{kpC}, sound{sound}, 
 	oledBoundary{ oledBoundary },
 	keypadFlag(this, "keypadInputFlag"),
+	irE{irE},
+	receiverMessageChannel(this,"receiverMessage"),
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" }
 {
 	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 6 * 8 });
@@ -33,7 +35,16 @@ void RunGameController::main()
 	while(true)
 	{	
 		const rtos::event& event = wait();
-		
+		bool buttonSet = irE.button.get();
+		irE.led.set(!buttonSet);
+		if(!buttonSet)
+		{
+			irE.receive.suspend();
+			irE.trans.enableFlag();
+			sleep(1200*rtos::ms);
+		};
+		irE.receive.resume();
+		//irE.receive.resume();
 		if(event == keypadFlag)	{
 			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());
 		}

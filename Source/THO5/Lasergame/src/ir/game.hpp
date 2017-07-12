@@ -1,53 +1,45 @@
-#include "hwlib.hpp"
+#ifndef GAME_HPP
+#define GAME_HPP
+
+/*#include "hwlib.hpp"
 #include "rtos.hpp"
 #include "transmitterController.hpp"
 #include "receiverController.hpp"
 #include "messageLogic.hpp"
-#include "gameParameters.hpp"
-
-#ifndef GAME_HPP
-#define GAME_HPP
-
-class gameController : public rtos::task<>{
+#include "gameParameters.hpp"*/
+/*typedef struct IREntity {
+	//auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver
+	hwlib::pin_in & button;
+	hwlib::pin_out & led;
+	transmitterController trans;
+	messageLogic & logic;
+	receiverController & receive;
+	
+	
+	IREntity(auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver) :
+	button{button},
+	led{led},
+	trans{playerInformation,1},
+	logic{logic},
+	receive{receiver} {}
+} &irentity;*/
+/*class gameController : public rtos::task<>{
 private:
+	irentity irE;
+	rtos::channel<char16_t,10> receiverMessageChannel;
 	hwlib::pin_in & button;
 	hwlib::pin_out & led;
 	transmitterController trans;
 	messageLogic & logic;
 	receiverController & receive;
 	rtos::channel<char16_t,10> receiverMessageChannel;
+
+	void main(void) override;
 	
-	void main(void){
-		hwlib::cout << "starting gamecontroller\n";
-		for(;;){
-
-			bool buttonSet = button.get();
-			led.set(!buttonSet);
-			if(!buttonSet){
-				receive.suspend();
-				trans.enableFlag();
-				
-				sleep(1200*rtos::ms);
-			};
-			receive.resume();
-			
-		};
-	};
 public:
-	gameController(hwlib::pin_in & button,hwlib::pin_out & led,playerInformation & playerInformation,messageLogic & logic,receiverController & receiver):
-		task(6,"game"),
-		button(button),
-		led(led),
-		trans(playerInformation),
-		logic(logic),
-		receive(receiver),
-		receiverMessageChannel(this,"receiverMessage")
-		{
-		
-		}
+	gameController(irentity irE);
+	~gameController();
 
-	void write(char16_t value){
-        receiverMessageChannel.write(value);
-    }
-};
+
+};*/
 #endif

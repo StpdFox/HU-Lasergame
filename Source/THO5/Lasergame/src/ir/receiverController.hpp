@@ -25,8 +25,8 @@ private:
 		}
 	}
 public:
-	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic ):
-	task(0,"receiverController"),
+	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic,unsigned int priority ):
+	task(priority,"receiverController"),
 	poolReceiverTimer(this,"poolReceiverTimer"),
 	rPin(rPin),
 	gnd(gnd),
