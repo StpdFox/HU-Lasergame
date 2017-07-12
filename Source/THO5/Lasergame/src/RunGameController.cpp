@@ -44,7 +44,7 @@ void RunGameController::main()
 			sleep(1200*rtos::ms);
 		};
 		irE.receive.resume();
-		//irE.receive.resume();
+		
 		if(event == keypadFlag)	{
 			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());
 		}
