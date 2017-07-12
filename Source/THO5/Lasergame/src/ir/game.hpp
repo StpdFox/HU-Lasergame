@@ -27,9 +27,9 @@ private:
 				receive.suspend();
 				trans.enableFlag();
 				
-				sleep(1000);
+				sleep(1200*rtos::ms);
 			};
-			release();
+			receive.resume();
 			
 		};
 	};

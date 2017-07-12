@@ -27,7 +27,7 @@ int main( void ){
 
     messageLogic messageLogic;
     playerInformation playerInformation;
-    char16_t compiledMessage = messageLogic.encode(2,2);
+    char16_t compiledMessage = messageLogic.encode(1,1);
     playerInformation.setCompiledBits(compiledMessage);
     auto receiver = receiverController(data,gnd,vcc,messageLogic);
     

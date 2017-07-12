@@ -7,28 +7,19 @@
 
 class receiverController : public rtos::task<>{
 private:
-	//rtos::timer poolReceiverTimer;
+	rtos::timer poolReceiverTimer;
 	hwlib::pin_in & rPin;
 	hwlib::pin_out & gnd;
 	hwlib::pin_out & vcc;
 	messageLogic & logic;
-	rtos::clock receiverClock;
+
 	void main(void){
 		while(1){
-<<<<<<< HEAD
-
-			//poolReceiverTimer.set(400*rtos::us);	
-			//wait(poolReceiverTimer);
- 			
- 			wait();
-=======
 			poolReceiverTimer.set(400*rtos::us);
 			wait(poolReceiverTimer);
-			// hwlib::cout << "reveicer\n";
->>>>>>> parent of 12b1a78... ?
 			if(getStartBit() != -1){
 				getMessage();
-				sleep(400*rtos::ms);
+				sleep(1200*rtos::ms);
 
 			}
 		}
@@ -36,61 +27,48 @@ private:
 public:
 	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic ):
 	task(0,"receiverController"),
-	//poolReceiverTimer(this,"poolReceiverTimer"),
+	poolReceiverTimer(this,"poolReceiverTimer"),
 	rPin(rPin),
 	gnd(gnd),
 	vcc(vcc),
-	logic(logic),
-	receiverClock(this,400*rtos::us,"receiverClock")
+	logic(logic)
 	{
 		gnd.set(0);
 		vcc.set(1);
 	}
 
 	int getStartBit(){
-<<<<<<< HEAD
-		int begin = hwlib::now_us();
-		 if(!rPin.get()){
-            while(hwlib::now_us() <= begin+1200){};
-            if(!rPin.get()){
-            	begin = hwlib::now_us();
-                while(hwlib::now_us() <= begin+1200){};
-                return 1;
-            }
-        }
-=======
 		if(!rPin.get()){
 			hwlib::wait_us(1100);
 			if(!rPin.get()){
-				hwlib:cout<<  1;
+				
 				hwlib::wait_us(700);
 				return 1;
-			}else{
-				hwlib::wait_us(700);
-				return 0;
 			}
 		}
->>>>>>> parent of 12b1a78... ?
 		return -1;
 	}
 
 	int getBit(){
 		int begin = hwlib::now_us();
 		while(rPin.get()){
-			hwlib::wait_us(400 * rtos::us);
+			sleep(100 * rtos::us);
 			if(begin-hwlib::now_us() >= 4000){
-				hwlib::cout<<"timeout";
 				return -1;
 			}
 		}
+            sleep(1100*rtos::us);
             if(!rPin.get()){
-            		while(hwlib::now_us() <= begin+1200){};
-            		return 1;
-            	}
-            	else{
-            		while(hwlib::now_us() <= begin+1200){};
-            		return 0;
-            	}
+                sleep(700*rtos::us);
+               
+
+                return 1;
+            }else{
+                sleep(700*rtos::us);
+               
+
+                return 0;
+            }
         return -1;
     }
     char16_t getMessage(){
@@ -109,7 +87,12 @@ public:
         }
         bitstream = bitstream | (1 << 15);
        hwlib::cout.base(2);
-       hwlib::cout << bitstream << "\n";
+       hwlib::cout << "receiving : " <<bitstream << "\n";
+       byte x = 5;
+       byte y = 5;
+       hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
+       logic.decode(bitstream,x,y);
+       hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
        return bitstream;
     }
 };
