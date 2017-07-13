@@ -40,8 +40,10 @@ void RunGameController::main()
 		if(event == keypadFlag)	{
 			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());
 		}
-		if(event == irMsgFlag)	{
+		else if(event == irMsgFlag)	{
 			hwlib::cout << "ir msg flag has been set!\n";
+			std::array<char, 2> msg = irMsgPool.read();
+			hwlib::cout << "byte01: " << msg[0] << " | byte02: " << msg[1] << " end of msg\n"; 
 		}
 		else if(event == gameTimeSecondsClock)
 		{
