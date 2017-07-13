@@ -1,3 +1,11 @@
+///	\file InitgameController.cpp
+/// The InitgameController file,
+/// contains the InitgameController class implementation only. 
+/// Date file created:
+/// \date 07-07-2017
+/// Date Last Update:
+/// \date 14-07-2017
+
 #include "InitGameController.hpp"
 
 InitGameController::InitGameController(KeypadController& kpC, KeypadListener* nextListener, unsigned int priority) : 

@@ -1,3 +1,12 @@
+///	\file receiverController.cpp
+/// The receiverController file,
+/// contains the receiverController class implementation only. 
+/// Date file created:
+/// \date 11-07-2017
+/// Date Last Update:
+/// \date 14-07-2017
+
+
 #include "receiverController.hpp"
 
 receiverController::receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic,unsigned int priority):
@@ -100,4 +109,8 @@ char16_t receiverController::getMessage()
 	rL->receivedMsgstd(msg);
     hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
     return bitstream;
+}
+
+void receiverController::setReceiveListener(ReceiveListener* newRL)	{
+		rL = newRL;
 }

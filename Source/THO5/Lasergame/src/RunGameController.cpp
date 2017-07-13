@@ -1,3 +1,11 @@
+///	\file RunGameController.cpp
+/// The RunGameController implementation file,
+/// contains the RunGameController class implementation only. 
+/// Date file created:
+/// \date 07-07-2017
+/// Date Last Update:
+/// \date 14-07-2017
+
 #define GAMETIME_WIDTH 5
 #define GAMETIME_HEIGHT 1
 #include "gameParameters.hpp"

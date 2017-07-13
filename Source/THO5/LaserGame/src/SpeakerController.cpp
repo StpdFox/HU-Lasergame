@@ -1,3 +1,11 @@
+///	\file SpeakerController.cpp
+/// The SpeakerController file,
+/// contains the SpeakerController class implementation only. 
+/// Date file created:
+/// \date 07-07-2017
+/// Date Last Update:
+/// \date 14-07-2017
+
 #include "SpeakerController.hpp"
 #include "hwlib.hpp"
 

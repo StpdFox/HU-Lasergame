@@ -1,5 +1,10 @@
-/// \author Marianne Delmaar
-/// \brief Rtos task that handles the output for speaker. Speaker commands come from RunGameController.
+///	\file SpeakerController.hpp
+/// The SpeakerController file,
+/// contains the SpeakerController class declaration only. 
+/// Date file created:
+/// \date 07-07-2017
+/// Date Last Update:
+/// \date 14-07-2017
 
 #ifndef SPEAKER_CONTROLLER_HPP
 #define SPEAKER_CONTROLLER_HPP
@@ -8,7 +13,8 @@
 #include "hwlib.hpp"
 #include <array>
 
-/// \author Marianne Delmaar en Ferdi Stoeltie
+/// \author Marianne Delmaar
+/// \author Ferdi Stoeltie
 /// \brief Enum for sound types
 enum class Sounds {HIT = 0x01, END_GAME = 0x02, START_GAME = 0x04, SHOOT = 0x08};
 
@@ -21,7 +27,8 @@ public:
 private:
 };
 
-/// \author Marianne Delmaar en Ferdi Stoeltie
+/// \author Marianne Delmaar
+/// \author Ferdi Stoeltie
 /// \brief SpeakerController that handles the playing of sounds
 class SpeakerController : public rtos::task<>, public ISound{
 private:
