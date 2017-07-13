@@ -19,12 +19,10 @@ void receiverController::main()
 		wait(poolReceiverTimer);
 		if(getStartBit() != -1)
 		{
-			byte x = 1;
-    		byte y = 1;
-   			hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
-    		if(logic.decode(getMessage(),x,y)){
-    		hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";}
-    		else{ hwlib::cout << "test";};
+			
+    		hwlib::cout.base(2);
+   			
+    		hwlib::cout <<getMessage() << "\n";    		
 			
 			sleep(1200*rtos::ms);
 		}
@@ -35,10 +33,10 @@ int receiverController::getStartBit()
 {
 	if(!rPin.get())
 	{
-		hwlib::wait_us(1100);
+		hwlib::wait_us(1200);
 		if(!rPin.get())
 		{
-			hwlib::wait_us(700);
+			hwlib::wait_us(1200);
 			return 1;
 		}
 	}
@@ -56,15 +54,17 @@ int receiverController::getBit()
 			return -1;
 		}
 	}
-	sleep(1100*rtos::us);
+	sleep(1200*rtos::us);
 	if(!rPin.get())
 	{
-		sleep(700*rtos::us);
+		
+		sleep(1200*rtos::us);
 		return 1;
 	}
 	else
 	{
-		sleep(700*rtos::us);
+		
+		sleep(1200*rtos::us);
 		return 0;
 	}
 	return -1;
@@ -73,7 +73,7 @@ int receiverController::getBit()
 char16_t receiverController::getMessage()
 {
 	char16_t bitstream = 0;
-	bitstream = bitstream << 1;
+	
 	for(int i = 0; i < 15; i++)
 	{
     	auto bit = getBit();
@@ -88,10 +88,8 @@ char16_t receiverController::getMessage()
         if(i < 14)
         {
         	bitstream = bitstream << 1;
-        }          
+        }          	
     }
     bitstream = bitstream | (1 << 15);
-    hwlib::cout.base(2);
-    hwlib::cout << "receiving : " <<bitstream << "\n";
     return bitstream;
 }

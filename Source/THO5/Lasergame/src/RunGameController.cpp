@@ -28,7 +28,6 @@ void RunGameController::main()
 	auto stream = hwlib::window_ostream{ lcd, f };
 	stream << "\f";
 	oledBoundary.flush();
-	
 	startOfGameTimestamp = hwlib::now_us();
 	gameDurationMin = 10;
 	hwlib::window_ostream gameTimeStream{ oledBoundary.getGameTimeField(), f };

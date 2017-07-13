@@ -29,15 +29,15 @@ void transmitter::sendMessage(char16_t message)
 			if((message & (1 <<i)) !=0)
 			{
 				sendOne();
-				hwlib::cout << "1";
+				
 			}
 			else
 			{
 				sendZero();
-				hwlib::cout << "0";
+				
 			}
 		}
-		
+		setZero();
 		hwlib::wait_ms(3);
 	}
 }
