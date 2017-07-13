@@ -18,6 +18,7 @@ public:
 	void setCompiledBits(char16_t value){
 		compiledBits = value;
 	}
+
 };
 
 class gameInformation{
