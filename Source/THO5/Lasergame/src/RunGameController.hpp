@@ -28,7 +28,6 @@ typedef struct IREntity {
 	transmitterController trans;
 	messageLogic & logic;
 	receiverController & receive;
-	
 	IREntity(auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver) :
 	button{button},
 	led{led},
@@ -36,7 +35,7 @@ typedef struct IREntity {
 	logic{logic},
 	receive{receiver} {}
 } &irentity;
-
+ /// \author Matthijs Vos
 /// \Author Ferdi Stoeltie
 /// \brief Controller for the runnable game logic
 /// \date 11-07-2017
@@ -64,7 +63,7 @@ private:
    int gameDurationMin;
 
 public:
-	
+	 /// \author Matthijs Vos
    /// \author Peter Bonnema 
    /// \author Marianne Delmaar
    /// \author Ferdi Stoeltie
@@ -77,7 +76,7 @@ public:
    ~RunGameController();
 
    void main() override;
-   
+   /// \author Matthijs Vos
    /// \author Ferdi Stoeltie
    /// \brief Method that is inherited from interface \c KeypadListener \c.
    /// 			In here the key that is being pressed by the KeypadController will be handled.

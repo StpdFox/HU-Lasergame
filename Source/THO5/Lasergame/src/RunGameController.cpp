@@ -1,6 +1,6 @@
 #define GAMETIME_WIDTH 5
 #define GAMETIME_HEIGHT 1
-
+#include "gameParameters.hpp"
 #include "RunGameController.hpp"
 #include "OLEDBoundary.hpp"
 
@@ -30,27 +30,17 @@ void RunGameController::main()
 	
 	startOfGameTimestamp = hwlib::now_us();
 	gameDurationMin = 1;
-	
 	hwlib::window_ostream gameTimeStream{ oledBoundary.getGameTimeField(), f };
 	while(true)
 	{	
+
 		const rtos::event& event = wait();
-		//bool buttonSet = irE.button.get();
-//		irE.led.set(!buttonSet);
-//		if(!buttonSet)
-//		{
-//			irE.receive.suspend();
-//			irE.trans.enableFlag();
-//			sleep(1200*rtos::ms);
-//		};
-//		irE.receive.resume();
-		//irE.receive.resume();
 		if(event == keypadFlag)	{
 			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());
 		}
 		else if(event == gameTimeSecondsClock)
 		{
-			int remainingTimeSec = gameDurationMin * 60 - (hwlib::now_us() - startOfGameTimestamp) / 1'000'000;
+			int remainingTimeSec = gameDurationMin * 60 - (hwlib::now_us() - startOfGameTimestamp) / 100'000'000;
 			gameTimeStream << "\f" << remainingTimeSec / 60 << ":" << remainingTimeSec % 60;
 			oledBoundary.flushParts();
 			

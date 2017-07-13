@@ -55,7 +55,6 @@ public:
 	void setPlayerHealth(int playerHealth){
 		playerHealth = playerHealth;
 	}
-	
 };
 
 class gameInformation{
