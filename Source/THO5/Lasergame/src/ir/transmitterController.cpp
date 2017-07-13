@@ -21,6 +21,7 @@ void transmitterController::main()
 void transmitterController::sendMessage()
 {
 	auto message = messageToSend.getCompiledBits();
+	
  	irTransmit.sendMessage(message);
 }
 

@@ -21,19 +21,23 @@ void transmitter::setZero()
 void transmitter::sendMessage(char16_t message)
 {
 	for(int nMessage = 0; nMessage < 2; nMessage++)
-	{
+	{	
+		
+		
 		for(int i = 15; i >= 0; i--)
 		{
 			if((message & (1 <<i)) !=0)
 			{
 				sendOne();
+				hwlib::cout << "1";
 			}
 			else
 			{
 				sendZero();
+				hwlib::cout << "0";
 			}
 		}
-		setZero();
+		
 		hwlib::wait_ms(3);
 	}
 }

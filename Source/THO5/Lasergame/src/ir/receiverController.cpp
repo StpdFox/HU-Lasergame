@@ -19,7 +19,13 @@ void receiverController::main()
 		wait(poolReceiverTimer);
 		if(getStartBit() != -1)
 		{
-			getMessage();
+			byte x = 1;
+    		byte y = 1;
+   			hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
+    		if(logic.decode(getMessage(),x,y)){
+    		hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";}
+    		else{ hwlib::cout << "test";};
+			
 			sleep(1200*rtos::ms);
 		}
 	}
@@ -87,10 +93,5 @@ char16_t receiverController::getMessage()
     bitstream = bitstream | (1 << 15);
     hwlib::cout.base(2);
     hwlib::cout << "receiving : " <<bitstream << "\n";
-    byte x = 5;
-    byte y = 5;
-    hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
-    logic.decode(bitstream,x,y);
-    hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
     return bitstream;
 }
