@@ -46,17 +46,12 @@ public:
 	playerInformation playerInfo;
 	
 	char commandCount = 0;
-    std::array<char, 2> commandCode { {'0', '0' } };
-    int COMMANDSIZE = 2; 
+    std::array<char, 1> commandCode { {'0'} };
+    int COMMANDSIZE = 1; 
 	bool id = true;
 	
-	int playerID;
-	int weaponID;
-	
-	uint8_t playerID1;
-	uint8_t playerID2;
-	uint8_t weaponID1;
-	uint8_t weaponID2;
+	uint8_t playerID;
+	uint8_t weaponID;
 	
 	void validateCommand();
 	void initNewCommand();

@@ -20,6 +20,7 @@ void receiverController::main()
 		if(getStartBit() != -1)
 		{
 			getMessage();
+			//rGC.receiverMessageChannel.write(getMessage());
 			sleep(1200*rtos::ms);
 		}
 	}

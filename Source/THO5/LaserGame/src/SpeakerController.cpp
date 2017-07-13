@@ -6,8 +6,8 @@ SpeakerController::SpeakerController(hwlib::pin_out &lsp, unsigned int priority)
 
 void SpeakerController::setSound(Sounds soundType)	{
 	// write a sound to play in the speakercontroller pool and set flag to start playing
-	hwlib::cout << "writing in sound pool...\n";
-	hwlib::cout << "setting flag...\n";
+//	hwlib::cout << "writing in sound pool...\n";
+//	hwlib::cout << "setting flag...\n";
 	soundPool.write(soundType);
 	playSoundFlag.set();
 }

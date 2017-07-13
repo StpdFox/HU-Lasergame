@@ -12,8 +12,9 @@ private:
 	hwlib::pin_out & gnd;
 	hwlib::pin_out & vcc;
 	messageLogic & logic;
-
+	
 	void main(void) override;
+	
 public:
 	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic,unsigned int priority );
 

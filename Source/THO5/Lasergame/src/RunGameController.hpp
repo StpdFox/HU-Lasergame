@@ -54,15 +54,17 @@ private:
    rtos::pool<char> keypadMsgPool;
    rtos::flag keypadFlag;
    irentity irE;
-   rtos::channel<char16_t,10> receiverMessageChannel;
    rtos::clock gameTimeSecondsClock;
-	
+   
+	//get and set gameParameters
+	playerInformation playerInfo;
 	
    // Primitive data types
    int startOfGameTimestamp;
    int gameDurationMin;
 
 public:
+
 	 /// \author Matthijs Vos
    /// \author Peter Bonnema 
    /// \author Marianne Delmaar
@@ -74,7 +76,8 @@ public:
    /// \param Priority of this rtos::task.
    RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority );
    ~RunGameController();
-
+	
+	   rtos::channel<char16_t,10> receiverMessageChannel;
    void main() override;
    /// \author Matthijs Vos
    /// \author Ferdi Stoeltie
@@ -86,6 +89,8 @@ public:
 	void consumeHashTag();
 	void consumeWildcard();
 	void consumeDigits(char c);
+	
+	void handleReceivedMessage(auto msg);
 };
 
 #endif //RUNGAMECONTROLLER_HPP

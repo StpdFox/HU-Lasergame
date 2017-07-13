@@ -10,10 +10,8 @@ public:
 	playerInformation():
 	compiledBits(0)
 	{}
-	byte playerID1;
-	byte playerID2;
-	byte weaponID1;
-	byte weaponID2;
+	byte playerID;
+	byte weaponID;
 	
 	int playerHealth = 100;
 	
@@ -25,28 +23,19 @@ public:
 		compiledBits = value;
 	}
 	
-	byte getPlayerID1(){
-		return playerID1;
+	byte getPlayerID(){
+		return playerID;
+	}
+	void setPlayerID(byte playerID){
+		playerID = playerID;
 	}
 	
-	byte getPlayerID2(){
-		return playerID2;
-	}
-	void setPlayerID(byte playerID1, byte playerID2){
-		playerID1 = playerID1;
-		playerID2 = playerID2;
+	byte getWeaponID(){
+		return weaponID;
 	}
 	
-	byte getWeaponID1(){
-		return weaponID2;
-	}
-	
-	byte getWeaponID2(){
-		return weaponID2;
-	}
-	void setWeaponID(byte weaponID1, byte weaponID2){
-		weaponID1 = weaponID1;
-		weaponID2 = weaponID2;
+	void setWeaponID(byte weaponID){
+		weaponID = weaponID;
 	}
 	
 	int getPlayerHealth(){

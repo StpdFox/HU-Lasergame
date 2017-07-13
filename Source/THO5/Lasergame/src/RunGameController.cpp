@@ -10,8 +10,8 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	oledBoundary{ oledBoundary },
 	keypadFlag(this, "keypadInputFlag"),
 	irE{irE},
-	receiverMessageChannel(this,"receiverMessage"),
-	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" }
+	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" },
+	receiverMessageChannel(this,"receiverMessage")
 {
 	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 6 * 8 });
 }
@@ -22,6 +22,7 @@ RunGameController::~RunGameController()
 
 void RunGameController::main()
 {
+	//hier moet ergens die getMessage van receiverController komen te staan om de hits te maken
 	hwlib::glcd_oled_buffered& lcd = oledBoundary.getBufferedLCD();
 	auto f = hwlib::font_default_8x8();
 	auto stream = hwlib::window_ostream{ lcd, f };
@@ -50,6 +51,9 @@ void RunGameController::main()
 				while(true) sleep(1);
 			}
 		}
+		else if(event == receiverMessageChannel){
+			handleReceivedMessage(irE.receive.getMessage());
+		}
 	}
 }
 
@@ -70,3 +74,19 @@ void RunGameController::consumeWildcard() {
 	irE.receive.resume();
 }
 void RunGameController::consumeDigits(char c) {}
+
+void RunGameController::handleReceivedMessage(auto msg){
+	
+	byte enemyPlayerID = 0;
+    byte enemyWeapon = 0;
+    hwlib::cout << "byte x = " << (int)enemyPlayerID << "\n byte y = " << (int)enemyWeapon << "\n";
+    if(irE.logic.decode(msg,enemyPlayerID,enemyWeapon) == 1){
+		 hwlib::cout << "byte x = " << (int)enemyPlayerID << "\n byte y = " << (int)enemyWeapon << "\n";
+		if(enemyPlayerID != 0){
+			//player hit
+			sound.setSound(Sounds::HIT);
+			playerInfo.setPlayerHealth(playerInfo.getPlayerHealth() - enemyWeapon);
+			hwlib::cout << "Player health: " << playerInfo.getPlayerHealth() << "\n";
+		}
+	}
+}
