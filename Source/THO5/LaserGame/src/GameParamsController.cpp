@@ -185,12 +185,10 @@ void GameParamsController::consumeDigits(char c) {
 		if(commandCount == 1)
 		{
 			playerIDStream << "\f" << c << "_";
-			commandCode[commandCount++] = c;
 		}
 		else if(commandCount == 2)
 		{
 			playerIDStream << "\f" << commandCode[0] << c;
-			commandCode[commandCount++] = c;
 			HWLIB_TRACE << "state = WAITING_FOR_B";
 			state = STATE::WAITING_FOR_B;
 		}
@@ -201,12 +199,10 @@ void GameParamsController::consumeDigits(char c) {
 		if(commandCount == 1)
 		{
 			weaponIDStream << "\f" << c << "_";
-			commandCode[commandCount++] = c;
 		}
 		else if(commandCount == 2)
 		{
 			weaponIDStream << "\f" << commandCode[0] << c;
-			commandCode[commandCount++] = c;
 			HWLIB_TRACE << "state = WAITING_FOR_HASHTAG";
 			state = STATE::WAITING_FOR_HASHTAG;
 		}
