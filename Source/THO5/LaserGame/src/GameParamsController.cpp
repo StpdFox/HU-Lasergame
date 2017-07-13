@@ -23,8 +23,8 @@ GameParamsController::GameParamsController(KeypadController& kpC, InitGameContro
 	runGameListener{runGameListener},
 	irMessageChannel{ this, "irMessageChannel" }
 {
-	oledBoundary.getPlayerNumberInputField().setLocation({ 12 * 8, 5 * 8 });
-	oledBoundary.getFirePowerInputField().setLocation({ 13 * 8, 5 * 8 });
+	oledBoundary.getPlayerNumberInputField().setLocation({ 12 * 8, 4 * 8 });
+	oledBoundary.getFirePowerInputField().setLocation({ 13 * 8, 4 * 8 });
 }
 
 GameParamsController::~GameParamsController(){
@@ -57,7 +57,7 @@ bool GameParamsController::validatePlayerIDInput() {
 	if(    commandCode[0] >= '0' && commandCode[0] <= '9' 
 		&& commandCode[1] >= '0' && commandCode[1] <= '9') {
 		playerID = (commandCode[0] - '0')*10 + (commandCode[1] - '0');
-		return playerID >= 1 && playerID <= 31;
+		return playerID >= 0 && playerID <= 31;
 	}
 	return false;
 }
@@ -159,6 +159,10 @@ void GameParamsController::consumeHashTag() {
 			weaponID = (commandCode[0] - '0')*10 + (commandCode[1] - '0');
 			hwlib::cout << "WeaponDMG: " << weaponID << "\n";
 			
+			hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
+			stream << "\f\n\nWaiting for the\nstart signal.";
+			oledBoundary.flush();
+			
 			HWLIB_TRACE << "state = WAITING_FOR_GAMETIME_CMD";
 			state = STATE::WAITING_FOR_COMMANDS;
 			if(playerID > 0)
@@ -192,6 +196,7 @@ void GameParamsController::consumeDigits(char c) {
 			HWLIB_TRACE << "state = WAITING_FOR_B";
 			state = STATE::WAITING_FOR_B;
 		}
+		oledBoundary.flushParts();
 	}
 	else if(state == STATE::INPUTTING_WEAPON_ID) {
 		commandCode[commandCount++] = c;
@@ -206,6 +211,6 @@ void GameParamsController::consumeDigits(char c) {
 			HWLIB_TRACE << "state = WAITING_FOR_HASHTAG";
 			state = STATE::WAITING_FOR_HASHTAG;
 		}
+		oledBoundary.flushParts();
 	}
-	oledBoundary.flushParts();
 }
