@@ -35,15 +35,15 @@ void RunGameController::main()
 	while(true)
 	{	
 		const rtos::event& event = wait();
-		bool buttonSet = irE.button.get();
-		irE.led.set(!buttonSet);
-		if(!buttonSet)
-		{
-			irE.receive.suspend();
-			irE.trans.enableFlag();
-			sleep(1200*rtos::ms);
-		};
-		irE.receive.resume();
+		//bool buttonSet = irE.button.get();
+//		irE.led.set(!buttonSet);
+//		if(!buttonSet)
+//		{
+//			irE.receive.suspend();
+//			irE.trans.enableFlag();
+//			sleep(1200*rtos::ms);
+//		};
+//		irE.receive.resume();
 		//irE.receive.resume();
 		if(event == keypadFlag)	{
 			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());
@@ -69,8 +69,14 @@ void RunGameController::handleMessageKey(char c)  {
 }
 
 void RunGameController::consumeChar(char c) {}
-void RunGameController::consumeHashTag() {
-	sound.setSound(Sounds::HIT);
+void RunGameController::consumeHashTag() {}
+void RunGameController::consumeWildcard() {
+	irE.led.set(true);
+	irE.receive.suspend();
+	irE.trans.enableFlag();
+	sound.setSound(Sounds::SHOOT);
+	irE.led.set(false);
+	sleep(1200*rtos::ms);
+	irE.receive.resume();
 }
-void RunGameController::consumeWildcard() {}
 void RunGameController::consumeDigits(char c) {}

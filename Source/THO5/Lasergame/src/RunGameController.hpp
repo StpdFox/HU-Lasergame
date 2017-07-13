@@ -66,7 +66,7 @@ private:
 public:
 	
    /// \author Peter Bonnema 
-   /// \author Marianna Delmaar
+   /// \author Marianne Delmaar
    /// \author Ferdi Stoeltie
    /// \brief Constructor that needs to be called to initialize the \c RunGameController \c instance.
    /// \param[in] kpC A reference tot the KeypadController.

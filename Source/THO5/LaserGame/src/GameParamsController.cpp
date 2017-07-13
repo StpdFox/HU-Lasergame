@@ -24,20 +24,26 @@ void GameParamsController::validateCommand()  {
 	if(commandCode[0] >= '0' && commandCode[0] <= '9' 
 		&& commandCode[1] >= '0' && commandCode[1] <= '9')  {
 		if(id){
+			playerID1 = commandCode[0];
+			playerID2 = commandCode[1];
+			playerInfo.setPlayerID(playerID1, playerID2);
 			playerID = (commandCode[0] - '0')*10 + (commandCode[1] - '0');
-			hwlib::cout << "playerID: " << playerID<< "\n";
+			hwlib::cout << "playerID: " << playerID << "\n";
 			id = false;
 			initNewCommand();
 		}
 		else{
-			weaponDmg = (commandCode[0] - '0')*10 + (commandCode[1] - '0');
-			hwlib::cout << "WeaponDMG: " << weaponDmg << "\n";
+			weaponID1 = commandCode[0];
+			weaponID2 = commandCode[1];
+			playerInfo.setWeaponID(weaponID1, weaponID2);
+			weaponID = (commandCode[0] - '0')*10 + (commandCode[1] - '0');
+			hwlib::cout << "WeaponDMG: " << weaponID<< "\n";
 			id = true;
 			initNewCommand();
 		}
 	}
 }
- 
+
 void GameParamsController::initNewCommand()   {
 	commandCode[0] = 0;
 	commandCode[1] = 0;

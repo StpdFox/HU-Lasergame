@@ -100,7 +100,7 @@ void SpeakerController::playSound(Sounds sounds){
 		case Sounds::HIT : ohhh(lsp);   break;
 		case Sounds::SHOOT : peew(lsp); break;
 		case Sounds::START_GAME : click(lsp);  break;
-		case Sounds::END_GAME : noise2(lsp); break;
+		case Sounds::END_GAME : uhoh(lsp); break;
 		default : break;
 	}
 	
