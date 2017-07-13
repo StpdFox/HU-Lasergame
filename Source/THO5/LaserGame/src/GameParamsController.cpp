@@ -83,6 +83,9 @@ void GameParamsController::waitForCommands()
 	if(message.receivedPlayerID == 0 && message.receivedWeaponID > 0)
 	{
 		HWLIB_TRACE << "timeCMD received";
+		hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
+		stream << "\f\n\nWaiting for the\nstart signal.";
+		oledBoundary.flush();
 		//TODO schrijf data naar de RunGameController
 	}
 	
@@ -160,7 +163,7 @@ void GameParamsController::consumeHashTag() {
 			hwlib::cout << "WeaponDMG: " << weaponID << "\n";
 			
 			hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
-			stream << "\f\n\nWaiting for the\nstart signal.";
+			stream << "\f\n\nWaiting for the\ngame time.";
 			oledBoundary.flush();
 			
 			HWLIB_TRACE << "state = WAITING_FOR_GAMETIME_CMD";
