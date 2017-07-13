@@ -105,8 +105,9 @@ int main( void ){
 	auto gPC = GameParamsController(kpC, &iGC, &rGC, 16);
 	//gameController game = gameController(button,led,playerInformation,messageLogic, IRE ,receiver);
 	kpC.registerNext(&gPC);
-
-   
+	
+	// set IR receiver
+	receiver.setReceiveListener(&rGC);
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);
    //RunGameController runGameController{ 2, oledBoundary };

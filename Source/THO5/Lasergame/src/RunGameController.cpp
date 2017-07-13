@@ -9,6 +9,7 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	kpC{kpC}, sound{sound}, 
 	oledBoundary{ oledBoundary },
 	keypadFlag(this, "keypadInputFlag"),
+	irMsgFlag(this, "irMsgFlag"),
 	irE{irE},
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" },
 	receiverMessageChannel(this,"receiverMessage")
@@ -38,6 +39,9 @@ void RunGameController::main()
 		const rtos::event& event = wait();
 		if(event == keypadFlag)	{
 			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());
+		}
+		if(event == irMsgFlag)	{
+			hwlib::cout << "ir msg flag has been set!\n";
 		}
 		else if(event == gameTimeSecondsClock)
 		{

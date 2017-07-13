@@ -18,6 +18,7 @@
 #include "receiverController.hpp"
 #include "messageLogic.hpp"
 #include "gameParameters.hpp"
+#include "ReceiveListener.hpp"
 
 class OLEDBoundary;
 
@@ -39,7 +40,7 @@ typedef struct IREntity {
 /// \Author Ferdi Stoeltie
 /// \brief Controller for the runnable game logic
 /// \date 11-07-2017
-class RunGameController : public rtos::task<>, public KeypadListener, private KeyConsume {
+class RunGameController : public rtos::task<>, public KeypadListener, public ReceiveListener, private KeyConsume {
 private:
 	// A reference to the keypad controller. This is required to register itself as a listener
    KeypadController& kpC;
@@ -52,9 +53,13 @@ private:
    
    // RTOS
    rtos::pool<char> keypadMsgPool;
+   //std::array<char, 2> commandCode { {'0', '0' } };
+   rtos::pool<std::array<char, 2>> irMsgPool;
    rtos::flag keypadFlag;
+   rtos::flag irMsgFlag;
    irentity irE;
    rtos::clock gameTimeSecondsClock;
+   
    
 	//get and set gameParameters
 	playerInformation playerInfo;
@@ -65,7 +70,7 @@ private:
 
 public:
 
-	 /// \author Matthijs Vos
+	/// \author Matthijs Vos
    /// \author Peter Bonnema 
    /// \author Marianne Delmaar
    /// \author Ferdi Stoeltie
@@ -91,6 +96,11 @@ public:
 	void consumeDigits(char c);
 	
 	void handleReceivedMessage(auto msg);
+	
+	void receivedMsgstd(std::array<char, 2> msg) {
+		irMsgPool.write(msg);
+		irMsgFlag.set();
+	}
 };
 
 #endif //RUNGAMECONTROLLER_HPP
