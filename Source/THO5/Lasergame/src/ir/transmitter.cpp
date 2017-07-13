@@ -20,21 +20,21 @@ void transmitter::setZero()
 }
 void transmitter::sendMessage(char16_t message)
 {
+	hwlib::cout.base(2);
+	HWLIB_TRACE << message;
 	for(int nMessage = 0; nMessage < 2; nMessage++)
-	{	
-		
-		
+	{
 		for(int i = 15; i >= 0; i--)
 		{
 			if((message & (1 <<i)) !=0)
 			{
 				sendOne();
-				hwlib::cout << "1";
+				//hwlib::cout << "1";
 			}
 			else
 			{
 				sendZero();
-				hwlib::cout << "0";
+				//hwlib::cout << "0";
 			}
 		}
 		

@@ -7,10 +7,11 @@ receiverController::receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gn
 	gnd(gnd),
 	vcc(vcc),
 	logic(logic)
-	{
-		gnd.set(0);
-		vcc.set(1);
-	}
+{
+	gnd.set(0);
+	vcc.set(1);
+}
+	
 void receiverController::main()
 {
 	while(1)
@@ -51,7 +52,7 @@ int receiverController::getBit()
 	while(rPin.get())
 	{
 		sleep(100 * rtos::us);
-		if(begin-hwlib::now_us() >= 4000)
+		if(hwlib::now_us() - begin >= 4000)
 		{
 			return -1;
 		}

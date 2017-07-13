@@ -14,6 +14,8 @@
 #include "KeypadController.hpp"
 #include "KeypadListener.hpp"
 #include "gameParameters.hpp"
+#include "RunGameController.hpp"
+#include "InitGameController.hpp"
 
 #include <array>
 
@@ -36,13 +38,13 @@ public:
 	/// \brief Controller task for game params like player id and weapon damage.
 	/// \param Priority of this rtos::task.
 	
-	GameParamsController(KeypadController& kpC, KeypadListener* initGameListener, KeypadListener* runGameListener,unsigned int priority);
+	GameParamsController(KeypadController& kpC, InitGameController* initGameListener, RunGameController* runGameListener,unsigned int priority);
 	~GameParamsController();
 	
 	KeypadController& kpC; // The owner
     rtos::mailbox<char> msg;
-    KeypadListener* initGameListener;
-	KeypadListener* runGameListener;
+    InitGameController* initGameListener;
+	RunGameController* runGameListener;
 	playerInformation playerInfo;
 	
 	char commandCount = 0;

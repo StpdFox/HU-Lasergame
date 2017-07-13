@@ -8,7 +8,7 @@
 
 #include "GameParamsController.hpp"
 
-GameParamsController::GameParamsController(KeypadController& kpC, KeypadListener* initGameListener, KeypadListener* runGameListener, unsigned int priority) : 
+GameParamsController::GameParamsController(KeypadController& kpC, InitGameController* initGameListener, RunGameController* runGameListener, unsigned int priority) : 
 rtos::task<>{ priority, "GameParamsController" }, kpC{kpC} , msg("keypad char"), initGameListener{initGameListener}, runGameListener{runGameListener}{
 	
 }
@@ -51,6 +51,8 @@ void GameParamsController::initNewCommand()   {
 }
 
 void GameParamsController::main()	{
+	initGameListener->suspend();
+	runGameListener->suspend();
 	for(;;) {
 		char c = msg.read();
 		KeyConsumer::handleMessageKey(*this, c);
@@ -59,10 +61,12 @@ void GameParamsController::main()	{
 		if(playerID == 1 && id){
 			hwlib::cout << "To initGame";
 			kpC.registerNext(initGameListener);
+			initGameListener->resume();
 		}
 		else if(playerID > 1 && id){ //if (IRmessageStart.received)
 			hwlib::cout << "To runGame";
 			kpC.registerNext(runGameListener);
+			runGameListener->resume();
 		}
 	}
 }
