@@ -19,14 +19,17 @@
 
 #include <array>
 
-///\author Marianne Delmaar
+class OLEDBoundary;
+class KeypadController;
+class transmitterController;
+
+/// \author Marianne Delmaar
 /// \author Ferdi Stoeltie
+/// \author Peter Bonnema
 /// \date 11-07-2017
 /// \brief Controller task for game params like player id and weapon damage. Waits for 'start game' signal from IRReceiver.
 class GameParamsController : public rtos::task<>, public KeypadListener, private KeyConsume{
 private:
-	void parseKeypad(char s);
-	
 	void consumeChar(char c);
 	void consumeHashTag();
 	void consumeWildcard();
@@ -35,34 +38,48 @@ private:
 public:
 	/// \author Marianne Delmaar
 	/// \author Ferdi Stoeltie
+	/// \author Peter Bonnema
 	/// \brief Controller task for game params like player id and weapon damage.
 	/// \param Priority of this rtos::task.
 	
-	GameParamsController(KeypadController& kpC, InitGameController* initGameListener, RunGameController* runGameListener,unsigned int priority);
+	GameParamsController(KeypadController& kpC, InitGameController* initGameListener, RunGameController* runGameListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
 	~GameParamsController();
 	
+	void handleNewMessage(byte & receivedPlayerID , byte & receivedWeaponID);
+private:
+	enum STATE
+	{
+		WAITING_FOR_A,
+		INPUTTING_PLAYER_ID,
+		WAITING_FOR_B,
+		INPUTTING_WEAPON_ID,
+		WAITING_FOR_HASHTAG,
+		WAITING_FOR_COMMANDS,
+	} state;
+	
+	irentity& irEntity;
+	playerInformation& playerInfo;
+	hwlib::font_default_8x8 font;
+	OLEDBoundary& oledBoundary;
 	KeypadController& kpC; // The owner
     rtos::mailbox<char> msg;
     InitGameController* initGameListener;
 	RunGameController* runGameListener;
-	playerInformation playerInfo;
 	
 	char commandCount = 0;
-    std::array<char, 2> commandCode { {'0', '0' } };
-    int COMMANDSIZE = 2; 
-	bool id = true;
+    std::array<char, 2> commandCode { { '0', '0' } };
 	
 	int playerID;
 	int weaponID;
 	
-	uint8_t playerID1;
-	uint8_t playerID2;
-	uint8_t weaponID1;
-	uint8_t weaponID2;
+	typedef struct { byte receivedPlayerID; byte receivedWeaponID; } irMessage;
+	rtos::channel<irMessage, 1> irMessageChannel;
 	
-	void validateCommand();
+	bool validatePlayerIDInput();
+	bool validateWeaponIDInput();
 	void initNewCommand();
 	void handleMessageKey(char c);
+	void waitForCommands();
 	void main();
 };
 

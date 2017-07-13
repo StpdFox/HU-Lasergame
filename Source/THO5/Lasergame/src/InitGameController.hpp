@@ -13,6 +13,7 @@ class KeypadController;
 class transmitterController;
 
 /// \author Ferdi Stoeltie
+/// \author Peter Bonnema
 /// \brief Controller class that handles the initialize of the game settings
 class InitGameController : public rtos::task<>, public KeypadListener, private KeyConsume  {
 public:

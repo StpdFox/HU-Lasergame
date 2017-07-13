@@ -80,6 +80,12 @@ void InitGameController::consumeChar(char c) {
 		HWLIB_TRACE << "state = STATE::INPUTTING_CMD";
 		state = STATE::INPUTTING_CMD;
 	}
+	else if(state == STATE::SENDING_START_CMD && c == 'C')
+	{
+		HWLIB_TRACE << "C pressed";
+		//TODO stuur start signaalnaar RunGameController
+		hwlib::cout << "To runGame";
+	}
 }
 
 void InitGameController::consumeHashTag() {
@@ -107,10 +113,7 @@ void InitGameController::consumeHashTag() {
 			initNewCommand();
 		}
 	}
-	else if(state == STATE::SENDING_CMD)
-	{
-		sendMessage();
-	}
+	//TODO zorg voor switch naar rungameController
 }
 
 void InitGameController::consumeWildcard() {
@@ -118,7 +121,7 @@ void InitGameController::consumeWildcard() {
 	if(state == STATE::SENDING_CMD)
 	{
 		hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
-		stream << "\f\n\nPress * to send\nthe start command.";
+		stream << "\f\n\nPress * to send\nthe start command.\n\nPress C to start\nplaying.";
 		oledBoundary.flush();
 		
 		char16_t timeBits = irEntity.logic.encode(0, 1);
@@ -137,16 +140,15 @@ void InitGameController::consumeDigits(char c) {
 	if(state == STATE::INPUTTING_CMD)
 	{
 		HWLIB_TRACE << c << " pressed";
+		commandCode[commandCount++] = c;
 		hwlib::window_ostream timeStream{ oledBoundary.getGameTimeField(), font };
-		if(commandCount == 0)
+		if(commandCount == 1)
 		{
 			timeStream << "\f" << c << "_";
-			commandCode[commandCount++] = c;
 		}
-		else if(commandCount == 1)
+		else if(commandCount == 2)
 		{
 			timeStream << "\f" << commandCode[0] << c;
-			commandCode[commandCount++] = c;
 			HWLIB_TRACE << "state = STATE::WAITING_FOR_HASHTAG";
 			state = STATE::WAITING_FOR_HASHTAG;
 		}

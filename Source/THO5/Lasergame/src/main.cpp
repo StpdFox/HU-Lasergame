@@ -77,7 +77,7 @@ int main( void ){
 	auto sC = SpeakerController(lsp, 14);
 	auto rGC = RunGameController(kpC, sC, oledBoundary, IRE, 12);
 	auto iGC = InitGameController(kpC, &rGC, oledBoundary, playerInformation, IRE, 13);
-	auto gPC = GameParamsController(kpC, &iGC, &rGC, 16);
+	auto gPC = GameParamsController(kpC, &iGC, &rGC, oledBoundary, playerInformation, IRE, 16);
 
 	kpC.registerNext(&gPC);
 

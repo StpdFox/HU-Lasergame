@@ -33,8 +33,8 @@ public:
 		return playerID2;
 	}
 	void setPlayerID(byte playerID1, byte playerID2){
-		playerID1 = playerID1;
-		playerID2 = playerID2;
+		this->playerID1 = playerID1;
+		this->playerID2 = playerID2;
 	}
 	
 	byte getWeaponID1(){
