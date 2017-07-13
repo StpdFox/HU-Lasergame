@@ -2,6 +2,9 @@
 #define MESSAGELOGIC_HPP
 
 #include "hwlib.hpp"
+/// \author Matthijs Vos
+/// \brief This class contains a simple implementation to encode and decode messages that are send over the IR (protocol).
+///
 class messageLogic{
 public:
 	
