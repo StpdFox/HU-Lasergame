@@ -2,7 +2,15 @@
 <Session Name="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\THO5.workspace">
   <int Value="0" Name="m_selectedTab"/>
   <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\THO5.workspace" Name="m_workspaceName"/>
-  <TabInfoArray Name="TabInfoArray"/>
+  <TabInfoArray Name="TabInfoArray">
+    <TabInfo>
+      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\GameParamsController.cpp" Name="FileName"/>
+      <int Value="51" Name="FirstVisibleLine"/>
+      <int Value="42" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+  </TabInfoArray>
   <SerializedObject Name="m_breakpoints">
     <long Value="0" Name="Count"/>
   </SerializedObject>

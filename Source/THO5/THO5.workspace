@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="THO5" Database="" Version="10.0.0">
   <Project Name="Lasergame" Path="Lasergame/Lasergame.project" Active="No"/>
-  <Project Name="Lasergame" Path="Lasergame/Lasergame.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>

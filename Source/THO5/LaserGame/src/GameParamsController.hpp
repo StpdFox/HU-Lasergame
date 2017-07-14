@@ -66,8 +66,8 @@ private:
     InitGameController* initGameListener;
 	RunGameController* runGameListener;
 	
-	uint8_t playerID;
-	uint8_t weaponID;
+	int playerID;
+	int weaponID;
 	
 	typedef struct { byte receivedPlayerID; byte receivedWeaponID; } irMessage;
 	rtos::channel<irMessage, 1> irMessageChannel;

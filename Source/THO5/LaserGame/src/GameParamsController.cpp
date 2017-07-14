@@ -93,7 +93,7 @@ void GameParamsController::consumeChar(char c) {
 	{
 		HWLIB_TRACE << "B pressed";
 		playerInfo.setPlayerID(playerID);
-		hwlib::cout << "playerID: " << playerID << "\n";
+		hwlib::cout << "playerID: " << int(playerID) << "\n";
 		
 		hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
 		stream << "\fWelcome\nplayer " << playerID << "\n\nEnter your\nweapon type: _\nEnd with #";
@@ -108,16 +108,16 @@ void GameParamsController::consumeHashTag() {
 	if(state == STATE::WAITING_FOR_HASHTAG) {
 		HWLIB_TRACE << "# pressed";
 		playerInfo.setWeaponID(weaponID);
-		hwlib::cout << "WeaponDMG: " << weaponID << "\n";
-		
-		hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
-		stream << "\f\n\nWaiting for the\ngame time.";
-		oledBoundary.flush();
-		
-		HWLIB_TRACE << "state = WAITING_FOR_GAMETIME_CMD";
-		state = STATE::WAITING_FOR_COMMANDS;
+		hwlib::cout << "WeaponDMG: " << int(weaponID) << "\n";
 		if(playerID > 0)
 		{
+			hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
+			stream << "\f\n\nWaiting for the\ngame time.";
+			oledBoundary.flush();
+			
+			HWLIB_TRACE << "state = WAITING_FOR_GAMETIME_CMD";
+			state = STATE::WAITING_FOR_COMMANDS;
+			
 			waitForCommands();
 		}
 		else
@@ -125,6 +125,7 @@ void GameParamsController::consumeHashTag() {
 			hwlib::cout << "To initGame";
 			kpC.registerNext(initGameListener);
 			initGameListener->resume();
+			suspend();
 		}
 	}
 }
@@ -135,6 +136,7 @@ void GameParamsController::consumeWildcard()
 void GameParamsController::consumeDigits(char c) {
 	if(state == STATE::INPUTTING_PLAYER_ID) {
 		playerID = c - '0';
+		HWLIB_TRACE << c - '0';
 		hwlib::window_ostream playerIDStream{ oledBoundary.getPlayerNumberInputField(), font };
 		playerIDStream << "\f" << c;
 		oledBoundary.flushParts();
