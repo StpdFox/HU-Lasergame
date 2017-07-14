@@ -15,7 +15,7 @@
 #include "ir/messageLogic.hpp"
 #include "RunGameController.hpp"
 
-InitGameController::InitGameController(KeypadController& kpC, KeypadListener* nextListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) : 
+InitGameController::InitGameController(KeypadController& kpC, RunGameController* nextListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) : 
     task(priority, "initGame task"),
 	state{ STATE::WAITING_FOR_C },
 	irEntity{ irEntity },
@@ -62,7 +62,7 @@ void InitGameController::sendMessage() {
 	HWLIB_TRACE << "InitGameController sendMessage";
 	irEntity.receive.suspend();
 	irEntity.trans.enableFlag();
-	hwlib::wait_ms(1000); //TODO fix this
+	hwlib::wait_ms(1000);
 	irEntity.receive.resume();
 }
 
@@ -72,9 +72,8 @@ void InitGameController::sendStartMessage() {
 	HWLIB_TRACE << "InitGameController sendStartMessage";
 	irEntity.receive.suspend();
 	irEntity.trans.enableFlag();
-	hwlib::wait_ms(1000); //TODO fix this
+	hwlib::wait_ms(1000);
 	irEntity.receive.resume();
-	//keypadController.registerNext(nextListener);
 }
 	
 // Keypad Methods
@@ -91,6 +90,9 @@ void InitGameController::consumeChar(char c) {
 		HWLIB_TRACE << "C pressed";
 		//TODO stuur start signaalnaar RunGameController
 		hwlib::cout << "To runGame";
+		keypadController.registerNext(nextListener);
+		nextListener->resume();
+		suspend();
 	}
 }
 
@@ -119,7 +121,10 @@ void InitGameController::consumeHashTag() {
 			initNewCommand();
 		}
 	}
-	//TODO zorg voor switch naar rungameController
+	else if(state == STATE::SENDING_CMD)
+	{
+		sendMessage();
+	}
 }
 
 void InitGameController::consumeWildcard() {
@@ -138,7 +143,6 @@ void InitGameController::consumeWildcard() {
 	if(state == STATE::SENDING_START_CMD)
 	{
 		sendStartMessage();
-		//TODO switch naar rungame wanneer je klaar bent.
 	}
 }
 

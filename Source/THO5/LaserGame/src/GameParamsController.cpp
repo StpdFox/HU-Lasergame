@@ -122,6 +122,10 @@ void GameParamsController::consumeHashTag() {
 		}
 		else
 		{
+			hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
+			stream << "\f\n\nPress C.";
+			oledBoundary.flush();
+			
 			hwlib::cout << "To initGame";
 			kpC.registerNext(initGameListener);
 			initGameListener->resume();

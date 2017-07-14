@@ -43,8 +43,7 @@ void RunGameController::main()
 	gameDurationMin = 10;
 	hwlib::window_ostream gameTimeStream{ oledBoundary.getGameTimeField(), f };
 	while(true)
-	{	
-
+	{
 		const rtos::event& event = wait();
 		if(event == keypadFlag)	{
 			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());

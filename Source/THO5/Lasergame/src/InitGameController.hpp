@@ -25,7 +25,7 @@ class transmitterController;
 /// \brief Controller class that handles the initialize of the game settings
 class InitGameController : public rtos::task<>, public KeypadListener, private KeyConsume  {
 public:
-    InitGameController(KeypadController& kpC, KeypadListener* nextListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
+    InitGameController(KeypadController& kpC, RunGameController* nextListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
 
     void handleMessageKey(char c);
 private:
@@ -44,7 +44,7 @@ private:
 	OLEDBoundary& oledBoundary;
     KeypadController& keypadController; // The owner
     rtos::mailbox<char> msg;
-    KeypadListener* nextListener;
+    RunGameController* nextListener;
 	
     void main() override;
 
