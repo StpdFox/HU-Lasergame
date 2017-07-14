@@ -36,7 +36,6 @@ void InitGameController::main()  {
 	for(;;) {
 		char c = msg.read();
 		KeyConsumer::handleMessageKey(*this, c);
-		//parseKeypad(s);
 	}
 }
 
@@ -70,7 +69,6 @@ void InitGameController::sendMessage() {
 void InitGameController::sendStartMessage() {
 	// Send the start message + start timer over the air with apple update system
 	// Deregisters self and registers other keypadlistener
-	//hwlib::cout << "sending start message and registering next task for keypadcontroller\n";
 	HWLIB_TRACE << "InitGameController sendStartMessage";
 	irEntity.receive.suspend();
 	irEntity.trans.enableFlag();

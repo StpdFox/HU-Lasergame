@@ -25,28 +25,6 @@ class transmitterController;
 /// \brief Controller class that handles the initialize of the game settings
 class InitGameController : public rtos::task<>, public KeypadListener, private KeyConsume  {
 public:
-//<<<<<<< HEAD
-//	
-//	/// \author Ferdi Stoeltie
-//	/// \brief InitGameController Constructor that initializes this task.
-//	/// \param KeypadController& kpC The KeypadController that is used to register the next listener to.
-//	/// \param KeypadListener* nextListener The next KeypadListener to register to the KeypadController when this task is finished.
-//	/// \param unsigned_int priority The priority of this RTOS task.
-//    InitGameController(KeypadController& kpC, KeypadListener* nextListener, unsigned int priority);
-//	
-//    
-//private:
-//	KeypadController& keypadController; // The owner
-//	rtos::mailbox<char> msg;
-//	KeypadListener* nextListener;
-//	void main();
-//    bool incomingCommand = false;
-//    bool commandoIsValid = false;
-//    char commandCount = 0;
-//    std::array<char, 2> commandCode { {'0', '0' } };
-//	
-//    int COMMANDSIZE = 2; 
-//=======
     InitGameController(KeypadController& kpC, KeypadListener* nextListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
 
     void handleMessageKey(char c);

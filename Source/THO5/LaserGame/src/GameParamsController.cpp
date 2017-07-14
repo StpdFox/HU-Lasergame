@@ -34,26 +34,6 @@ void GameParamsController::handleMessageKey(char c) {
 	msg.write(c);
 }
 
-//<<<<<<< HEAD
-//void GameParamsController::validateCommand()  {
-//	if(commandCode[0] >= '0' && commandCode[0] <= '9')  {
-//		if(id){
-//			playerID = commandCode[0];
-//			playerInfo.setPlayerID(playerID);
-//			//playerID = (commandCode[0] - '0')*10 + (commandCode[1] - '0');
-//			hwlib::cout << "playerID: " << playerID << "\n";
-//			id = false;
-//			initNewCommand();
-//		}
-//		else{
-//			weaponID = commandCode[0];
-//			playerInfo.setWeaponID(weaponID);
-//			//weaponID = (commandCode[0] - '0')*10 + (commandCode[1] - '0');
-//			hwlib::cout << "WeaponID: " << weaponID<< "\n";
-//			id = true;
-//			initNewCommand();
-//		}
-//=======
 void GameParamsController::main() {
 	initGameListener->suspend(); //TODO verzin mechanisme waarbij initGame en RunGame niet dingen doen (zoals timers laten zien) als dat nog niet moet
 	runGameListener->suspend();
