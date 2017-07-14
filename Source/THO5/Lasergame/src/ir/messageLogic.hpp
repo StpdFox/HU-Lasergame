@@ -19,7 +19,7 @@ public:
 	/// \param uint_fast8_t playerID ID of the player that is sending the message.
 	/// \param uint_fast8_t weaponID weaponID of th weapon firing.
 	/// \return char16_t encoded bitstream that can be send correctly over the IR.
-	char16_t encode(uint_fast8_t playerID, uint_fast8_t weaponID);
+	char16_t encode(uint8_t playerID, uint8_t weaponID);
 
 	/// \author Matthijs Vos
 	/// \brief Decodes a message that has been received by the IR receiver.

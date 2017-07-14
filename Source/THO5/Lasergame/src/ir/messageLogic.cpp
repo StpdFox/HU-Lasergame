@@ -1,7 +1,7 @@
 #include "messageLogic.hpp"
 
 
-char16_t messageLogic::encode(uint_fast8_t playerID, uint_fast8_t weaponID)
+char16_t messageLogic::encode(uint8_t playerID, uint8_t weaponID)
 {
 	char16_t compiledMessage = 1;
 	compiledMessage = compiledMessage <<5;

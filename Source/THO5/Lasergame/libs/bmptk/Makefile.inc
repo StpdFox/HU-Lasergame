@@ -77,7 +77,7 @@ ifeq ($(OS),Windows_NT)
    BOSSAC        ?= "$(BMPTK)/tools/bmptk-bossac.exe"
 
 
-   DUE_BOOTMODE  ?= cmd "/C C:/Users/matth/Desktop/Lasergame/Source/THO5/Lasergame/libs/bmptk/tools/due_bootmode.bat $(SERIAL_PORT) "
+   DUE_BOOTMODE  ?= cmd "/C C:/Users/Peter/Downloads/School/THO05_Devices/Lasergame_repo/Source/THO5/Lasergame/libs/bmptk/tools/due_bootmode.bat $(SERIAL_PORT) "
 
 
    # installed separately

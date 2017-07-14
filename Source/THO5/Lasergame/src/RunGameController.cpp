@@ -7,6 +7,7 @@
 /// \date 14-07-2017
 
 #define GAMETIME_WIDTH 5
+
 #define GAMETIME_HEIGHT 1
 #include "gameParameters.hpp"
 #include "RunGameController.hpp"
@@ -39,7 +40,7 @@ void RunGameController::main()
 	oledBoundary.flush();
 	
 	startOfGameTimestamp = hwlib::now_us();
-	gameDurationMin = 1;
+	gameDurationMin = 10;
 	hwlib::window_ostream gameTimeStream{ oledBoundary.getGameTimeField(), f };
 	while(true)
 	{	
@@ -55,7 +56,7 @@ void RunGameController::main()
 		}
 		else if(event == gameTimeSecondsClock)
 		{
-			int remainingTimeSec = gameDurationMin * 60 - (hwlib::now_us() - startOfGameTimestamp) / 100'000'000;
+			int remainingTimeSec = gameDurationMin * 60 - (hwlib::now_us() - startOfGameTimestamp) / 1'000'000;
 			gameTimeStream << "\f" << remainingTimeSec / 60 << ":" << remainingTimeSec % 60;
 			oledBoundary.flushParts();
 			
@@ -82,10 +83,12 @@ void RunGameController::consumeWildcard() {
 	irE.led.set(true);
 	irE.receive.suspend();
 	irE.trans.enableFlag();
+	
+	hwlib::wait_ms(1000);
+
+	irE.receive.resume();
 	sound.setSound(Sounds::SHOOT);
 	irE.led.set(false);
-	sleep(1200*rtos::ms);
-	irE.receive.resume();
 }
 void RunGameController::consumeDigits(char c) {}
 

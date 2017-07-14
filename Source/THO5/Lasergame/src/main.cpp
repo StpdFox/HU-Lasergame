@@ -71,39 +71,14 @@ int main( void ){
     auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
 	
 	struct IREntity IRE(button,led,playerInformation,messageLogic,receiver);
-	
-	//gameController game = gameController(IRE);
-/*<<<<<<< HEAD
-    //Create a test message and encode it
-    messageLogic messageLogic;
-    char16_t compiledMessage = messageLogic.encode(1,1);
 
-    //Set the playerInformation according to the message
-    playerInformation playerInformation;
-    playerInformation.setCompiledBits(compiledMessage);
-
-    //Set receivercontroller
-    auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
-
-    //Set gamecontroller
-    gameController game = gameController(button,led,playerInformation,messageLogic,receiver);
-
-
-	KeypadController kpC = KeypadController(keypad, 7);
-	OLEDBoundary oledBoundary{ 4 };
-	auto sC = SpeakerController(lsp, 8);
-	auto rGC = RunGameController(kpC, sC, oledBoundary, 5);
-	auto iGC = InitGameController(kpC, &rGC, 2);
-	kpC.registerNext(&iGC);
-	
-=======*/
 	KeypadController kpC = KeypadController(keypad, 15);
 	OLEDBoundary oledBoundary{ 10 };
 	auto sC = SpeakerController(lsp, 14);
 	auto rGC = RunGameController(kpC, sC, oledBoundary, IRE, 12);
-	auto iGC = InitGameController(kpC, &rGC, 13);
-	auto gPC = GameParamsController(kpC, &iGC, &rGC, 16);
-	//gameController game = gameController(button,led,playerInformation,messageLogic, IRE ,receiver);
+	auto iGC = InitGameController(kpC, &rGC, oledBoundary, playerInformation, IRE, 13);
+	auto gPC = GameParamsController(kpC, &iGC, &rGC, oledBoundary, playerInformation, IRE, 16);
+
 	kpC.registerNext(&gPC);
 	
 	// set IR receiver
