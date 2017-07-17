@@ -13,6 +13,26 @@
 #include "RunGameController.hpp"
 #include "OLEDBoundary.hpp"
 
+Player::Player(uint8_t playerId, RunGameController& parentController, int life) : parentController{parentController}, life{life}	{}
+
+void Player::damagePlayer(uint8_t player_id, uint8_t damage)	{
+	other_players[player_id].first = player_id;
+	other_players[player_id].second += 1; // got hit another time
+	if((life -= damage) < 0)	{
+		life = 0; // game over
+		parentController.sound.setSound(Sounds::END_GAME);
+		// set timeout
+	}
+	else{
+		parentController.sound.setSound(Sounds::HIT);
+		// stop game
+	}
+}
+
+bool Player::playerIsAlive()	{
+		return playerisAlive;
+}
+
 RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority ) :
 	rtos::task<>{ priority, "RunGameController" },
 	kpC{kpC}, sound{sound}, 
@@ -31,7 +51,7 @@ RunGameController::~RunGameController()
 }
 
 void RunGameController::main()
-{
+{	
 	//hier moet ergens die getMessage van receiverController komen te staan om de hits te maken
 	hwlib::glcd_oled_buffered& lcd = oledBoundary.getBufferedLCD();
 	auto f = hwlib::font_default_8x8();
@@ -51,7 +71,31 @@ void RunGameController::main()
 		else if(event == irMsgFlag)	{
 			hwlib::cout << "ir msg flag has been set!\n";
 			std::array<char, 2> msg = irMsgPool.read();
+			
 			hwlib::cout << "byte01: " << msg[0] << " | byte02: " << msg[1] << " end of msg\n"; 
+			player.damagePlayer((uint8_t)msg[0], (uint8_t)msg[1]);
+			/*if(player.isAlive())	{
+				// Set timeout
+			}
+			else	{
+				// End game for this player
+			}*/
+			/*if(player.isAlive())	{
+				sound.setSound(Sounds::HIT);
+			}
+			else {
+				
+			}*/
+/*			if(damagePlayer((uint8_t)msg[0], (uint8_t)msg[1]))	{
+				sound.setSound(Sounds::HIT);
+				//Set Timeout (reset time of player, 
+				//this way the player cannot be damaged multiple times in a row within the same time period).
+				// Player took a hit
+			}
+			else{
+				sound.setSound(Sounds::END_GAME);
+				// Player is dead. RIP player
+			}*/
 		}
 		else if(event == gameTimeSecondsClock)
 		{
@@ -106,3 +150,13 @@ void RunGameController::handleReceivedMessage(auto msg){
 		}
 	}
 }
+
+/*bool RunGameController::damagePlayer(uint8_t player_id, uint8_t damage)	{
+	players[player_id].first = player_id;
+	players[player_id].second += 1; // got hit another time
+	if((life -= damage) < 0)	{
+		life = 0; // game over
+		return false;
+	}
+	return true;
+}*/

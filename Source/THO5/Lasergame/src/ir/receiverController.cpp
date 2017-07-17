@@ -6,7 +6,6 @@
 /// Date Last Update:
 /// \date 14-07-2017
 
-
 #include "receiverController.hpp"
 
 receiverController::receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic,unsigned int priority):

@@ -19,9 +19,35 @@
 #include "messageLogic.hpp"
 #include "gameParameters.hpp"
 #include "ReceiveListener.hpp"
+#include <array>
+#include <utility>
 
 class OLEDBoundary;
-
+class RunGameController;
+class Player	{
+private:
+	bool playerisAlive = true;
+	RunGameController& parentController;
+	int life;
+	// Array van 10 elementen (max 10 spelers), waar de key-pair is: hoeveelheid damage, aantal schoten
+	std::array<std::pair<uint8_t, uint8_t>, 10> other_players { { 
+		std::pair<uint8_t,uint8_t>(0x00, 0), 
+		std::pair<uint8_t,uint8_t>(0x00, 0),
+		std::pair<uint8_t,uint8_t>(0x00, 0),
+		std::pair<uint8_t,uint8_t>(0x00, 0),
+		std::pair<uint8_t,uint8_t>(0x00, 0),
+		std::pair<uint8_t,uint8_t>(0x00, 0),
+		std::pair<uint8_t,uint8_t>(0x00, 0),
+		std::pair<uint8_t,uint8_t>(0x00, 0),
+		std::pair<uint8_t,uint8_t>(0x00, 0),
+		std::pair<uint8_t,uint8_t>(0x00, 0)} };
+		
+public:
+	Player(uint8_t playerId, RunGameController& parentController, int life = 100);
+	
+	void damagePlayer(uint8_t, uint8_t);
+	bool playerIsAlive();
+};
 typedef struct IREntity {
 	//auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver
 	hwlib::pin_in & button;
@@ -35,6 +61,7 @@ typedef struct IREntity {
 	trans{playerInformation,1},
 	logic{logic},
 	receive{receiver} {}
+
 } &irentity;
  /// \author Matthijs Vos
 /// \Author Ferdi Stoeltie
@@ -42,6 +69,7 @@ typedef struct IREntity {
 /// \date 11-07-2017
 class RunGameController : public rtos::task<>, public KeypadListener, public ReceiveListener, private KeyConsume {
 private:
+	friend class Player;
 	// A reference to the keypad controller. This is required to register itself as a listener
    KeypadController& kpC;
    
@@ -60,14 +88,18 @@ private:
    irentity irE;
    rtos::clock gameTimeSecondsClock;
    
-   
 	//get and set gameParameters
 	playerInformation playerInfo;
 	
    // Primitive data types
    int startOfGameTimestamp;
    int gameDurationMin;
+   
+	//int life = 100;
+	Player player{0x00, *this};
 
+		
+		//bool damagePlayer(uint8_t, uint8_t);
 public:
 
 	/// \author Matthijs Vos
