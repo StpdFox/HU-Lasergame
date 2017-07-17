@@ -19,7 +19,19 @@
 //#include "TestTask.hpp"
 
 int main( void ){
-   
+   /***
+    * 
+	* 
+	* ToDo:
+	* Playerinformation has to be shared between multiple objects (tasks):
+	* Own player information is set in initgamecontroller for host and gameparamscontroller for clients.
+	* This is then passed to the RunGameController.
+	* When a shot is being launched, 
+	* the client player_id and weapon_id within playerInformation (within Player <-- current player) is sent over the IR.
+	* 
+	* For retrieval of other players shooting, the Playerinformation is being used by the receiver.
+	* This is then passed to the RunGameController where the damage taken is taken care of by the Player object.
+	* playerInformation contains data for over IR. Player contains logic for gameplay implementation.
 
    	// kill the watchdog
   	WDT->WDT_MR = WDT_MR_WDDIS;
