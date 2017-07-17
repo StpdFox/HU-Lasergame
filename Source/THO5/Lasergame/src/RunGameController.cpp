@@ -21,7 +21,8 @@ void Player::damagePlayer(uint8_t player_id, uint8_t damage)	{
 	if((life -= damage) < 0)	{
 		life = 0; // game over
 		parentController.sound.setSound(Sounds::END_GAME);
-		// set timeout
+		parentController.shutDownGame();
+		// shutdown game
 	}
 	else{
 		parentController.sound.setSound(Sounds::HIT);
@@ -74,28 +75,6 @@ void RunGameController::main()
 			
 			hwlib::cout << "byte01: " << msg[0] << " | byte02: " << msg[1] << " end of msg\n"; 
 			player.damagePlayer((uint8_t)msg[0], (uint8_t)msg[1]);
-			/*if(player.isAlive())	{
-				// Set timeout
-			}
-			else	{
-				// End game for this player
-			}*/
-			/*if(player.isAlive())	{
-				sound.setSound(Sounds::HIT);
-			}
-			else {
-				
-			}*/
-/*			if(damagePlayer((uint8_t)msg[0], (uint8_t)msg[1]))	{
-				sound.setSound(Sounds::HIT);
-				//Set Timeout (reset time of player, 
-				//this way the player cannot be damaged multiple times in a row within the same time period).
-				// Player took a hit
-			}
-			else{
-				sound.setSound(Sounds::END_GAME);
-				// Player is dead. RIP player
-			}*/
 		}
 		else if(event == gameTimeSecondsClock)
 		{
@@ -106,6 +85,22 @@ void RunGameController::main()
 			if(remainingTimeSec <= 0)
 			{
 				HWLIB_TRACE << "Game over!";
+				//while(true) sleep(1);
+				char c = '0';
+				hwlib::cin >> c;
+				if(c == 'r')	{
+					hwlib::cout << "writing data brb...\t ";
+					sleep(100);
+					hwlib::cout << "tjuuk...";
+					sleep(100);
+					hwlib::cout << "tjuuk...";
+					sleep(50);
+					hwlib::cout << "prrp...";
+					sleep(500);
+					hwlib::cout << "ping!";
+					sleep(500);
+					hwlib::cout << "done!" << hwlib::endl;
+				}
 				while(true) sleep(1);
 			}
 		}
@@ -150,7 +145,9 @@ void RunGameController::handleReceivedMessage(auto msg){
 		}
 	}
 }
-
+void RunGameController::shutDownGame()	{
+	gameDurationMin = 0;
+}
 /*bool RunGameController::damagePlayer(uint8_t player_id, uint8_t damage)	{
 	players[player_id].first = player_id;
 	players[player_id].second += 1; // got hit another time

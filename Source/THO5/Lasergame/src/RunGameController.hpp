@@ -114,7 +114,7 @@ public:
    RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority );
    ~RunGameController();
 	
-	   rtos::channel<char16_t,10> receiverMessageChannel;
+   rtos::channel<char16_t,10> receiverMessageChannel;
    void main() override;
    /// \author Matthijs Vos
    /// \author Ferdi Stoeltie
@@ -129,6 +129,7 @@ public:
 	
 	void handleReceivedMessage(auto msg);
 	
+	void shutDownGame();
 	void receivedMsgstd(std::array<char, 2> msg) {
 		irMsgPool.write(msg);
 		irMsgFlag.set();
