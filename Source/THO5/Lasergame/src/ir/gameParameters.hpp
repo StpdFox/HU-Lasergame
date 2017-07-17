@@ -13,6 +13,10 @@ public:
 	byte playerID;
 	byte weaponID;
 	
+	// health is hier niet nodig? deze klasse wordt alleen gebruikt om data over te sturen.
+	// Bevat alleen constante die na 1x setten niet meer veranderen? Dus playerID, weaponID.
+	// in Player (rungamecontroller.hpp / cpp) zit het echte player object,
+	// waar logica aan verbonden is over de implementatie binnen het spel.
 	int playerHealth = 100;
 	
 	char16_t getCompiledBits(){

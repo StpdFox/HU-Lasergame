@@ -19,6 +19,7 @@
 #include "messageLogic.hpp"
 #include "gameParameters.hpp"
 #include "ReceiveListener.hpp"
+#include "GameParameters.hpp"
 #include <array>
 #include <utility>
 
@@ -27,8 +28,10 @@ class RunGameController;
 class Player	{
 private:
 	bool playerisAlive = true;
+	playerInformation& playerInfo;
 	RunGameController& parentController;
-	int life;
+	
+	int healthPoints;
 	// Array van 10 elementen (max 10 spelers), waar de key-pair is: hoeveelheid damage, aantal schoten
 	std::array<std::pair<uint8_t, uint8_t>, 10> other_players { { 
 		std::pair<uint8_t,uint8_t>(0x00, 0), 
@@ -43,9 +46,11 @@ private:
 		std::pair<uint8_t,uint8_t>(0x00, 0)} };
 		
 public:
-	Player(uint8_t playerId, RunGameController& parentController, int life = 100);
+	Player(playerInformation& playerInfo, RunGameController& parentController);
+	//Player(uint8_t playerId, RunGameController& parentController, int life = 100);
 	
-	void damagePlayer(uint8_t, uint8_t);
+	void takeDamage(uint8_t, uint8_t);
+	void doDamage();
 	bool playerIsAlive();
 };
 typedef struct IREntity {
@@ -96,10 +101,9 @@ private:
    int gameDurationMin;
    
 	//int life = 100;
-	Player player{0x00, *this};
-
-		
-		//bool damagePlayer(uint8_t, uint8_t);
+	//Player player{0x00, *this};
+	Player& player;
+	//bool damagePlayer(uint8_t, uint8_t);
 public:
 
 	/// \author Matthijs Vos
@@ -111,7 +115,7 @@ public:
    /// \param[in] sound A handle to the ISound interface.
    /// \param[in] oledBoundary a reference to the oledBoundary object.
    /// \param Priority of this rtos::task.
-   RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority );
+   RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, playerInformation& playerInfo , unsigned int priority );
    ~RunGameController();
 	
    rtos::channel<char16_t,10> receiverMessageChannel;
@@ -130,6 +134,7 @@ public:
 	void handleReceivedMessage(auto msg);
 	
 	void shutDownGame();
+	void writeGameResults();
 	void receivedMsgstd(std::array<char, 2> msg) {
 		irMsgPool.write(msg);
 		irMsgFlag.set();

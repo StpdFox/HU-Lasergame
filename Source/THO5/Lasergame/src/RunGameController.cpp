@@ -12,14 +12,20 @@
 #include "gameParameters.hpp"
 #include "RunGameController.hpp"
 #include "OLEDBoundary.hpp"
-
-Player::Player(uint8_t playerId, RunGameController& parentController, int life) : parentController{parentController}, life{life}	{}
-
-void Player::damagePlayer(uint8_t player_id, uint8_t damage)	{
+Player::Player(playerInformation& playerInfo, RunGameController& parentController) : playerInfo{playerInfo}, parentController{parentController}{
+	//playerInfo.getPlayerHealth();
+	healthPoints = playerInfo.playerHealth;
+}
+//Player::Player(uint8_t playerId, RunGameController& parentController, int healthPoints) : parentController{parentController}, healthPoints{healthPoints}	{}
+void Player::doDamage()	{
+		// send over ir to do damage
+		//parentController.irE.trans.sendMessage(playerInfo.getPlayerID(), playerInfo.getWeaponID());
+}
+void Player::takeDamage(uint8_t player_id, uint8_t damage)	{
 	other_players[player_id].first = player_id;
 	other_players[player_id].second += 1; // got hit another time
-	if((life -= damage) < 0)	{
-		life = 0; // game over
+	if((healthPoints -= damage) < 0)	{
+		healthPoints = 0; // game over
 		parentController.sound.setSound(Sounds::END_GAME);
 		parentController.shutDownGame();
 		// shutdown game
@@ -34,7 +40,7 @@ bool Player::playerIsAlive()	{
 		return playerisAlive;
 }
 
-RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority ) :
+RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, playerInformation& playerInfo, unsigned int priority ) :
 	rtos::task<>{ priority, "RunGameController" },
 	kpC{kpC}, sound{sound}, 
 	oledBoundary{ oledBoundary },
@@ -42,6 +48,7 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	irMsgFlag(this, "irMsgFlag"),
 	irE{irE},
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" },
+	player(playerInfo, *this);
 	receiverMessageChannel(this,"receiverMessage")
 {
 	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 6 * 8 });
@@ -74,7 +81,7 @@ void RunGameController::main()
 			std::array<char, 2> msg = irMsgPool.read();
 			
 			hwlib::cout << "byte01: " << msg[0] << " | byte02: " << msg[1] << " end of msg\n"; 
-			player.damagePlayer((uint8_t)msg[0], (uint8_t)msg[1]);
+			player.takeDamage((uint8_t)msg[0], (uint8_t)msg[1]);
 		}
 		else if(event == gameTimeSecondsClock)
 		{
@@ -89,17 +96,7 @@ void RunGameController::main()
 				char c = '0';
 				hwlib::cin >> c;
 				if(c == 'r')	{
-					hwlib::cout << "writing data brb...\t ";
-					sleep(100);
-					hwlib::cout << "tjuuk...";
-					sleep(100);
-					hwlib::cout << "tjuuk...";
-					sleep(50);
-					hwlib::cout << "prrp...";
-					sleep(500);
-					hwlib::cout << "ping!";
-					sleep(500);
-					hwlib::cout << "done!" << hwlib::endl;
+					writeGameResults();
 				}
 				while(true) sleep(1);
 			}
@@ -148,12 +145,16 @@ void RunGameController::handleReceivedMessage(auto msg){
 void RunGameController::shutDownGame()	{
 	gameDurationMin = 0;
 }
-/*bool RunGameController::damagePlayer(uint8_t player_id, uint8_t damage)	{
-	players[player_id].first = player_id;
-	players[player_id].second += 1; // got hit another time
-	if((life -= damage) < 0)	{
-		life = 0; // game over
-		return false;
-	}
-	return true;
-}*/
+void RunGameController::writeGameResults()	{
+	hwlib::cout << "writing data brb...\t ";
+	sleep(100);
+	hwlib::cout << "tjuuk...";
+	sleep(100);
+	hwlib::cout << "tjuuk...";
+	sleep(50);
+	hwlib::cout << "prrp...";
+	sleep(500);
+	hwlib::cout << "ping!";
+	sleep(500);
+	hwlib::cout << "done!" << hwlib::endl;
+}

@@ -18,7 +18,7 @@
 class KeypadController : public rtos::task<>   {
 private:
 	// Time that the task activates at, to poll the keypad peripheral.
-	int waitTime = 100; // 100 ms
+	int waitTime = 200; // 200 ms
 	
 	// Keypad hardware device
     hwlib::keypad<16> &keypad;

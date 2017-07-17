@@ -49,8 +49,6 @@
       <File Name="src/GameParamsController.hpp"/>
       <File Name="src/GameParamsController.cpp"/>
       <File Name="src/KeyConsumer.h"/>
-      <File Name="src/EmbeddedMap.hpp"/>
-      <File Name="src/EmbeddedMap.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libs">
       <VirtualDirectory Name="hwlib">
