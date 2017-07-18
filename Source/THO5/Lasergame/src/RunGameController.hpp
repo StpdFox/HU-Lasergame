@@ -27,7 +27,10 @@ class OLEDBoundary;
 class RunGameController;
 class Player	{
 private:
-	bool playerisAlive = true;
+	friend class FormattedGameStats; // They are bff's!
+	
+public:
+bool playerisAlive = true;
 	playerInformation& playerInfo;
 	RunGameController& parentController;
 	
@@ -45,7 +48,6 @@ private:
 		std::pair<uint8_t,uint8_t>(0x00, 0),
 		std::pair<uint8_t,uint8_t>(0x00, 0)} };
 		
-public:
 	Player(playerInformation& playerInfo, RunGameController& parentController);
 	//Player(uint8_t playerId, RunGameController& parentController, int life = 100);
 	
@@ -68,7 +70,8 @@ typedef struct IREntity {
 	receive{receiver} {}
 
 } &irentity;
- /// \author Matthijs Vos
+
+/// \author Matthijs Vos
 /// \Author Ferdi Stoeltie
 /// \brief Controller for the runnable game logic
 /// \date 11-07-2017
@@ -102,7 +105,7 @@ private:
    
 	//int life = 100;
 	//Player player{0x00, *this};
-	Player& player;
+	Player player;
 	//bool damagePlayer(uint8_t, uint8_t);
 public:
 

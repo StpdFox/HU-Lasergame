@@ -21,10 +21,10 @@ void Player::doDamage()	{
 		// send over ir to do damage
 		//parentController.irE.trans.sendMessage(playerInfo.getPlayerID(), playerInfo.getWeaponID());
 }
-void Player::takeDamage(uint8_t player_id, uint8_t damage)	{
-	other_players[player_id].first = player_id;
-	other_players[player_id].second += 1; // got hit another time
-	if((healthPoints -= damage) < 0)	{
+void Player::takeDamage(byte player_id, byte damage_id)	{
+	other_players[(uint8_t)player_id].first = (uint8_t)damage_id;
+	other_players[(uint8_t)player_id].second += 1; // got hit another time
+	if((healthPoints -= damage_id) < 0)	{
 		healthPoints = 0; // game over
 		parentController.sound.setSound(Sounds::END_GAME);
 		parentController.shutDownGame();
@@ -48,7 +48,7 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	irMsgFlag(this, "irMsgFlag"),
 	irE{irE},
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" },
-	player(playerInfo, *this);
+	player{playerInfo, *this},
 	receiverMessageChannel(this,"receiverMessage")
 {
 	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 6 * 8 });

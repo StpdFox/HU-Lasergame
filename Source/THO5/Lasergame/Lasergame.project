@@ -40,6 +40,8 @@
         <File Name="src/ir/transmitter.cpp"/>
         <File Name="src/ir/transmitterController.cpp"/>
         <File Name="src/ir/game.cpp"/>
+        <File Name="src/ir/FormattedGameStats.hpp"/>
+        <File Name="src/ir/FormattedGameStats.cpp"/>
       </VirtualDirectory>
       <File Name="src/KeypadListener.hpp"/>
       <File Name="src/KeypadController.cpp"/>

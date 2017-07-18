@@ -54,6 +54,8 @@ HEADERS				+= defines.h
 HEADERS				+= OLEDBoundary.hpp
 SOURCES				+= OLEDBoundary.cpp
 
+HEADERS 			+= FormattedGameStats.hpp
+SOURCES 			+= FormattedGameStats.cpp
 
 #HEADERS				+= TestTask.hpp
 #SOURCES				+= TestTask.cpp

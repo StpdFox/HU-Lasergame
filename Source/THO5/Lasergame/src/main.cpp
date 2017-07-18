@@ -16,9 +16,11 @@
 
 #include "rtos.hpp"
 #include "OLEDBoundary.hpp"
+#include "FormattedGameStats.hpp"
 //#include "TestTask.hpp"
 
 int main( void ){
+   
    /***
     * 
 	* 
@@ -32,8 +34,9 @@ int main( void ){
 	* For retrieval of other players shooting, the Playerinformation is being used by the receiver.
 	* This is then passed to the RunGameController where the damage taken is taken care of by the Player object.
 	* playerInformation contains data for over IR. Player contains logic for gameplay implementation.
-
-   	// kill the watchdog
+	**/
+   	
+	// kill the watchdog
   	WDT->WDT_MR = WDT_MR_WDDIS;
 
 
@@ -49,7 +52,6 @@ int main( void ){
     auto vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
     auto gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
     auto data = hwlib::target::pin_in(hwlib::target::pins::d8);
-
 
     //Set speaker pin
     auto lsp = target::pin_out( target::pins::d7);
@@ -83,14 +85,22 @@ int main( void ){
     auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
 	
 	struct IREntity IRE(button,led,playerInformation,messageLogic,receiver);
-
+	
 	KeypadController kpC = KeypadController(keypad, 15);
 	OLEDBoundary oledBoundary{ 10 };
 	auto sC = SpeakerController(lsp, 14);
-	auto rGC = RunGameController(kpC, sC, oledBoundary, IRE, 12);
+	auto rGC = RunGameController(kpC, sC, oledBoundary, IRE, playerInformation, 12);
 	auto iGC = InitGameController(kpC, &rGC, oledBoundary, playerInformation, IRE, 13);
 	auto gPC = GameParamsController(kpC, &iGC, &rGC, oledBoundary, playerInformation, IRE, 16);
-
+	Player testPlayer(playerInformation, rGC);
+	FormattedGameStats FGS;
+	//std::string lotsofaids;
+	FGS.getResultsXml(testPlayer);
+	
+/*	for(unsigned int i = 0; i < lotsofaids.size() - 1; i++)	{
+		buffedasfuck[i] = lotsofaids.at(i);
+	}*/
+	
 	kpC.registerNext(&gPC);
 	
 	// set IR receiver
@@ -98,7 +108,7 @@ int main( void ){
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);
    //RunGameController runGameController{ 2, oledBoundary };
-
+	//hwlib::cout << buffedasfuck << hwlib::endl;
    rtos::run();
 }
 
