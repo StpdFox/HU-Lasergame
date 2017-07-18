@@ -96,10 +96,11 @@ private:
 	void flush() {
 		if(dirty)
 		{
-			command( COLUMNADDR,  start.x,  127 );
-			command( PAGEADDR,    start.y / 8,    7 );
+			command( COLUMNADDR,  start.x,  width+start.x-1);
+			command( PAGEADDR,    start.y / 8,    (height + start.y) / 8-1 );			
 			for(unsigned int y = 0; y < height / 8; y++)
 			{
+
 				for(unsigned int x = 0; x < width; x++)
 				{
 					byte d = buffer[ x + width * y ];
@@ -123,7 +124,8 @@ public:
 		dirty{ false },
 		bus(bus),
 		address(address),
-		cursor_x(255), cursor_y(255),
+		cursor_x(255), 
+		cursor_y(255),
 		start(start)
 	{ }
    
@@ -148,6 +150,8 @@ public:
     void flush();
     void flushParts();
 	hwlib::glcd_oled_buffered& getBufferedLCD();
+	glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT *8>& getStatusMessageField();
+
 	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8>& getPlayerNumberInputField();
 	glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT * 8>& getFirePowerInputField();
 	glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT * 8>& getGameDurationInputField();
@@ -164,6 +168,7 @@ private:
     rtos::flag flushFlag, flushPartsFlag;
 	
 	//these will be default initialized to nullptr's
+	glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT * 8> statusMessageField;
 	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8> playerNumberInputField;
 	glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT * 8> firePowerInputField;
 	glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT * 8> gameDurationInputField;

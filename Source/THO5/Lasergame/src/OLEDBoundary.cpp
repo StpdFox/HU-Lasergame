@@ -16,6 +16,7 @@ OLEDBoundary::OLEDBoundary(unsigned int priority) :
 		},
 	flushFlag{ this, "flushFlag" },
 	flushPartsFlag{ this, "flushPartsFlag" },
+	statusMessageField{ i2c_bus, 0x3c},
 	playerNumberInputField{ i2c_bus, 0x3c },
 	firePowerInputField{ i2c_bus, 0x3c },
 	gameDurationInputField{ i2c_bus, 0x3c },
@@ -42,7 +43,10 @@ hwlib::glcd_oled_buffered& OLEDBoundary::getBufferedLCD()
 {
 	return bufferedLCD;
 }
-
+glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT * 8>& OLEDBoundary::getStatusMessageField()
+{
+	return statusMessageField;
+}
 glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8>& OLEDBoundary::getPlayerNumberInputField()
 {
 	return playerNumberInputField;
@@ -79,10 +83,11 @@ void OLEDBoundary::main()
 		}
 		else if(event == flushPartsFlag)
 		{
+			gameTimeField.flush();
 			playerNumberInputField.flush();
 			firePowerInputField.flush();
 			gameDurationInputField.flush();
-			gameTimeField.flush();
+			statusMessageField.flush();
 			scoreField.flush();
 		}
 	}
