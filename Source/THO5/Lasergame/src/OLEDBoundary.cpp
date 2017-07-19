@@ -9,13 +9,15 @@ OLEDBoundary::OLEDBoundary(unsigned int priority) :
 	//bufferedLCD{ i2c_bus, 0x3c }, //wont work because of the necessary 200 ms init time for the OLED and there is no default constructor
 	bufferedLCD{
 			[this](){
-				hwlib::wait_ms(200);
+				// hwlib::wait_ms(200);
 				// use the buffered version
 				return hwlib::glcd_oled_buffered{ i2c_bus, 0x3c };
 			}()
 		},
 	flushFlag{ this, "flushFlag" },
 	flushPartsFlag{ this, "flushPartsFlag" },
+	statusMessageField{ i2c_bus, 0x3c},
+	confirmMessageField{ i2c_bus, 0x03c},
 	playerNumberInputField{ i2c_bus, 0x3c },
 	firePowerInputField{ i2c_bus, 0x3c },
 	gameDurationInputField{ i2c_bus, 0x3c },
@@ -42,7 +44,14 @@ hwlib::glcd_oled_buffered& OLEDBoundary::getBufferedLCD()
 {
 	return bufferedLCD;
 }
-
+glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT * 8>& OLEDBoundary::getStatusMessageField()
+{
+	return statusMessageField;
+}
+glcd_oled_part_buffered<CONFIRMMESSAGEFIELD_WIDTH * 8, CONFIRMMESSAGEFIELD_HEIGHT * 8>& OLEDBoundary::getConfirmMessageField()
+{
+	return confirmMessageField;
+}
 glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8>& OLEDBoundary::getPlayerNumberInputField()
 {
 	return playerNumberInputField;
@@ -79,10 +88,12 @@ void OLEDBoundary::main()
 		}
 		else if(event == flushPartsFlag)
 		{
+			gameTimeField.flush();
+			confirmMessageField.flush();
 			playerNumberInputField.flush();
 			firePowerInputField.flush();
 			gameDurationInputField.flush();
-			gameTimeField.flush();
+			statusMessageField.flush();
 			scoreField.flush();
 		}
 	}

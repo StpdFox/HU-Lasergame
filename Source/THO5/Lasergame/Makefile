@@ -80,5 +80,5 @@ include $(BMPTK)Makefile.inc
 
 ifeq ($(OS), Linux)
 run:
-	sudo stty -F /dev/ttyACM0 speed 1200 cs8 -cstopb -parenb && make build && sudo bossac --info --port "ttyACM0" --erase --write --verify --reset --debug --boot -U false ./src/main.bin && sudo platformio serialports monitor -b 38400
+	sudo stty -F /dev/ttyACM0 speed 1200 cs8 -cstopb -parenb && make build && sudo bossac --info --port "ttyACM0" --erase --write --verify --reset  --boot -U false ./src/main.bin && platformio serialports monitor -b 38400
 endif
