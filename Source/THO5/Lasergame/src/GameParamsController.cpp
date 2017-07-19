@@ -174,7 +174,7 @@ void GameParamsController::consumeDigits(char c) {
 		HWLIB_TRACE << "state = WAITING_FOR_B";
 		state = STATE::WAITING_FOR_B;
 	}
-	else if(state == STATE::INPUTTING_WEAPON_ID) {
+	else if(state == STATE::INPUTTING_WEAPON_ID || state == STATE::WAITING_FOR_HASHTAG) {
 		weaponID = c - '0';
 		confirmStream << "\f";
 		hwlib::window_ostream weaponIDStream{ oledBoundary.getFirePowerInputField(), font };

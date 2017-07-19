@@ -63,7 +63,7 @@ else
 
    # on Linux the path can in most cases be omitted
    GCC-ARM         ?= 
-   GCC-AVR         ?=
+   GCC-AVR         ?= 
    GCC-MSP430      ?= 
    
    # serial port defaults
