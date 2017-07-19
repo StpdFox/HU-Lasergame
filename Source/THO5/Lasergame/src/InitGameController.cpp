@@ -35,6 +35,7 @@ void InitGameController::handleMessageKey(char c)  {
 }
 
 void InitGameController::main()  {
+
 	for(;;) {
 		char c = msg.read();
 		KeyConsumer::handleMessageKey(*this, c);
@@ -84,6 +85,9 @@ void InitGameController::sendStartMessage() {
 void InitGameController::consumeChar(char c) {
 	if(state == STATE::WAITING_FOR_C && c == 'C')
 	{
+			hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(), font };
+	confirm << "\f ";
+	oledBoundary.flushParts();
 		HWLIB_TRACE << "C pressed";
 		initNewCommand();
 		HWLIB_TRACE << "state = STATE::INPUTTING_CMD";
@@ -102,11 +106,17 @@ void InitGameController::consumeChar(char c) {
 
 void InitGameController::consumeHashTag() {
 	// If the command has been validated, it can be executed
-
+	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
+	hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
+	hwlib::window_ostream time{ oledBoundary.getGameTimeField(),font};
 	if(state == STATE::WAITING_FOR_HASHTAG)
 	{
-		hwlib::window_ostream stream{ oledBoundary.getConfirmMessageField(), font };
+		
 		HWLIB_TRACE << "# pressed";
+		confirm <<"\f  * to start";
+		stream << "\f# to send";
+		time << "\f ";
+		oledBoundary.flushParts();
 		if(validateCommand()) {
 			HWLIB_TRACE << "command is valid";
 			char16_t timeBits = irEntity.logic.encode(0, (commandCode[0] - '0') * 10 + (commandCode[1] - '0'));
@@ -114,11 +124,6 @@ void InitGameController::consumeHashTag() {
 			hwlib::cout.base(2);
 			HWLIB_TRACE << playerInfo.getCompiledBits() << "\n";
 			HWLIB_TRACE << "state = STATE::SENDING_CMD";
-			
-			
-			stream << "\f* to confirm";
-			oledBoundary.flushParts();
-			
 			state = STATE::SENDING_CMD;
 		} else {
 			HWLIB_TRACE << "command is not valid";
@@ -128,11 +133,14 @@ void InitGameController::consumeHashTag() {
 			oledBoundary.flushParts();
 			initNewCommand();
 		}
+		
 	}
 	else if(state == STATE::SENDING_CMD)
 	{
+		
 		sendMessage();
 	}
+	
 }
 
 void InitGameController::consumeWildcard() {
@@ -142,9 +150,8 @@ void InitGameController::consumeWildcard() {
 		hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
 		hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
 		hwlib::window_ostream time{oledBoundary.getGameTimeField(),font};
+		stream << "\fC to start\nGame";
 		time << "\f  ";
-		confirm <<"\f  # to start";
-		stream << "\f* to send";
 		oledBoundary.flushParts();
 		
 		char16_t timeBits = irEntity.logic.encode(0, 1);
@@ -173,9 +180,11 @@ void InitGameController::consumeDigits(char c) {
 		{
 			timeStream << "\f" << commandCode[0] << c;
 			HWLIB_TRACE << "state = STATE::WAITING_FOR_HASHTAG";
+			confirm << "\f# to confirm";
+		
 			state = STATE::WAITING_FOR_HASHTAG;
 		}
-		confirm << "\f# to confirm";
 		oledBoundary.flushParts();
+		
 	}
 }
