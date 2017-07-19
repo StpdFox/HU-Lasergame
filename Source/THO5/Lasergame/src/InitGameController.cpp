@@ -184,6 +184,7 @@ void InitGameController::consumeDigits(char c) {
 		
 			state = STATE::WAITING_FOR_HASHTAG;
 		}
+		confirm << "\f# to confirm";
 		oledBoundary.flushParts();
 		
 	}
