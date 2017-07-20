@@ -22,13 +22,14 @@
 class OLEDBoundary;
 class KeypadController;
 class transmitterController;
+class ReceiveListener;
 
 /// \author Marianne Delmaar
 /// \author Ferdi Stoeltie
 /// \author Peter Bonnema
 /// \date 11-07-2017
 /// \brief Controller task for game params like player id and weapon damage. Waits for 'start game' signal from IRReceiver.
-class GameParamsController : public rtos::task<>, public KeypadListener, private KeyConsume{
+class GameParamsController : public rtos::task<>, public KeypadListener, public ReceiveListener, private KeyConsume{
 private:
 	void consumeChar(char c);
 	void consumeHashTag();
@@ -45,7 +46,8 @@ public:
 	GameParamsController(KeypadController& kpC, InitGameController* initGameListener, RunGameController* runGameListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
 	~GameParamsController();
 	
-	void handleNewMessage(byte & receivedPlayerID , byte & receivedWeaponID);
+	void receivedMsgstd(std::array<char, 2> msg) override;
+	
 private:
 	enum STATE
 	{

@@ -66,7 +66,7 @@ void RunGameController::main()
 			}
 		}
 		else if(event == receiverMessageChannel){
-			handleReceivedMessage(irE.receive.getMessage());
+			//handleReceivedMessage(irE.receive.getMessage());
 		}
 	}
 }

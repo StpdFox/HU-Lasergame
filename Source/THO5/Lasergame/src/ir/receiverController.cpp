@@ -54,15 +54,16 @@ void receiverController::main()
 			
 			HWLIB_TRACE << hwlib::bin << message1 << " " << hwlib::bin << message2;
 			
-			if(messageIsValid(message1))
+			byte playerID, weaponID;
+			if(logic.decode(message1, playerID, weaponID))
 			{
 				HWLIB_TRACE << "message1 is valid.";
-				rL->receivedMsgstd({ char((message1 & 0xFF00) >> 8), char(message1 & 0xFF) });
+				rL->receivedMsgstd({ playerID, weaponID });
 			}
-			else if(messageIsValid(message2))
+			else if(logic.decode(message2, playerID, weaponID))
 			{
 				HWLIB_TRACE << "message1 is not valid but message2 is.";
-				rL->receivedMsgstd({ char((message2 & 0xFF00) >> 8), char(message2 & 0xFF) });
+				rL->receivedMsgstd({ playerID, weaponID });
 			}
 			else
 			{
@@ -103,88 +104,6 @@ uint16_t receiverController::readBit(unsigned int maxDelayUs, unsigned int inter
 	block_wait(1600 * rtos::us);
 	return bit;
 }
-
-bool receiverController::messageIsValid(uint16_t message)
-{
-	uint16_t weapon = (message >> 5) & 0x1F;
-	uint16_t playerID = (message >> 10) & 0x1F;
-	return (weapon ^ playerID) == (message & 0x1F);
-}
-
-//int receiverController::getStartBit()
-//{
-//	if(!rPin.get())
-//	{
-//		hwlib::wait_us(1200);
-//		if(!rPin.get())
-//		{
-//			hwlib::wait_us(1200);
-//			return 1;
-//		}
-//	}
-//	return -1;
-//}
-//
-//int receiverController::getBit()
-//{
-//	int begin = hwlib::now_us();
-//	while(rPin.get())
-//	{
-//		hwlib::wait_us(400);
-//		if(hwlib::now_us() - begin >= 4000)
-//		{
-//			return -1;
-//		}
-//	}
-//	hwlib::wait_us(1200);
-//	if(!rPin.get())
-//	{
-//		hwlib::wait_us(1200);
-//		return 1;
-//	}
-//	else
-//	{
-//		hwlib::wait_us(1200);
-//		return 0;
-//	}
-//	return -1;
-//}
-//
-//char16_t receiverController::getMessage()
-//{
-//	char16_t bitstream = 0;
-//	for(int i = 0; i < 15; i++)
-//	{
-//    	auto bit = getBit();
-//        if((bit == 1) || (bit == 0))
-//        {
-//			bitstream = (bitstream | bit);
-//        }
-//        else if(bit == -1)
-//        {
-//        	return -1;
-//        }
-//        if(i < 14)
-//        {
-//        	bitstream = bitstream << 1;
-//        }          
-//    }
-//    bitstream = bitstream | (1 << 15);
-//    hwlib::cout.base(2);
-//    hwlib::cout << "receiving : " << bitstream << "\n";
-//    byte x = 5;
-//    byte y = 5;
-//    hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
-//    logic.decode(bitstream,x,y);
-//	/**
-//	 * 
-//	 * 
-//	 * */
-//	 std::array<char, 2> msg = {{x, y}};
-//	rL->receivedMsgstd(msg);
-//    hwlib::cout << "byte x = " << (int)x << "\n byte y = " << (int)y << "\n";
-//    return bitstream;
-//}
 
 void receiverController::setReceiveListener(ReceiveListener* newRL)	{
 	rL = newRL;
