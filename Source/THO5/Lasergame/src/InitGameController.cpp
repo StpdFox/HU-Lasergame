@@ -25,7 +25,9 @@ InitGameController::InitGameController(KeypadController& kpC, RunGameController*
 	msg("keypad char"),
 	nextListener{nextListener}
 {
-	oledBoundary.getGameTimeField().setLocation({ 9 * 8, 2 * 8 });
+	oledBoundary.getStatusMessageField().setLocation({4 *8  , 1 * 8 });
+	oledBoundary.getConfirmMessageField().setLocation({2 * 8, 6 * 8});
+	oledBoundary.getGameTimeField().setLocation({ 4 * 8, 5 * 8 });
 }
 
 void InitGameController::handleMessageKey(char c)  {
@@ -33,6 +35,7 @@ void InitGameController::handleMessageKey(char c)  {
 }
 
 void InitGameController::main()  {
+
 	for(;;) {
 		char c = msg.read();
 		KeyConsumer::handleMessageKey(*this, c);
@@ -43,9 +46,11 @@ void InitGameController::initNewCommand() {
 	commandCode[0] = 0;
 	commandCode[1] = 0;
 	commandCount = 0;
-	hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
-	stream << "\f\n\nCommand: __\nPress # when\nyou're done.";
-	oledBoundary.flush();
+	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
+	hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(), font };
+	stream << "\fInput \ntime";
+	
+	oledBoundary.flushParts();
 }
 
 bool InitGameController::validateCommand() {
@@ -80,6 +85,9 @@ void InitGameController::sendStartMessage() {
 void InitGameController::consumeChar(char c) {
 	if(state == STATE::WAITING_FOR_C && c == 'C')
 	{
+			hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(), font };
+	confirm << "\f ";
+	oledBoundary.flushParts();
 		HWLIB_TRACE << "C pressed";
 		initNewCommand();
 		HWLIB_TRACE << "state = STATE::INPUTTING_CMD";
@@ -98,9 +106,18 @@ void InitGameController::consumeChar(char c) {
 
 void InitGameController::consumeHashTag() {
 	// If the command has been validated, it can be executed
+	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
+	hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
+	hwlib::window_ostream time{ oledBoundary.getGameTimeField(),font};
 	if(state == STATE::WAITING_FOR_HASHTAG)
 	{
+		
 		HWLIB_TRACE << "# pressed";
+		time << "\f* to";
+		confirm <<"\fstart others";
+		stream << "\f# to send";
+		
+		oledBoundary.flushParts();
 		if(validateCommand()) {
 			HWLIB_TRACE << "command is valid";
 			char16_t timeBits = irEntity.logic.encode(0, (commandCode[0] - '0') * 10 + (commandCode[1] - '0'));
@@ -108,34 +125,37 @@ void InitGameController::consumeHashTag() {
 			hwlib::cout.base(2);
 			HWLIB_TRACE << playerInfo.getCompiledBits() << "\n";
 			HWLIB_TRACE << "state = STATE::SENDING_CMD";
-			
-			hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
-			stream << "\f\n\nPress # to send\nthe command.\n\nPress * when\nyou're done.";
-			oledBoundary.flush();
-			
 			state = STATE::SENDING_CMD;
 		} else {
 			HWLIB_TRACE << "command is not valid";
 			HWLIB_TRACE << "state = STATE::INPUTTING_CMD";
 			state = STATE::INPUTTING_CMD;
+			stream << "\f invalid";
+			oledBoundary.flushParts();
 			initNewCommand();
 		}
+		
 	}
 	else if(state == STATE::SENDING_CMD)
 	{
+		
 		sendMessage();
 	}
+	
 }
 
 void InitGameController::consumeWildcard() {
 	// Send a start message
 	if(state == STATE::SENDING_CMD)
 	{
-		hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };
-		stream << "\f\n\nPress * to send\nthe start command.\n\nPress C to start\nplaying.";
-		oledBoundary.flush();
+		hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
+		hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
+		hwlib::window_ostream time{oledBoundary.getGameTimeField(),font};
+		stream << "\fC to start\nGame";
+		time << "\f  ";
+		oledBoundary.flushParts();
 		
-		char16_t timeBits = irEntity.logic.encode(0, 1);
+		char16_t timeBits = irEntity.logic.encode(0, 0);
 		playerInfo.setCompiledBits(timeBits);
 		HWLIB_TRACE << "state = STATE::SENDING_START_CMD";
 		state = STATE::SENDING_START_CMD;
@@ -152,6 +172,8 @@ void InitGameController::consumeDigits(char c) {
 		HWLIB_TRACE << c << " pressed";
 		commandCode[commandCount++] = c;
 		hwlib::window_ostream timeStream{ oledBoundary.getGameTimeField(), font };
+		hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
+		timeStream << "\f_";
 		if(commandCount == 1)
 		{
 			timeStream << "\f" << c << "_";
@@ -160,8 +182,12 @@ void InitGameController::consumeDigits(char c) {
 		{
 			timeStream << "\f" << commandCode[0] << c;
 			HWLIB_TRACE << "state = STATE::WAITING_FOR_HASHTAG";
+			confirm << "\f# to confirm";
+		
 			state = STATE::WAITING_FOR_HASHTAG;
 		}
+		confirm << "\f# to confirm";
 		oledBoundary.flushParts();
+		
 	}
 }
