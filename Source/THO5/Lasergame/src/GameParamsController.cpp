@@ -163,10 +163,11 @@ void GameParamsController::consumeWildcard()
 
 void GameParamsController::consumeDigits(char c) {
 	hwlib::window_ostream confirmStream{ oledBoundary.getConfirmMessageField(), font};
+	hwlib::window_ostream playerIDStream{ oledBoundary.getPlayerNumberInputField(), font };
 	if(state == STATE::INPUTTING_PLAYER_ID || state == STATE::WAITING_FOR_B) {
 		playerID = c - '0';
 		HWLIB_TRACE << c - '0';
-		hwlib::window_ostream playerIDStream{ oledBoundary.getPlayerNumberInputField(), font };
+		
 		playerIDStream << "\f" << c;
 		
 		confirmStream << "B to Confirm";

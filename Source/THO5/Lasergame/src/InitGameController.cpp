@@ -113,9 +113,10 @@ void InitGameController::consumeHashTag() {
 	{
 		
 		HWLIB_TRACE << "# pressed";
-		confirm <<"\f  * to start";
+		time << "\f* to";
+		confirm <<"\fstart others";
 		stream << "\f# to send";
-		time << "\f ";
+		
 		oledBoundary.flushParts();
 		if(validateCommand()) {
 			HWLIB_TRACE << "command is valid";
@@ -154,7 +155,7 @@ void InitGameController::consumeWildcard() {
 		time << "\f  ";
 		oledBoundary.flushParts();
 		
-		char16_t timeBits = irEntity.logic.encode(0, 1);
+		char16_t timeBits = irEntity.logic.encode(0, 0);
 		playerInfo.setCompiledBits(timeBits);
 		HWLIB_TRACE << "state = STATE::SENDING_START_CMD";
 		state = STATE::SENDING_START_CMD;
@@ -172,6 +173,7 @@ void InitGameController::consumeDigits(char c) {
 		commandCode[commandCount++] = c;
 		hwlib::window_ostream timeStream{ oledBoundary.getGameTimeField(), font };
 		hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
+		timeStream << "\f_";
 		if(commandCount == 1)
 		{
 			timeStream << "\f" << c << "_";
