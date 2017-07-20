@@ -43,7 +43,7 @@ public:
 	/// author Matthijs Vos
 	/// \brief Checks whether or not the IR message contains a start bit
 	/// \return int Startbit of the message
-	int getStartBit();
+//	int getStartBit();
 	
 	/// author Ferdi Stoeltie
 	/// \brief Sets the ReceiveListener that the received messages should be passed to and handled in.
@@ -53,11 +53,15 @@ public:
 	/// \author Matthijs Vos
 	/// \brief Gets the bit value that is determined by the pin being HIGH or LOW.
 	/// \return int Bit within message byte.
-	int getBit();
+//	int getBit();
 
 	/// \author Matthijs Vos
 	/// \brief Returns the entire message that has been retrieved by the ReceiverController.
 	/// \return char16_t Message 
-    char16_t getMessage();
+//    char16_t getMessage();
+	
+	uint16_t readMessage();
+	uint16_t readBit(unsigned int maxDelayUs = 0, unsigned int intervalUs = 0);
+	bool messageIsValid(uint16_t message);
 };
 #endif

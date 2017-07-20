@@ -1,3 +1,8 @@
+#define block_wait(ticks) { auto t = hwlib::now_ticks() + (ticks); \
+      while( hwlib::now_ticks() < t ); }
+	  
+#define sleep_non_block(ticks) { auto t = hwlib::now_ticks() + (ticks), now = t; \
+	while((now = hwlib::now_ticks()) < t) rtos::current_task()->sleep(t - now); }
 
 #ifndef PLAYERNUMBERINPUT_WIDTH
 #define PLAYERNUMBERINPUT_WIDTH 0
