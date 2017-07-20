@@ -8,6 +8,7 @@
 
 #include "GameParamsController.hpp"
 #include "OLEDBoundary.hpp"
+#include "ReceiveListener.hpp"
 #include "ir/transmitterController.hpp"
 #include "ir/messageLogic.hpp"
 
@@ -37,10 +38,16 @@ void GameParamsController::handleMessageKey(char c) {
 	msg.write(c);
 }
 
+void GameParamsController::receivedMsgstd(std::array<char, 2> msg)
+{
+	irMessageChannel.write({ msg[0], msg[1] });
+}
+
 void GameParamsController::main() {
 	initGameListener->suspend(); //TODO verzin mechanisme waarbij initGame en RunGame niet dingen doen (zoals timers laten zien) als dat nog niet moet
 	runGameListener->suspend();
 	
+	irEntity.receive.setReceiveListener(this);
 	hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };	
 	
 	stream << "\f*--------------*";
@@ -52,7 +59,6 @@ void GameParamsController::main() {
 	stream << "\n|              |";
 	stream << "\n*--------------*";
 	oledBoundary.flush();
-	
 
 	for(;;) {
 		char c = msg.read();
@@ -60,34 +66,28 @@ void GameParamsController::main() {
 	}
 }
 
-void GameParamsController::handleNewMessage(byte & receivedPlayerID , byte & receivedWeaponID)
-{
-	irMessageChannel.write({ receivedPlayerID, receivedWeaponID });
-}
-
 void GameParamsController::waitForCommands()
 {
-	irMessage message{ irMessageChannel.read() };
-	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
-	if(message.receivedPlayerID == 0 && message.receivedWeaponID > 0)
-	{
-		HWLIB_TRACE << "timeCMD received";
-		
-		stream << "\fWaiting for start";
-		oledBoundary.flush();
-		//TODO schrijf data naar de RunGameController
-	}
+	irMessage message;
+	do {
+		message = irMessageChannel.read();
+	} while(!(message.receivedPlayerID == 0 && message.receivedWeaponID > 0));
 	
-	message = irMessageChannel.read();
-	if(message.receivedPlayerID == 0 && message.receivedWeaponID == 0)
-	{
-		HWLIB_TRACE << "startCMD received";
-		//TODO stuur start signaal
-		
-		hwlib::cout << "To runGame";
-		kpC.registerNext(runGameListener);
-		runGameListener->resume();
-	}
+	HWLIB_TRACE << "timeCMD received: " << int(message.receivedWeaponID);
+	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
+	stream << "\fWaiting for start";
+	oledBoundary.flushParts();
+	//TODO schrijf data naar de RunGameController
+	
+	do {
+		message = irMessageChannel.read();
+	} while(!(message.receivedPlayerID == 0 && message.receivedWeaponID == 0));
+	HWLIB_TRACE << "startCMD received";
+	//TODO stuur start signaal
+	
+	HWLIB_TRACE << "To runGame";
+	kpC.registerNext(runGameListener);
+	runGameListener->resume();
 }
 
 void GameParamsController::consumeChar(char c) {
@@ -141,7 +141,7 @@ void GameParamsController::consumeHashTag() {
 			stream << "\fWaiting \nfor time.";
 			confirmStream << "\f  ";
 			oledBoundary.flushParts();
-			HWLIB_TRACE << "state = WAITING_FOR_GAMETIME_CMD";
+			HWLIB_TRACE << "state = WAITING_FOR_COMMANDS";
 			state = STATE::WAITING_FOR_COMMANDS;
 			waitForCommands();
 		}

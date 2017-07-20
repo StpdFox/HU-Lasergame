@@ -1,8 +1,8 @@
 #define block_wait(ticks) { auto t = hwlib::now_ticks() + (ticks); \
-while( hwlib::now_ticks() < t ); }
-
+      while( hwlib::now_ticks() < t ); }
+	  
 #define sleep_non_block(ticks) { auto t = hwlib::now_ticks() + (ticks), now = t; \
-while((now = hwlib::now_ticks()) < t) rtos::current_task()->sleep(t - now); }
+	while((now = hwlib::now_ticks()) < t) rtos::current_task()->sleep(t - now); }
 
 #define STATUSMESSAGEFIELD_WIDTH 10
 

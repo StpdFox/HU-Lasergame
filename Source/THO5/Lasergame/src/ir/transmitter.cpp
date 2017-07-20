@@ -5,16 +5,16 @@
 void transmitter::sendOne()
 {
 	sendPin.set(1);
-	block_wait(1600*rtos::us);
+	block_wait(1600 * rtos::us);
 	sendPin.set(0);
-	block_wait(800*rtos::us);
+	block_wait(800 * rtos::us);
 }
 void transmitter::sendZero()
 {
 	sendPin.set(1);
-	block_wait(800*rtos::us);
+	block_wait(800 * rtos::us);
 	sendPin.set(0);
-	block_wait(1600*rtos::us);
+	block_wait(1600 * rtos::us);
 }
 void transmitter::setZero()
 {
@@ -23,7 +23,7 @@ void transmitter::setZero()
 void transmitter::sendMessage(char16_t message)
 {
 	hwlib::cout.base(2);
-	HWLIB_TRACE << message;
+	HWLIB_TRACE << message << "\n";
 	for(int nMessage = 0; nMessage < 2; nMessage++)
 	{
 		for(int i = 15; i >= 0; i--)
@@ -39,6 +39,6 @@ void transmitter::sendMessage(char16_t message)
 
 			}
 		}
-		sleep_non_block(3*rtos::ms);
+		sleep_non_block(3 * rtos::ms);
 	}
 }

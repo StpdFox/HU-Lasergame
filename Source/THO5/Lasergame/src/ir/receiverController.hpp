@@ -39,25 +39,20 @@ public:
 	/// \param messageLogic& logic Message type that ensures correct message logic.
 	/// \param unsigned_int priority Priority that is passed to the underlying RTOS task.
 	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic,unsigned int priority );
-
-	/// author Matthijs Vos
-	/// \brief Checks whether or not the IR message contains a start bit
-	/// \return int Startbit of the message
-	int getStartBit();
 	
 	/// author Ferdi Stoeltie
 	/// \brief Sets the ReceiveListener that the received messages should be passed to and handled in.
 	/// \param ReceiveListener* newRL The new ReceiveListener that should be set as active listener.
 	void setReceiveListener(ReceiveListener* newRL);
 	
-	/// \author Matthijs Vos
+	/// \author Peter Bonnema
 	/// \brief Gets the bit value that is determined by the pin being HIGH or LOW.
 	/// \return int Bit within message byte.
-	int getBit();
+	uint16_t readBit(unsigned int maxDelayUs = 0, unsigned int intervalUs = 0);
 
-	/// \author Matthijs Vos
+	/// \author Peter Bonnema
 	/// \brief Returns the entire message that has been retrieved by the ReceiverController.
 	/// \return char16_t Message 
-    char16_t getMessage();
+	uint16_t readMessage();
 };
 #endif
