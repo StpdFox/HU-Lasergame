@@ -15,27 +15,36 @@
 #include "ir/messageLogic.hpp"
 #include "RunGameController.hpp"
 
-InitGameController::InitGameController(KeypadController& kpC, RunGameController* nextListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) : 
+InitGameController::InitGameController(KeypadController& kpC, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) : 
     task(priority, "initGame task"),
 	state{ STATE::WAITING_FOR_C },
 	irEntity{ irEntity },
 	playerInfo{ playerInfo },
 	oledBoundary{ oledBoundary },
+	statusStream{ oledBoundary.getStatusMessageField(), font },
+	confirmStream{ oledBoundary.getConfirmMessageField(), font },
+	timeStream{ oledBoundary.getGameDurationInputField(), font },
 	keypadController{kpC},
 	msg("keypad char"),
-	nextListener{nextListener}
+	runGameController{runGameController},
+	startFlag{ this, "startFlag" }
 {
-	oledBoundary.getStatusMessageField().setLocation({4 *8  , 1 * 8 });
-	oledBoundary.getConfirmMessageField().setLocation({2 * 8, 6 * 8});
-	oledBoundary.getGameTimeField().setLocation({ 4 * 8, 5 * 8 });
+	oledBoundary.getStatusMessageField().setLocation({ 4 * 8, 1 * 8 });
+	oledBoundary.getConfirmMessageField().setLocation({ 2 * 8, 5 * 8 });
+	oledBoundary.getGameDurationInputField().setLocation({ 4 * 8, 4 * 8 });
 }
 
 void InitGameController::handleMessageKey(char c)  {
    msg.write(c);
 }
 
-void InitGameController::main()  {
-
+void InitGameController::main()
+{
+	wait(startFlag);
+	keypadController.registerNext(this);
+	statusStream << "\fYou are\nHost";
+	confirmStream << "\f C to setup";
+	oledBoundary.flushParts();
 	for(;;) {
 		char c = msg.read();
 		KeyConsumer::handleMessageKey(*this, c);
@@ -46,10 +55,8 @@ void InitGameController::initNewCommand() {
 	commandCode[0] = 0;
 	commandCode[1] = 0;
 	commandCount = 0;
-	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
-	hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(), font };
-	stream << "\fInput \ntime";
-	
+	statusStream << "\fInput time";
+	timeStream << "\f_";
 	oledBoundary.flushParts();
 }
 
@@ -85,78 +92,60 @@ void InitGameController::sendStartMessage() {
 void InitGameController::consumeChar(char c) {
 	if(state == STATE::WAITING_FOR_C && c == 'C')
 	{
-			hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(), font };
-	confirm << "\f ";
-	oledBoundary.flushParts();
-		HWLIB_TRACE << "C pressed";
+		confirmStream << "\f";
+		oledBoundary.flushParts();
 		initNewCommand();
 		HWLIB_TRACE << "state = STATE::INPUTTING_CMD";
 		state = STATE::INPUTTING_CMD;
 	}
 	else if(state == STATE::SENDING_START_CMD && c == 'C')
 	{
-		HWLIB_TRACE << "C pressed";
-		//TODO stuur start signaalnaar RunGameController
 		hwlib::cout << "To runGame";
-		keypadController.registerNext(nextListener);
-		nextListener->resume();
+		runGameController.startGame(gameDurationMin);
 		suspend();
 	}
 }
 
 void InitGameController::consumeHashTag() {
 	// If the command has been validated, it can be executed
-	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
-	hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
-	hwlib::window_ostream time{ oledBoundary.getGameTimeField(),font};
 	if(state == STATE::WAITING_FOR_HASHTAG)
 	{
-		
-		HWLIB_TRACE << "# pressed";
-		time << "\f* to";
-		confirm <<"\fstart others";
-		stream << "\f# to send";
-		
-		oledBoundary.flushParts();
 		if(validateCommand()) {
+			timeStream << "\f";
+			statusStream << "\f# to send\nthe cmd";
+			confirmStream << "\f* to start\nothers";
 			HWLIB_TRACE << "command is valid";
-			char16_t timeBits = irEntity.logic.encode(0, (commandCode[0] - '0') * 10 + (commandCode[1] - '0'));
+			gameDurationMin = (commandCode[0] - '0') * 10 + (commandCode[1] - '0');
+			char16_t timeBits = irEntity.logic.encode(0, gameDurationMin);
 			playerInfo.setCompiledBits(timeBits); //playerInformation is the object in the transmitterController
-			hwlib::cout.base(2);
-			HWLIB_TRACE << playerInfo.getCompiledBits() << "\n";
+			HWLIB_TRACE << hwlib::bin << playerInfo.getCompiledBits() << "\n";
 			HWLIB_TRACE << "state = STATE::SENDING_CMD";
 			state = STATE::SENDING_CMD;
 		} else {
 			HWLIB_TRACE << "command is not valid";
+			statusStream << "\finvalid"; 
+			initNewCommand();
 			HWLIB_TRACE << "state = STATE::INPUTTING_CMD";
 			state = STATE::INPUTTING_CMD;
-			stream << "\f invalid";
-			oledBoundary.flushParts();
-			initNewCommand();
 		}
-		
+		oledBoundary.flushParts();
 	}
 	else if(state == STATE::SENDING_CMD)
 	{
-		
 		sendMessage();
 	}
-	
 }
 
 void InitGameController::consumeWildcard() {
 	// Send a start message
 	if(state == STATE::SENDING_CMD)
 	{
-		hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
-		hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
-		hwlib::window_ostream time{oledBoundary.getGameTimeField(),font};
-		stream << "\fC to start\nGame";
-		time << "\f  ";
+		statusStream << "\fC to start\nGame";
+		timeStream << "\f";
 		oledBoundary.flushParts();
 		
-		char16_t timeBits = irEntity.logic.encode(0, 0);
-		playerInfo.setCompiledBits(timeBits);
+		char16_t commandBits = irEntity.logic.encode(0, 0);
+		playerInfo.setCompiledBits(commandBits);
 		HWLIB_TRACE << "state = STATE::SENDING_START_CMD";
 		state = STATE::SENDING_START_CMD;
 	}
@@ -171,9 +160,6 @@ void InitGameController::consumeDigits(char c) {
 	{
 		HWLIB_TRACE << c << " pressed";
 		commandCode[commandCount++] = c;
-		hwlib::window_ostream timeStream{ oledBoundary.getGameTimeField(), font };
-		hwlib::window_ostream confirm{ oledBoundary.getConfirmMessageField(),font};
-		timeStream << "\f_";
 		if(commandCount == 1)
 		{
 			timeStream << "\f" << c << "_";
@@ -181,13 +167,15 @@ void InitGameController::consumeDigits(char c) {
 		else if(commandCount == 2)
 		{
 			timeStream << "\f" << commandCode[0] << c;
-			HWLIB_TRACE << "state = STATE::WAITING_FOR_HASHTAG";
-			confirm << "\f# to confirm";
+			confirmStream << "\f\n# to confirm";
 		
+			HWLIB_TRACE << "state = STATE::WAITING_FOR_HASHTAG";
 			state = STATE::WAITING_FOR_HASHTAG;
 		}
-		confirm << "\f# to confirm";
 		oledBoundary.flushParts();
-		
 	}
+}
+void InitGameController::start()
+{
+	startFlag.set();
 }

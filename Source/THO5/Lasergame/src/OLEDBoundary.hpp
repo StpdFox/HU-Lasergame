@@ -96,11 +96,10 @@ private:
 	void flush() {
 		if(dirty)
 		{
-			command( COLUMNADDR,  start.x,  width+start.x-1);
-			command( PAGEADDR,    start.y / 8,    (height + start.y) / 8-1 );			
+			command( COLUMNADDR,  start.x,		width + start.x - 1);
+			command( PAGEADDR,    start.y / 8,	(height + start.y) / 8 - 1 );			
 			for(unsigned int y = 0; y < height / 8; y++)
 			{
-
 				for(unsigned int x = 0; x < width; x++)
 				{
 					byte d = buffer[ x + width * y ];
@@ -129,10 +128,11 @@ public:
 		start(start)
 	{ }
    
-	virtual void clear() {
+	virtual void clear() override {
 		for(unsigned int i = 0; i < sizeof(buffer) / sizeof(uint8_t); i++) {
 			buffer[i] = 0x00;
 		}
+		dirty = true;
 	}
 	
 	void setLocation(const hwlib::location& loc)

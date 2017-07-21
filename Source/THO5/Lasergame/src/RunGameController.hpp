@@ -43,64 +43,62 @@ typedef struct IREntity {
 class RunGameController : public rtos::task<>, public KeypadListener, public ReceiveListener, private KeyConsume {
 private:
 	// A reference to the keypad controller. This is required to register itself as a listener
-   KeypadController& kpC;
-   
-   // A reference to a sound interface. ISound.setSound is required to set an active sound.
-   ISound& sound;
-   
-   // The OLEDBoundary hardware interface object.
-   OLEDBoundary& oledBoundary;
-   
-   // RTOS
-   rtos::pool<char> keypadMsgPool;
-   //std::array<char, 2> commandCode { {'0', '0' } };
-   rtos::pool<std::array<char, 2>> irMsgPool;
-   rtos::flag keypadFlag;
-   rtos::flag irMsgFlag;
-   irentity irE;
-   rtos::clock gameTimeSecondsClock;
-   
-   
+	KeypadController& kpC;
+
+	// A reference to a sound interface. ISound.setSound is required to set an active sound.
+	ISound& sound;
+
+	// The OLEDBoundary hardware interface object.
+	OLEDBoundary& oledBoundary;
+	hwlib::font_default_8x8 font;
+	hwlib::window_ostream oledStream, gameTimeStream;
+
+	// RTOS
+	rtos::pool<char> keypadMsgPool;
+	rtos::pool<std::array<char, 2>> irMsgPool;
+	rtos::pool<byte> durationPool;
+	rtos::flag startFlag, keypadFlag, irMsgFlag;
+	irentity irE;
+	rtos::clock gameTimeSecondsClock;
+
 	//get and set gameParameters
 	playerInformation playerInfo;
-	
-   // Primitive data types
-   int startOfGameTimestamp;
-   int gameDurationMin;
 
+	// Primitive data types
+	int startOfGameTimestamp;
+	int gameDurationMin;
+   
 public:
 
 	/// \author Matthijs Vos
-   /// \author Peter Bonnema 
-   /// \author Marianne Delmaar
-   /// \author Ferdi Stoeltie
-   /// \brief Constructor that needs to be called to initialize the \c RunGameController \c instance.
-   /// \param[in] kpC A reference tot the KeypadController.
-   /// \param[in] sound A handle to the ISound interface.
-   /// \param[in] oledBoundary a reference to the oledBoundary object.
-   /// \param Priority of this rtos::task.
-   RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority );
-   ~RunGameController();
-	
-	   rtos::channel<char16_t,10> receiverMessageChannel;
-   void main() override;
-   /// \author Matthijs Vos
-   /// \author Ferdi Stoeltie
-   /// \brief Method that is inherited from interface \c KeypadListener \c.
-   /// 			In here the key that is being pressed by the KeypadController will be handled.
-   void handleMessageKey(char c);
-   
-   	void consumeChar(char c);
+	/// \author Peter Bonnema 
+	/// \author Marianne Delmaar
+	/// \author Ferdi Stoeltie
+	/// \brief Constructor that needs to be called to initialize the \c RunGameController \c instance.
+	/// \param[in] kpC A reference tot the KeypadController.
+	/// \param[in] sound A handle to the ISound interface.
+	/// \param[in] oledBoundary a reference to the oledBoundary object.
+	/// \param Priority of this rtos::task.
+	RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority);
+	~RunGameController();
+
+	void main() override;
+	/// \author Matthijs Vos
+	/// \author Ferdi Stoeltie
+	/// \brief Method that is inherited from interface \c KeypadListener \c.
+	/// 			In here the key that is being pressed by the KeypadController will be handled.
+	void handleMessageKey(char c);
+
+	void consumeChar(char c);
 	void consumeHashTag();
 	void consumeWildcard();
 	void consumeDigits(char c);
+
+	void handleReceivedMessage(const std::array<char, 2>& msg);
+
+	void receivedMsgstd(const std::array<char, 2>& msg) override;
 	
-	void handleReceivedMessage(auto msg);
-	
-	void receivedMsgstd(std::array<char, 2> msg) {
-		irMsgPool.write(msg);
-		irMsgFlag.set();
-	}
+	void startGame(byte durationMin);
 };
 
 #endif //RUNGAMECONTROLLER_HPP

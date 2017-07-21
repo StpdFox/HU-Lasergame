@@ -43,10 +43,10 @@ public:
 	/// \brief Controller task for game params like player id and weapon damage.
 	/// \param Priority of this rtos::task.
 	
-	GameParamsController(KeypadController& kpC, InitGameController* initGameListener, RunGameController* runGameListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
+	GameParamsController(KeypadController& kpC, InitGameController& initGameController, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
 	~GameParamsController();
 	
-	void receivedMsgstd(std::array<char, 2> msg) override;
+	void receivedMsgstd(const std::array<char, 2>& msg) override;
 	
 private:
 	enum STATE
@@ -63,10 +63,11 @@ private:
 	playerInformation& playerInfo;
 	hwlib::font_default_8x8 font;
 	OLEDBoundary& oledBoundary;
+	hwlib::window_ostream oledStream, statusStream, playerIDStream, confirmStream, weaponIDStream;
 	KeypadController& kpC; // The owner
     rtos::mailbox<char> msg;
-    InitGameController* initGameListener;
-	RunGameController* runGameListener;
+    InitGameController& initGameController;
+	RunGameController& runGameController;
 	
 	int playerID;
 	int weaponID;

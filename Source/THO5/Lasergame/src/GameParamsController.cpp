@@ -12,21 +12,26 @@
 #include "ir/transmitterController.hpp"
 #include "ir/messageLogic.hpp"
 
-GameParamsController::GameParamsController(KeypadController& kpC, InitGameController* initGameListener, RunGameController* runGameListener, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) : 
+GameParamsController::GameParamsController(KeypadController& kpC, InitGameController& initGameController, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) : 
 	rtos::task<>{ priority, "GameParamsController" },
 	state{ STATE::WAITING_FOR_A },
 	irEntity{ irEntity },
 	playerInfo{ playerInfo },
+	font{ },
 	oledBoundary{ oledBoundary },
+	oledStream{ oledBoundary.getBufferedLCD(), font },
+	statusStream{ oledBoundary.getStatusMessageField(), font },
+	playerIDStream{ oledBoundary.getPlayerNumberInputField(), font },
+	confirmStream{ oledBoundary.getConfirmMessageField(), font },
+	weaponIDStream{ oledBoundary.getFirePowerInputField(), font },
 	kpC{kpC},
 	msg("keypad char"),
-	initGameListener{initGameListener},
-	runGameListener{runGameListener},
+	initGameController{initGameController},
+	runGameController{runGameController},
 	irMessageChannel{ this, "irMessageChannel" }
 {
-	oledBoundary.getStatusMessageField().setLocation({4 *8  , 1 * 8 });
-	oledBoundary.getConfirmMessageField().setLocation({2 * 8, 6 * 8});
-	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 5 * 8 });
+	oledBoundary.getStatusMessageField().setLocation({ 4 * 8, 1 * 8 });
+	oledBoundary.getConfirmMessageField().setLocation({ 2 * 8, 5 * 8 });
 	oledBoundary.getPlayerNumberInputField().setLocation({ 4 * 8, 4 * 8 });
 	oledBoundary.getFirePowerInputField().setLocation({ 4 * 8, 4 * 8 });
 }
@@ -38,26 +43,23 @@ void GameParamsController::handleMessageKey(char c) {
 	msg.write(c);
 }
 
-void GameParamsController::receivedMsgstd(std::array<char, 2> msg)
+void GameParamsController::receivedMsgstd(const std::array<char, 2>& msg)
 {
 	irMessageChannel.write({ msg[0], msg[1] });
 }
 
-void GameParamsController::main() {
-	initGameListener->suspend(); //TODO verzin mechanisme waarbij initGame en RunGame niet dingen doen (zoals timers laten zien) als dat nog niet moet
-	runGameListener->suspend();
+void GameParamsController::main()
+{
+	irEntity.receive.setReceiveListener(this);	
 	
-	irEntity.receive.setReceiveListener(this);
-	hwlib::window_ostream stream{ oledBoundary.getBufferedLCD(), font };	
-	
-	stream << "\f*--------------*";
-	stream << "\n|   Welcome!   |";
-	stream << "\n|   Press A    |";
-	stream << "\n|              |";
-	stream << "\n|              |";
-	stream << "\n|              |";
-	stream << "\n|              |";
-	stream << "\n*--------------*";
+	oledStream << "\f*--------------*";
+	oledStream << "\n|   Welcome!   |";
+	oledStream << "\n|   Press A    |";
+	oledStream << "\n|              |";
+	oledStream << "\n|              |";
+	oledStream << "\n|              |";
+	oledStream << "\n|              |";
+	oledStream << "\n*--------------*";
 	oledBoundary.flush();
 
 	for(;;) {
@@ -72,74 +74,55 @@ void GameParamsController::waitForCommands()
 	do {
 		message = irMessageChannel.read();
 	} while(!(message.receivedPlayerID == 0 && message.receivedWeaponID > 0));
-	
-	HWLIB_TRACE << "timeCMD received: " << int(message.receivedWeaponID);
-	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
-	stream << "\fWaiting for start";
+	byte gameDuration = message.receivedWeaponID;
+	HWLIB_TRACE << "timeCMD received: " << int(gameDuration);
+	statusStream << "\fWaiting\nfor start";
 	oledBoundary.flushParts();
-	//TODO schrijf data naar de RunGameController
 	
 	do {
 		message = irMessageChannel.read();
 	} while(!(message.receivedPlayerID == 0 && message.receivedWeaponID == 0));
 	HWLIB_TRACE << "startCMD received";
-	//TODO stuur start signaal
-	
 	HWLIB_TRACE << "To runGame";
-	kpC.registerNext(runGameListener);
-	runGameListener->resume();
+	runGameController.startGame(gameDuration);
 }
 
 void GameParamsController::consumeChar(char c) {
 	
 	if(state == STATE::WAITING_FOR_A && c == 'A')
 	{
-		HWLIB_TRACE << "A pressed";
-		hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
-		
-		stream << "\fEnter\nPlayerID";
-		
+		statusStream << "\fEnter\nPlayerID";
+		playerIDStream << "\f_";
 		oledBoundary.flushParts();
-		
 		HWLIB_TRACE << "state = INPUTTING_PLAYER_ID";
 		state = STATE::INPUTTING_PLAYER_ID;
 	}
 	else if(state == STATE::WAITING_FOR_B && c == 'B')
 	{
-		hwlib::window_ostream pIDstream{oledBoundary.getPlayerNumberInputField(),font};
-		pIDstream << "\f ";
-		hwlib::window_ostream confirmStream{oledBoundary.getConfirmMessageField(), font};
-		confirmStream << "\f        ";
-		HWLIB_TRACE << "B pressed";
+		playerIDStream << "\f";
+		confirmStream << "\f";
+		weaponIDStream << "\f_";
 		playerInfo.setPlayerID(playerID);
 		hwlib::cout << "playerID: " << int(playerID) << "\n";
-		hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
-		
-		stream << "\fEnter\nWeaponID";
-
+		statusStream << "\fEnter\nWeaponID";
 		oledBoundary.flushParts();
-		
 		HWLIB_TRACE << "state = INPUTTING_WEAPON_ID";
 		state = STATE::INPUTTING_WEAPON_ID;
 	}
 }
 
 void GameParamsController::consumeHashTag() {
-	hwlib::window_ostream confirmStream{ oledBoundary.getConfirmMessageField(), font};
-	hwlib::window_ostream weaponIDStream{ oledBoundary.getFirePowerInputField(), font };
-	hwlib::window_ostream stream{ oledBoundary.getStatusMessageField(), font };
-
-	weaponIDStream << "\f  ";
+	weaponIDStream << "\f";
 	oledBoundary.flushParts();
-	if(state == STATE::WAITING_FOR_HASHTAG) {
-
+	if(state == STATE::WAITING_FOR_HASHTAG)
+	{
 		HWLIB_TRACE << "# pressed";
 		playerInfo.setWeaponID(weaponID);
 		hwlib::cout << "WeaponDMG: " << int(weaponID) << "\n";
 		if(playerID > 0)
 		{
-			stream << "\fWaiting \nfor time.";
-			confirmStream << "\f  ";
+			statusStream << "\fWaiting\nfor time.";
+			confirmStream << "\f";
 			oledBoundary.flushParts();
 			HWLIB_TRACE << "state = WAITING_FOR_COMMANDS";
 			state = STATE::WAITING_FOR_COMMANDS;
@@ -147,12 +130,8 @@ void GameParamsController::consumeHashTag() {
 		}
 		else
 		{
-			stream << "\fYou are \nHost";
-			confirmStream << "\f C to setup";
-			oledBoundary.flushParts();
 			hwlib::cout << "To initGame";
-			kpC.registerNext(initGameListener);
-			initGameListener->resume();
+			initGameController.start();
 			suspend();
 		}
 	}
@@ -162,25 +141,18 @@ void GameParamsController::consumeWildcard()
 {}
 
 void GameParamsController::consumeDigits(char c) {
-	hwlib::window_ostream confirmStream{ oledBoundary.getConfirmMessageField(), font};
-	hwlib::window_ostream playerIDStream{ oledBoundary.getPlayerNumberInputField(), font };
 	if(state == STATE::INPUTTING_PLAYER_ID || state == STATE::WAITING_FOR_B) {
 		playerID = c - '0';
-		HWLIB_TRACE << c - '0';
-		
 		playerIDStream << "\f" << c;
-		
-		confirmStream << "B to Confirm";
+		confirmStream << "\f\nB to Confirm";
 		oledBoundary.flushParts();
 		HWLIB_TRACE << "state = WAITING_FOR_B";
 		state = STATE::WAITING_FOR_B;
 	}
 	else if(state == STATE::INPUTTING_WEAPON_ID || state == STATE::WAITING_FOR_HASHTAG) {
 		weaponID = c - '0';
-		confirmStream << "\f";
-		hwlib::window_ostream weaponIDStream{ oledBoundary.getFirePowerInputField(), font };
 		weaponIDStream << "\f" << c;
-		confirmStream << "\f# to Confirm";
+		confirmStream << "\f\n# to Confirm";
 		oledBoundary.flushParts();
 		HWLIB_TRACE << "state = WAITING_FOR_HASHTAG";
 		state = STATE::WAITING_FOR_HASHTAG;
