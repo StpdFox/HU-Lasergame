@@ -75,7 +75,7 @@ int main( void ){
 	KeypadController kpC = KeypadController(keypad, 15);
 	OLEDBoundary oledBoundary{ 17 };
 	auto sC = SpeakerController(lsp, 14);
-	auto rGC = RunGameController(kpC, sC, oledBoundary, IRE, 19);
+	auto rGC = RunGameController(kpC, sC, oledBoundary, playerInformation, IRE, 19);
 	auto iGC = InitGameController(kpC, rGC, oledBoundary, playerInformation, IRE, 13);
 	auto gPC = GameParamsController(kpC, iGC, rGC, oledBoundary, playerInformation, IRE, 16);
 

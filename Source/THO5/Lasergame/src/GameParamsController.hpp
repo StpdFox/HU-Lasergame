@@ -69,9 +69,6 @@ private:
     InitGameController& initGameController;
 	RunGameController& runGameController;
 	
-	int playerID;
-	int weaponID;
-	
 	typedef struct { byte receivedPlayerID; byte receivedWeaponID; } irMessage;
 	rtos::channel<irMessage, 1> irMessageChannel;
 	

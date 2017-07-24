@@ -102,8 +102,7 @@ void GameParamsController::consumeChar(char c) {
 		playerIDStream << "\f";
 		confirmStream << "\f";
 		weaponIDStream << "\f_";
-		playerInfo.setPlayerID(playerID);
-		hwlib::cout << "playerID: " << int(playerID) << "\n";
+		hwlib::cout << "playerID: " << int(playerInfo.getPlayerID()) << "\n";
 		statusStream << "\fEnter\nWeaponID";
 		oledBoundary.flushParts();
 		HWLIB_TRACE << "state = INPUTTING_WEAPON_ID";
@@ -117,9 +116,8 @@ void GameParamsController::consumeHashTag() {
 	if(state == STATE::WAITING_FOR_HASHTAG)
 	{
 		HWLIB_TRACE << "# pressed";
-		playerInfo.setWeaponID(weaponID);
-		hwlib::cout << "WeaponDMG: " << int(weaponID) << "\n";
-		if(playerID > 0)
+		hwlib::cout << "WeaponDMG: " << int(playerInfo.getWeaponID()) << "\n";
+		if(playerInfo.getPlayerID() > 0)
 		{
 			statusStream << "\fWaiting\nfor time.";
 			confirmStream << "\f";
@@ -132,8 +130,8 @@ void GameParamsController::consumeHashTag() {
 		{
 			hwlib::cout << "To initGame";
 			initGameController.start();
-			suspend();
 		}
+		suspend();
 	}
 }
 
@@ -142,7 +140,7 @@ void GameParamsController::consumeWildcard()
 
 void GameParamsController::consumeDigits(char c) {
 	if(state == STATE::INPUTTING_PLAYER_ID || state == STATE::WAITING_FOR_B) {
-		playerID = c - '0';
+		playerInfo.setPlayerID(c - '0');
 		playerIDStream << "\f" << c;
 		confirmStream << "\f\nB to Confirm";
 		oledBoundary.flushParts();
@@ -150,7 +148,7 @@ void GameParamsController::consumeDigits(char c) {
 		state = STATE::WAITING_FOR_B;
 	}
 	else if(state == STATE::INPUTTING_WEAPON_ID || state == STATE::WAITING_FOR_HASHTAG) {
-		weaponID = c - '0';
+		playerInfo.setWeaponID(c - '0');
 		weaponIDStream << "\f" << c;
 		confirmStream << "\f\n# to Confirm";
 		oledBoundary.flushParts();

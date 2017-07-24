@@ -58,15 +58,13 @@ private:
 	rtos::pool<std::array<char, 2>> irMsgPool;
 	rtos::pool<byte> durationPool;
 	rtos::flag startFlag, keypadFlag, irMsgFlag;
-	irentity irE;
+	irentity& irE;
 	rtos::clock gameTimeSecondsClock;
 
 	//get and set gameParameters
-	playerInformation playerInfo;
-
-	// Primitive data types
-	int startOfGameTimestamp;
-	int gameDurationMin;
+	playerInformation& playerInfo;
+	
+	void doCountDown(int seconds);
    
 public:
 
@@ -79,7 +77,7 @@ public:
 	/// \param[in] sound A handle to the ISound interface.
 	/// \param[in] oledBoundary a reference to the oledBoundary object.
 	/// \param Priority of this rtos::task.
-	RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority);
+	RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irE, unsigned int priority);
 	~RunGameController();
 
 	void main() override;
@@ -95,9 +93,7 @@ public:
 	void consumeDigits(char c);
 
 	void handleReceivedMessage(const std::array<char, 2>& msg);
-
 	void receivedMsgstd(const std::array<char, 2>& msg) override;
-	
 	void startGame(byte durationMin);
 };
 

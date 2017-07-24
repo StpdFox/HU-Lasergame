@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Session Name="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\THO5.workspace">
-  <int Value="4" Name="m_selectedTab"/>
+  <int Value="2" Name="m_selectedTab"/>
   <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\THO5.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
-      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\main.cpp" Name="FileName"/>
-      <int Value="66" Name="FirstVisibleLine"/>
-      <int Value="79" Name="CurrentLine"/>
+      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\RunGameController.cpp" Name="FileName"/>
+      <int Value="115" Name="FirstVisibleLine"/>
+      <int Value="128" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\RunGameController.cpp" Name="FileName"/>
-      <int Value="34" Name="FirstVisibleLine"/>
-      <int Value="45" Name="CurrentLine"/>
+      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\RunGameController.hpp" Name="FileName"/>
+      <int Value="84" Name="FirstVisibleLine"/>
+      <int Value="96" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\Makefile" Name="FileName"/>
-      <int Value="11" Name="FirstVisibleLine"/>
-      <int Value="31" Name="CurrentLine"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="20" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\GameParamsController.cpp" Name="FileName"/>
-      <int Value="130" Name="FirstVisibleLine"/>
-      <int Value="154" Name="CurrentLine"/>
+      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\main.cpp" Name="FileName"/>
+      <int Value="58" Name="FirstVisibleLine"/>
+      <int Value="77" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\ir\transmitterController.cpp" Name="FileName"/>
+      <int Value="6" Name="FirstVisibleLine"/>
+      <int Value="22" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\InitGameController.cpp" Name="FileName"/>
-      <int Value="131" Name="FirstVisibleLine"/>
-      <int Value="152" Name="CurrentLine"/>
+      <int Value="85" Name="FirstVisibleLine"/>
+      <int Value="103" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\InitGameController.hpp" Name="FileName"/>
-      <int Value="8" Name="FirstVisibleLine"/>
-      <int Value="8" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\defines.h" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="12" Name="CurrentLine"/>
+      <wxString Value="C:\Users\Peter\Downloads\School\THO05_Devices\Lasergame_repo\Source\THO5\Lasergame\src\GameParamsController.cpp" Name="FileName"/>
+      <int Value="110" Name="FirstVisibleLine"/>
+      <int Value="142" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>

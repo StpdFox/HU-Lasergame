@@ -10,7 +10,7 @@
 #include "RunGameController.hpp"
 #include "OLEDBoundary.hpp"
 
-RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, unsigned int priority ) :
+RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irE, unsigned int priority) :
 	rtos::task<>{ priority, "RunGameController" },
 	kpC{kpC}, sound{sound}, 
 	oledBoundary{ oledBoundary },
@@ -25,9 +25,7 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	irMsgFlag{this, "irMsgFlag"},
 	irE{ irE },
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" },
-	playerInfo{ },
-	startOfGameTimestamp{ 0 },
-	gameDurationMin{ 0 }
+	playerInfo{ playerInfo }
 {
 	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 6 * 8 });
 }
@@ -39,15 +37,21 @@ RunGameController::~RunGameController()
 void RunGameController::main()
 {
 	wait(startFlag);
+	int gameDurationMin = durationPool.read();
 	kpC.registerNext(this);
-	HWLIB_TRACE << "start game!\n";
+	irE.receive.setReceiveListener(this);
+	playerInfo.setCompiledBits(irE.logic.encode(playerInfo.getPlayerID(), playerInfo.getWeaponID()));
+	HWLIB_TRACE << "start RunGameController!\n";
 	
-	//hier moet ergens die getMessage van receiverController komen te staan om de hits te maken
+	//TODO hier moet ergens die getMessage van receiverController komen te staan om de hits te maken
 	oledStream << "\f";
 	oledBoundary.flush();
 	
-	startOfGameTimestamp = hwlib::now_us();
-	gameDurationMin = durationPool.read();
+	int countdownSec = 20;
+	doCountDown(countdownSec);
+	sound.setSound(Sounds::START_GAME);
+	
+	int startOfGameTimestamp = hwlib::now_us();
 	while(true)
 	{
 		const rtos::event& event = wait();
@@ -65,10 +69,23 @@ void RunGameController::main()
 			
 			if(remainingTimeSec <= 0)
 			{
+				sound.setSound(Sounds::END_GAME);
 				HWLIB_TRACE << "Game over!";
-				while(true) sleep(10);
+				suspend();
 			}
 		}
+	}
+}
+
+void RunGameController::doCountDown(int seconds)
+{
+	int startOfGameTimestamp = hwlib::now_us(), remainingTimeSec = 1;
+	while(remainingTimeSec > 0)
+	{
+		remainingTimeSec = seconds - (hwlib::now_us() - startOfGameTimestamp) / 1'000'000;
+		gameTimeStream << "\f" << remainingTimeSec / 60 << ":" << remainingTimeSec % 60;
+		oledBoundary.flushParts();
+		//TODO beep geluid
 	}
 }
 

@@ -20,7 +20,7 @@ public:
 	}
 
 	void setCompiledBits(char16_t value){
-		compiledBits = value;
+		this->compiledBits = value;
 	}
 	
 	byte getPlayerID(){
@@ -28,7 +28,7 @@ public:
 	}
 	
 	void setPlayerID(byte playerID){
-		playerID = playerID;
+		this->playerID = playerID;
 	}
 	
 	byte getWeaponID(){
@@ -36,36 +36,36 @@ public:
 	}
 	
 	void setWeaponID(byte weaponID){
-		weaponID = weaponID;
+		this->weaponID = weaponID;
 	}
 	
 	int getPlayerHealth(){
 		return playerHealth;
 	}
 	void setPlayerHealth(int playerHealth){
-		playerHealth = playerHealth;
+		this->playerHealth = playerHealth;
 	}
 };
 
 class gameInformation{
 private:
-	int gameTimeRemaning;
+	int gameTimeRemaining;
 	bool gameRunning;
 public:
-	gameInformation(int gameTimeRemaning):
-	gameTimeRemaning(gameTimeRemaning),
+	gameInformation(int gameTimeRemaining):
+	gameTimeRemaining(gameTimeRemaining),
 	gameRunning(0)
 	{}
 
 	int getGameTime(){
-		return gameTimeRemaning;
+		return gameTimeRemaining;
 	}
 	bool getGameRunning(){
 		return gameRunning;
 	}
 
 	void setGameTime(int time){
-		gameTimeRemaning = time;
+		gameTimeRemaining = time;
 	}
 	void setGameRunning(bool state){
 		gameRunning = state;
