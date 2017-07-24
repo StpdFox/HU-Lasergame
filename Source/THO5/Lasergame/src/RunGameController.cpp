@@ -17,6 +17,7 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	font{ },
 	oledStream{ oledBoundary.getBufferedLCD(), font },
 	gameTimeStream{ oledBoundary.getGameTimeField(), font },
+	statusMessageStream{ oledBoundary.getStatusMessageField(),font},
 	keypadMsgPool{ "keypadMsgPool" },
 	irMsgPool{ "irMsgPool" },
 	durationPool{ "durationPool" },
@@ -27,7 +28,8 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" },
 	playerInfo{ playerInfo }
 {
-	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 6 * 8 });
+	
+	
 }
 
 RunGameController::~RunGameController()
@@ -36,20 +38,33 @@ RunGameController::~RunGameController()
 
 void RunGameController::main()
 {
+
 	wait(startFlag);
+	oledBoundary.getGameTimeField().setLocation({ 10 * 8, 6 * 8 });
+	oledBoundary.getStatusMessageField().setLocation({1 * 8, 1* 8});
 	int gameDurationMin = durationPool.read();
 	kpC.registerNext(this);
-	irE.receive.setReceiveListener(this);
-	playerInfo.setCompiledBits(irE.logic.encode(playerInfo.getPlayerID(), playerInfo.getWeaponID()));
+	
 	HWLIB_TRACE << "start RunGameController!\n";
 	
 	//TODO hier moet ergens die getMessage van receiverController komen te staan om de hits te maken
-	oledStream << "\f";
+	oledStream << "\f*--------------*";
+	oledStream << "\n|       |      |";
+	oledStream << "\n|       |ID: "<<(int)playerInfo.getPlayerID()<<" |";
+	oledStream << "\n|       |------|";
+	oledStream << "\n|       |DMG:"<<(int)playerInfo.getWeaponID()<<" |";
+	oledStream << "\n|-------|------|";
+	oledStream << "\n|HP:"<<playerInfo.getPlayerHealth()<<" |      |";
+	oledStream << "\n*--------------*";
 	oledBoundary.flush();
+
 	
 	int countdownSec = 20;
 	doCountDown(countdownSec);
+	irE.receive.setReceiveListener(this);
+	playerInfo.setCompiledBits(irE.logic.encode(playerInfo.getPlayerID(), playerInfo.getWeaponID()));
 	sound.setSound(Sounds::START_GAME);
+
 	
 	int startOfGameTimestamp = hwlib::now_us();
 	while(true)
@@ -59,6 +74,7 @@ void RunGameController::main()
 			KeyConsumer::handleMessageKey(*this, keypadMsgPool.read());
 		}
 		else if(event == irMsgFlag)	{
+			HWLIB_TRACE << "Got hit";
 			handleReceivedMessage(irMsgPool.read());
 		}
 		else if(event == gameTimeSecondsClock)
@@ -112,12 +128,17 @@ void RunGameController::consumeDigits(char c) {}
 void RunGameController::handleReceivedMessage(const std::array<char, 2>& msg)
 {
 	hwlib::cout << "byte01: " << (int)msg[0] << " | byte02: " << (int)msg[1] << " end of msg\n";
-	if(msg[0] != 0){
+	
+		HWLIB_TRACE << "\n true ";
 		//player hit
+		statusMessageStream << "Hi!";
+		oledBoundary.flushParts();
 		sound.setSound(Sounds::HIT);
 		playerInfo.setPlayerHealth(playerInfo.getPlayerHealth() - msg[1]);
 		hwlib::cout << "Player health: " << playerInfo.getPlayerHealth() << "\n";
-	}
+		sleep_non_block(1*rtos::s);
+		statusMessageStream << "\f";
+	
 }
 
 void RunGameController::receivedMsgstd(const std::array<char, 2>& msg)

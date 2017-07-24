@@ -50,6 +50,11 @@ void GameParamsController::receivedMsgstd(const std::array<char, 2>& msg)
 
 void GameParamsController::main()
 {
+	runGameController.startGame(10);
+	playerInfo.setPlayerID(0);
+	playerInfo.setWeaponID(1);
+
+	suspend();
 	irEntity.receive.setReceiveListener(this);	
 	
 	oledStream << "\f*--------------*";
