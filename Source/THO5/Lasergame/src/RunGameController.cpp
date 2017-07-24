@@ -17,7 +17,8 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	font{ },
 	oledStream{ oledBoundary.getBufferedLCD(), font },
 	gameTimeStream{ oledBoundary.getGameTimeField(), font },
-	statusMessageStream{ oledBoundary.getStatusMessageField(),font},
+	statusMessageStream{ oledBoundary.getHitNotificationField(),font},
+	playerHealthStream{ oledBoundary.getPlayerHealthField(),font},
 	keypadMsgPool{ "keypadMsgPool" },
 	irMsgPool{ "irMsgPool" },
 	durationPool{ "durationPool" },
@@ -41,7 +42,8 @@ void RunGameController::main()
 
 	wait(startFlag);
 	oledBoundary.getGameTimeField().setLocation({ 10 * 8, 6 * 8 });
-	oledBoundary.getStatusMessageField().setLocation({1 * 8, 1* 8});
+	oledBoundary.getHitNotificationField().setLocation({1 * 8, 1* 8});
+	oledBoundary.getPlayerHealthField().setLocation({1* 8, 6*8});
 	int gameDurationMin = durationPool.read();
 	kpC.registerNext(this);
 	
@@ -54,11 +56,11 @@ void RunGameController::main()
 	oledStream << "\n|       |------|";
 	oledStream << "\n|       |DMG:"<<(int)playerInfo.getWeaponID()<<" |";
 	oledStream << "\n|-------|------|";
-	oledStream << "\n|HP:"<<playerInfo.getPlayerHealth()<<" |      |";
+	oledStream << "\n|       |      |";
 	oledStream << "\n*--------------*";
 	oledBoundary.flush();
-
-	
+	playerHealthStream <<"HP:"<<playerInfo.getPlayerHealth();
+	oledBoundary.flushParts();
 	int countdownSec = 20;
 	doCountDown(countdownSec);
 	irE.receive.setReceiveListener(this);
@@ -131,11 +133,13 @@ void RunGameController::handleReceivedMessage(const std::array<char, 2>& msg)
 	
 		HWLIB_TRACE << "\n true ";
 		//player hit
-		statusMessageStream << "Hi!";
+		statusMessageStream << "Hit!";
 		oledBoundary.flushParts();
 		sound.setSound(Sounds::HIT);
 		playerInfo.setPlayerHealth(playerInfo.getPlayerHealth() - msg[1]);
 		hwlib::cout << "Player health: " << playerInfo.getPlayerHealth() << "\n";
+		playerHealthStream <<"\fHP:"<<playerInfo.getPlayerHealth();
+		oledBoundary.flushParts();
 		sleep_non_block(1*rtos::s);
 		statusMessageStream << "\f";
 	

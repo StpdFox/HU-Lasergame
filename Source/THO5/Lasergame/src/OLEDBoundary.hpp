@@ -150,6 +150,8 @@ public:
     void flush();
     void flushParts();
 	hwlib::glcd_oled_buffered& getBufferedLCD();
+	glcd_oled_part_buffered<PLAYERHEALTHFIELD_WIDTH * 8, PLAYERHEALTHFIELD_HEIGHT * 8>& getPlayerHealthField();
+	glcd_oled_part_buffered<HITNOTIFICATION_WIDTH * 8, HITNOTIFICATION_HEIGHT *8>& getHitNotificationField();
 	glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT *8>& getStatusMessageField();
 	glcd_oled_part_buffered<CONFIRMMESSAGEFIELD_WIDTH * 8, CONFIRMMESSAGEFIELD_HEIGHT *8>& getConfirmMessageField();
 	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8>& getPlayerNumberInputField();
@@ -168,6 +170,8 @@ private:
     rtos::flag flushFlag, flushPartsFlag;
 	
 	//these will be default initialized to nullptr's
+	glcd_oled_part_buffered<PLAYERHEALTHFIELD_WIDTH * 8, PLAYERHEALTHFIELD_HEIGHT *8> playerHealthField;
+	glcd_oled_part_buffered<HITNOTIFICATION_WIDTH * 8, HITNOTIFICATION_HEIGHT *8> hitNotificationField;
 	glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT * 8> statusMessageField;
 	glcd_oled_part_buffered<CONFIRMMESSAGEFIELD_WIDTH * 8, CONFIRMMESSAGEFIELD_HEIGHT * 8> confirmMessageField;
 	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8> playerNumberInputField;

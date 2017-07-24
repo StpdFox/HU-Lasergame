@@ -51,7 +51,7 @@ private:
 	// The OLEDBoundary hardware interface object.
 	OLEDBoundary& oledBoundary;
 	hwlib::font_default_8x8 font;
-	hwlib::window_ostream oledStream, gameTimeStream, statusMessageStream;
+	hwlib::window_ostream oledStream, gameTimeStream, statusMessageStream, playerHealthStream;
 	// RTOS
 	rtos::pool<char> keypadMsgPool;
 	rtos::pool<std::array<char, 2>> irMsgPool;
