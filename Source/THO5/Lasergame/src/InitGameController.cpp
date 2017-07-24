@@ -29,9 +29,7 @@ InitGameController::InitGameController(KeypadController& kpC, RunGameController&
 	runGameController{runGameController},
 	startFlag{ this, "startFlag" }
 {
-	oledBoundary.getStatusMessageField().setLocation({ 4 * 8, 1 * 8 });
-	oledBoundary.getConfirmMessageField().setLocation({ 2 * 8, 5 * 8 });
-	oledBoundary.getGameDurationInputField().setLocation({ 4 * 8, 4 * 8 });
+
 }
 
 void InitGameController::handleMessageKey(char c)  {
@@ -41,6 +39,9 @@ void InitGameController::handleMessageKey(char c)  {
 void InitGameController::main()
 {
 	wait(startFlag);
+	oledBoundary.getStatusMessageField().setLocation({ 4 * 8, 1 * 8 });
+	oledBoundary.getConfirmMessageField().setLocation({ 2 * 8, 5 * 8 });
+	oledBoundary.getGameDurationInputField().setLocation({ 4 * 8, 4 * 8 });
 	keypadController.registerNext(this);
 	statusStream << "\fYou are\nHost";
 	confirmStream << "\f C to setup";

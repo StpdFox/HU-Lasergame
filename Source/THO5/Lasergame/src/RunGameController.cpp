@@ -103,7 +103,7 @@ void RunGameController::doCountDown(int seconds)
 		remainingTimeSec = seconds - (hwlib::now_us() - startOfGameTimestamp) / 1'000'000;
 		gameTimeStream << "\f" << remainingTimeSec / 60 << ":" << remainingTimeSec % 60;
 		oledBoundary.flushParts();
-		//TODO beep geluid
+		sound.setSound(Sounds::END_GAME);
 	}
 }
 
@@ -132,7 +132,8 @@ void RunGameController::handleReceivedMessage(const std::array<char, 2>& msg)
 	hwlib::cout << "byte01: " << (int)msg[0] << " | byte02: " << (int)msg[1] << " end of msg\n";
 	
 		HWLIB_TRACE << "\n true ";
-		//player hit
+		
+
 		statusMessageStream << "Hit!";
 		oledBoundary.flushParts();
 		sound.setSound(Sounds::HIT);

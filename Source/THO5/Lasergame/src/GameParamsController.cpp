@@ -30,10 +30,7 @@ GameParamsController::GameParamsController(KeypadController& kpC, InitGameContro
 	runGameController{runGameController},
 	irMessageChannel{ this, "irMessageChannel" }
 {
-	oledBoundary.getStatusMessageField().setLocation({ 4 * 8, 1 * 8 });
-	oledBoundary.getConfirmMessageField().setLocation({ 2 * 8, 5 * 8 });
-	oledBoundary.getPlayerNumberInputField().setLocation({ 4 * 8, 4 * 8 });
-	oledBoundary.getFirePowerInputField().setLocation({ 4 * 8, 4 * 8 });
+
 }
 
 GameParamsController::~GameParamsController(){
@@ -50,11 +47,17 @@ void GameParamsController::receivedMsgstd(const std::array<char, 2>& msg)
 
 void GameParamsController::main()
 {
-	runGameController.startGame(10);
-	playerInfo.setPlayerID(0);
-	playerInfo.setWeaponID(1);
+	oledBoundary.getStatusMessageField().setLocation({ 4 * 8, 1 * 8 });
+	oledBoundary.getConfirmMessageField().setLocation({ 2 * 8, 5 * 8 });
+	oledBoundary.getPlayerNumberInputField().setLocation({ 4 * 8, 4 * 8 });
+	oledBoundary.getFirePowerInputField().setLocation({ 4 * 8, 4 * 8 });
 
-	suspend();
+	// UNCOMMENT THIS TO SKIP TO GAME
+	// runGameController.startGame(10);
+	// playerInfo.setPlayerID(0);
+	// playerInfo.setWeaponID(1);
+
+	// suspend();
 	irEntity.receive.setReceiveListener(this);	
 	
 	oledStream << "\f*--------------*";
