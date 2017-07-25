@@ -9,7 +9,6 @@
 #include "InitGameController.hpp"
 #include "KeypadListener.hpp"
 #include "KeypadController.hpp"
-#include "KeyConsumer.h"
 #include "OLEDBoundary.hpp"
 #include "ir/transmitterController.hpp"
 #include "ir/messageLogic.hpp"

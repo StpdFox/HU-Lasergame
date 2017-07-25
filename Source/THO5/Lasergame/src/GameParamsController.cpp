@@ -35,9 +35,6 @@ GameParamsController::GameParamsController(KeypadController& kpC, InitGameContro
 	oledBoundary.getPlayerNumberInputField().setLocation({ 4 * 8, 4 * 8 });
 	oledBoundary.getFirePowerInputField().setLocation({ 4 * 8, 4 * 8 });
 }
-
-GameParamsController::~GameParamsController(){
-}
 	
 void GameParamsController::handleMessageKey(char c) {
 	msg.write(c);

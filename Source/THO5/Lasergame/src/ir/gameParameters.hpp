@@ -1,19 +1,20 @@
-#include "hwlib.hpp"
 #ifndef GAMEPARAMETERS_HPP
 #define GAMEPARAMETERS_HPP
 
+#include "hwlib.hpp"
+
 class playerInformation{
 private:
-
 	char16_t compiledBits;
+	int playerHealth = 100;
+	byte playerID;
+	byte weaponID;
+	
 public:
 	playerInformation():
 	compiledBits(0)
 	{}
-	byte playerID;
-	byte weaponID;
 	
-	int playerHealth = 100;
 	
 	char16_t getCompiledBits(){
 		return compiledBits;

@@ -30,10 +30,6 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	oledBoundary.getGameTimeField().setLocation({ 7 * 8, 6 * 8 });
 }
 
-RunGameController::~RunGameController()
-{
-}
-
 void RunGameController::main()
 {
 	wait(startFlag);
