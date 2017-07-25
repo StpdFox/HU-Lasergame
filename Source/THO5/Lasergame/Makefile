@@ -10,7 +10,7 @@
 
 # settings for Arduino Due projects
 TARGET            ?= arduino_due
-SERIAL_PORT       ?= COM5
+SERIAL_PORT       ?= COM3
 CONSOLE_BAUDRATE  ?= 38400
 STACK_SIZE        ?= 81920
 HEAP              ?= BMPTK
@@ -27,39 +27,33 @@ HEADERS           += coroutine.hpp switch_to.hpp
 SOURCES           += coroutine.cpp switch_to.asm
 HEADERS           += rtos.hpp
 SOURCES           += rtos.cpp
-HEADERS			+= src/test.hpp
-SOURCES 		+= src/test.cpp
-HEADERS			+= src/RunGameController.hpp
-SOURCES			+= src/RunGameController.cpp
 
-HEADERS			+= src/KeypadController.hpp
-SOURCES			+= src/KeypadController.cpp
+SEARCH			+= ./src/
+HEADERS			+= RunGameController.hpp
+SOURCES			+= RunGameController.cpp
 
-HEADERS			+= src/InitGameController.hpp
-SOURCES			+= src/InitGameController.cpp
+HEADERS			+= KeypadController.hpp
+SOURCES			+= KeypadController.cpp
 
-HEADERS			+= src/KeypadListener.hpp
-HEADERS				+= src/ir/game.hpp
-SOURCES				+= src/ir/game.cpp
-HEADERS			+= src/SpeakerController.hpp
-SOURCES			+= src/SpeakerController.cpp
+HEADERS			+= InitGameController.hpp
+SOURCES			+= InitGameController.cpp
 
-HEADERS			+= src/GameParamsController.hpp
-SOURCES			+=src/GameParamsController.cpp
+HEADERS			+= KeypadListener.hpp
+HEADERS			+= SpeakerController.hpp
+SOURCES			+= SpeakerController.cpp
+
+HEADERS			+= GameParamsController.hpp
+SOURCES			+= GameParamsController.cpp
+
+HEADERS			+= glcd_oled_part_buffered.hpp
 
 # the source and header files
 
-SEARCH				+= ./src/
 HEADERS				+= defines.h
 HEADERS				+= OLEDBoundary.hpp
 SOURCES				+= OLEDBoundary.cpp
 
-
-#HEADERS				+= TestTask.hpp
-#SOURCES				+= TestTask.cpp
-
 SEARCH				+= ./src/ir/
-
 HEADERS				+= receiverController.hpp
 SOURCES				+= receiverController.cpp
 HEADERS				+= gameParameters.hpp
