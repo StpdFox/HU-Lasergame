@@ -9,9 +9,10 @@
 #define GAMETIME_WIDTH 5
 
 #define GAMETIME_HEIGHT 1
-#include "gameParameters.hpp"
+
 #include "RunGameController.hpp"
 #include "OLEDBoundary.hpp"
+#include <cstdlib>
 Player::Player(playerInformation& playerInfo, RunGameController& parentController) : playerInfo{playerInfo}, parentController{parentController}{
 	//playerInfo.getPlayerHealth();
 	healthPoints = playerInfo.playerHealth;
@@ -37,7 +38,45 @@ void Player::takeDamage(byte player_id, byte damage_id)	{
 }
 
 bool Player::playerIsAlive()	{
-		return playerisAlive;
+	return playerisAlive;
+}
+
+void Player::getResultsXml()	{
+	//data_struct dt;
+	//dt.size = 100;
+	toByteBuffer();
+	/*createMessage(MESSAGE_TYPES::PD, dt);
+	resetBuffer();
+	fillByteArray("<player_game_info>\n");*/
+	//fillByteArray("\t<player_id> ");
+	//fillBufferWithUInt(playerInfo.playerID + 104);
+	//fillByteArray(" </player_id>\n");
+	
+	//fillByteArray("\t<player_healthpoints>");
+	//fillBufferWithUInt(healthPoints);
+	//fillByteArray("</player_healthpoints>\n");
+	
+	//"\t<other_players amount=\"" << other_players.size() << "\">\n"
+	//fillByteArray("\t<other_players amount=\"");
+	//fillBufferWithUInt(other_players.size());
+	//fillByteArray("\">\n");
+	
+	//hwlib::cout << "\t<player_healthpoints>" << healthPoints << "</player_healthpoints>\n";
+	//printByteArray();
+	/*hwlib::cout << "<player_game_info>\n";
+	//hwlib::wait_ms(1000);
+	hwlib::cout << "\t<player_id>" << playerInfo.playerID << "</player_id>\n" << "\t<player_healthpoints>";
+	hwlib::cout << "\t<player_healthpoints>" << healthPoints << "</player_healthpoints>\n";
+	hwlib::cout << "\t<other_players amount=\"" << other_players.size() << "\">\n";
+	for(unsigned int i = 0; i < other_players.size() - 1; i++)	{
+		hwlib::cout << "\t\t<player>\n";
+		hwlib::cout << "\t\t\t<player_id>" << i << "</player_id>\n";
+		hwlib::cout << "\t\t\t<weapon_id>" << other_players[i].first << "</weapon_id>\n";
+		hwlib::cout << "\t\t\t<player_damage>" << other_players[i].second << "</player_damage>\n";
+		hwlib::cout << "\t\t</player>\n";
+	}
+	hwlib::cout << "\t</other_players>\n";
+	hwlib::cout << "</player_game_info>\n" << hwlib::endl;*/
 }
 
 RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, irentity irE, playerInformation& playerInfo, unsigned int priority ) :
@@ -96,7 +135,7 @@ void RunGameController::main()
 				char c = '0';
 				hwlib::cin >> c;
 				if(c == 'r')	{
-					writeGameResults();
+					player.getResultsXml();
 				}
 				while(true) sleep(1);
 			}
@@ -113,7 +152,16 @@ void RunGameController::handleMessageKey(char c)  {
 }
 
 void RunGameController::consumeChar(char c) {}
-void RunGameController::consumeHashTag() {}
+void RunGameController::consumeHashTag() {
+		if(!previousPressHashCode)	{
+			previousPressHashCode = true;
+		}
+		else	{
+			previousPressHashCode = false;
+			// send data over usb to computer
+			player.getResultsXml();
+		}
+}
 void RunGameController::consumeWildcard() {
 	irE.led.set(true);
 	irE.receive.suspend();

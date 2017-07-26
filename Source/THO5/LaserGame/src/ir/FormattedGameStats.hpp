@@ -13,8 +13,10 @@ private:
 	//FormattedGameStats& operator=(const FormattedGameStats& rhs);
 	
 public:
+	/// \deprecated
 	FormattedGameStats();
 	//~FormattedGameStats();
+	/// \deprecated
 	void getResultsXml(Player& player);
 };
 

@@ -4,7 +4,6 @@
 #include "ir/gameParameters.hpp"
 #include "ir/messageLogic.hpp"
 #include "ir/receiverController.hpp"
-
 #include "ir/game.hpp"
 #include "test.hpp"
 #include "InitGameController.hpp"
@@ -17,8 +16,8 @@
 #include "rtos.hpp"
 #include "OLEDBoundary.hpp"
 #include "FormattedGameStats.hpp"
-//#include "TestTask.hpp"
 
+//#include "TestTask.hpp"
 int main( void ){
    
    /***
@@ -35,12 +34,15 @@ int main( void ){
 	* This is then passed to the RunGameController where the damage taken is taken care of by the Player object.
 	* playerInformation contains data for over IR. Player contains logic for gameplay implementation.
 	**/
-   	
+		
 	// kill the watchdog
   	WDT->WDT_MR = WDT_MR_WDDIS;
 
 
-	namespace target = hwlib::target;
+	//while(true)	{
+		//hwlib::cout << "hello world" << hwlib::endl;
+	//}
+	namespace target = hwlib::target;	
    	//Wait for hell freezing over
 	hwlib::wait_ms(1000);
 	
@@ -93,9 +95,9 @@ int main( void ){
 	auto iGC = InitGameController(kpC, &rGC, oledBoundary, playerInformation, IRE, 13);
 	auto gPC = GameParamsController(kpC, &iGC, &rGC, oledBoundary, playerInformation, IRE, 16);
 	Player testPlayer(playerInformation, rGC);
-	FormattedGameStats FGS;
+	//FormattedGameStats FGS;
 	//std::string lotsofaids;
-	FGS.getResultsXml(testPlayer);
+	
 	
 /*	for(unsigned int i = 0; i < lotsofaids.size() - 1; i++)	{
 		buffedasfuck[i] = lotsofaids.at(i);
@@ -105,10 +107,29 @@ int main( void ){
 	
 	// set IR receiver
 	receiver.setReceiveListener(&rGC);
+	
+	
+	while(true)	{
+		char c;
+		hwlib::cin >> c;
+		if(c == 'r')	{
+			testPlayer.getResultsXml();
+			//hwlib::cout <<  << hwlib::endl;
+		}
+	}
+	
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);
-   //RunGameController runGameController{ 2, oledBoundary };
-	//hwlib::cout << buffedasfuck << hwlib::endl;
+	//RunGameController runGameController{ 2, oledBoundary };
+	
+	/*while(true)	{
+		char c;
+		hwlib::cin >> c;
+		if(c == 'r')	{
+			testPlayer.getResultsXml();
+			//hwlib::cout <<  << hwlib::endl;
+		}
+	}*/
    rtos::run();
 }
 

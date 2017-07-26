@@ -8,7 +8,7 @@
 
 #ifndef RUNGAME_HPP
 #define RUNGAME_HPP
-
+#include "gameParameters.hpp"
 #include "hwlib.hpp"
 #include "rtos.hpp"
 #include "keypadlistener.hpp"
@@ -22,13 +22,229 @@
 #include "GameParameters.hpp"
 #include <array>
 #include <utility>
-
+#include "Player.hpp"
+#define BUFFER_SIZE 1024
 class OLEDBoundary;
 class RunGameController;
-class Player	{
+constexpr char RESERVED = (char)0xff;
+constexpr int MSG_BODY_OFFSET = 6;
+enum class MESSAGE_TYPES{
+	PD = 0x00,
+};
+class data_struct {
+public:
+	unsigned int size = 0;
+	// should be only method to have access to byte buffer from data struct objects, can use friends?
+	virtual void toByteBuffer() = 0;
+	
+};
+class MessageHandler{
+private:
+
+	byte bytearray[BUFFER_SIZE];
+	unsigned int bytesFilled = 6;
+	unsigned int msgSize = 0;
+
+	//friend void data_struct::toByteBuffer();
+
+	MessageHandler() {}
+	~MessageHandler()=delete;
+	
+public:
+	void printByteArray()	{
+		unsigned int index = 0;
+		while(index != bytesFilled && index < BUFFER_SIZE )	{
+			hwlib::cout << bytearray[index++];
+		}
+	}
+	
+	void fillheader(MESSAGE_TYPES type)	{
+		switch (type)	{
+			case MESSAGE_TYPES::PD:
+				bytearray[0] = 'P';
+				bytearray[1] = 'D';
+		}
+
+		bytearray[2] = msgSize >> 8;
+		bytearray[3] = msgSize;
+		bytearray[4] = RESERVED;
+		bytearray[5] = RESERVED;
+		//unsigned int rsize = (bytearray[3]) + (unsigned int)(bytearray[2] << 8);
+		//hwlib::cout << "returned size:\t" << rsize << hwlib::endl;
+	}
+
+	void resetBuffer()	{
+		while(bytesFilled > 0) {
+			bytearray[bytesFilled--] = '\0';
+		}
+		bytearray[bytesFilled] = '\0';
+		msgSize = 0;
+	}
+	// Should only be used to write into the body of the msg.
+	void fillBodyMsg(const char* str)	{
+		// copy string into byte array
+		while(*str != '\0')	{
+			bytearray[bytesFilled++] = *str;
+			// Safeguard because msgSize is size of msg data only (excluding: Header, Footer).
+/*			if(bytesFilled >= 6)	{
+				++msgSize;
+			}*/
+			++msgSize;
+			++str;
+		}
+		bytearray[bytesFilled] = '\0';
+	}
+	void fillMsgWithUint(unsigned int convert)	{
+		int size = 0;
+		int xtraconvert = convert;
+		while(xtraconvert != 0)	{
+			size++;
+			xtraconvert = (xtraconvert / 10);
+			hwlib::cout << xtraconvert << hwlib::endl;
+		}
+		
+		if(size <= 1)	{
+			bytearray[bytesFilled++] = '0' + convert;
+			bytearray[bytesFilled] = '\0';
+			msgSize++;
+/*			char buffer[2];
+			buffer[0] = '0' + convert;
+			buffer[1] = '\0';
+			return buffer;*/
+		}
+		else	{
+			//char buffer[32]; // size of int?
+			//hwlib::cout << "nextdigit:\t" << nextDigit;
+			int nextDigit = convert;
+			int counter = size;
+			
+			while(nextDigit != 0)	{
+				bytearray[bytesFilled + counter--] = (nextDigit % 10) + '0';
+				//buffer[counter--] = (nextDigit % 10) + '0';
+				hwlib::cout << "convert:\t" << convert << hwlib::endl;
+				convert /= 10;
+				
+				nextDigit = convert;
+			}
+			bytesFilled += size + 1;
+			msgSize += size;
+			bytearray[bytesFilled] = '\0';
+		}
+		
+		//buffer[size] = '\0';
+		//return buffer;
+	}
+	void writeKeyValuePair(const char* key, const char* value)	{
+		hwlib::cout << "I AM NOT SOO WISE" << hwlib::endl;
+		bytesFilled = msgSize + MSG_BODY_OFFSET; // jump to offset of body
+		if(msgSize > 0)	{
+			fillBodyMsg("&");
+		}
+		fillBodyMsg(key);
+		fillBodyMsg(":");
+		fillBodyMsg(value);
+	}
+	void writeKeyValuePair(const char* key, unsigned int value)	{
+		hwlib::cout << "I AM WISE" << hwlib::endl;
+		bytesFilled = msgSize + MSG_BODY_OFFSET; // jump to offset of body
+		if(msgSize > 0)	{
+			fillBodyMsg("&");
+		}
+		fillBodyMsg(key);
+		fillBodyMsg(":");
+		fillMsgWithUint(value);
+	}
+	void setEnd()	{
+		bytesFilled = msgSize + MSG_BODY_OFFSET;
+		bytearray[bytesFilled++] = ';';
+		bytearray[bytesFilled++] = 'E';
+		bytearray[bytesFilled++] = 'N';
+		bytearray[bytesFilled++] = 'D';
+		bytearray[bytesFilled] = '\0';
+	}
+	static MessageHandler& getInstance()	{
+		static MessageHandler mh;
+		return mh;
+	}
+	/*void createMessage(MESSAGE_TYPES type, data_struct data) {
+		switch (type) {
+			case MESSAGE_TYPES::PD:
+				fillMsgBody(data);
+				void getMessageSize
+				fillheader("PD", data.size);
+				break;
+			
+		}
+	}*/
+};
+class Player : data_struct	{
 private:
 	friend class FormattedGameStats; // They are bff's!
 	
+	void toByteBuffer() override {
+		MessageHandler& mh = MessageHandler::getInstance();
+		
+		//ToDo make fillkeypair instead of fillbytearray and fillbufferwithuint each and every time... Done?
+		const unsigned int pID =  0;//playerInfo.getPlayerID();
+		mh.writeKeyValuePair("Player_ID", pID);
+		mh.writeKeyValuePair("Player_Name", "zoro");
+		mh.fillheader(MESSAGE_TYPES::PD);
+		mh.setEnd();
+		mh.printByteArray();
+		
+		mh.resetBuffer(); // Should be renamed to clear?
+		/*mh.writeKeyValuePair("key", "value");
+		mh.fillByteArray("Player_ID:")
+		mh.fillBufferWithUInt(playerInfo.getPlayerID());
+		mh.fillByteArray("&Player_Health:");
+		mh.fillBufferWithUInt(healthPoints);
+		mh.fillheader(MESSAGE_TYPES::PD, mh.bytesFilled - MSG_BODY_OFFSET);*/
+	}
+/*	unsigned int bytesFilled = 0;
+
+	void printByteArray()	{
+		unsigned int index = 0;
+		while(index != bytesFilled && index < BUFFER_SIZE )	{
+			hwlib::cout << bytearray[index++];
+		}
+	}
+	void fillBufferWithUInt(unsigned int convert)	{
+		int size = 0;
+		int xtraconvert = convert;
+		while(xtraconvert != 0)	{
+			size++;
+			xtraconvert = (xtraconvert / 10);
+			hwlib::cout << xtraconvert << hwlib::endl;
+		}
+
+		if(size == 1)	{
+			bytearray[bytesFilled++] = '0' + convert;
+			bytearray[bytesFilled] = '\0';
+			char buffer[2];
+			buffer[0] = '0' + convert;
+			buffer[1] = '\0';
+			return buffer;
+		}
+		else	{
+			//char buffer[32]; // size of int?
+			//hwlib::cout << "nextdigit:\t" << nextDigit;
+			int nextDigit = convert;
+			int counter = size;
+			while(nextDigit != 0)	{
+				bytearray[bytesFilled + counter--] = (nextDigit % 10) + '0';
+				//buffer[counter--] = (nextDigit % 10) + '0';
+				hwlib::cout << "convert:\t" << convert << hwlib::endl;
+				convert /= 10;
+				
+				nextDigit = convert;
+			}
+			bytesFilled += size + 1;
+			bytearray[bytesFilled] = '\0';
+		}*/
+		
+		//buffer[size] = '\0';
+		//return buffer;
+	//}
 public:
 bool playerisAlive = true;
 	playerInformation& playerInfo;
@@ -51,6 +267,8 @@ bool playerisAlive = true;
 	Player(playerInformation& playerInfo, RunGameController& parentController);
 	//Player(uint8_t playerId, RunGameController& parentController, int life = 100);
 	
+	void getResultsXml();
+
 	void takeDamage(uint8_t, uint8_t);
 	void doDamage();
 	bool playerIsAlive();
@@ -107,6 +325,7 @@ private:
 	//Player player{0x00, *this};
 	Player player;
 	//bool damagePlayer(uint8_t, uint8_t);
+	bool previousPressHashCode = true;
 public:
 
 	/// \author Matthijs Vos

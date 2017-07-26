@@ -19,7 +19,8 @@
 class OLEDBoundary;
 class KeypadController;
 class transmitterController;
-
+class RunGameController;
+typedef struct IREntity& irentity;
 /// \author Ferdi Stoeltie
 /// \author Peter Bonnema
 /// \brief Controller class that handles the initialize of the game settings

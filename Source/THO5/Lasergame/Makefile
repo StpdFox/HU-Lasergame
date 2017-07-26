@@ -21,6 +21,8 @@ PROJECT 	  	  ?= src/main
 SEARCH            += ./libs/hwlib
 SOURCES           += hwlib.cpp
 
+HEADERS 			+= Player.hpp
+SOURCES 			+= Player.cpp
 # use the rtos
 SEARCH            += ./libs/rtos
 HEADERS           += coroutine.hpp switch_to.hpp
@@ -56,6 +58,8 @@ SOURCES				+= OLEDBoundary.cpp
 
 HEADERS 			+= FormattedGameStats.hpp
 SOURCES 			+= FormattedGameStats.cpp
+
+
 
 #HEADERS				+= TestTask.hpp
 #SOURCES				+= TestTask.cpp

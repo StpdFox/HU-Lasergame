@@ -22,7 +22,9 @@
 class OLEDBoundary;
 class KeypadController;
 class transmitterController;
-
+class InitGameController;
+class RunGameController;
+typedef struct IREntity& irentity;
 /// \author Marianne Delmaar
 /// \author Ferdi Stoeltie
 /// \author Peter Bonnema

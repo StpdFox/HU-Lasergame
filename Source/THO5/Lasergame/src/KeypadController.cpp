@@ -23,5 +23,6 @@ void KeypadController::main() {
 }
 void KeypadController::registerNext(KeypadListener* nextListener) {
     kp = nextListener;
-	hwlib::cout << "Registering next listener\n";
+	//hwlib::cout << "Registering next listener\n\n" << hwlib::endl;
+	//hwlib::cout.flush();
 }
