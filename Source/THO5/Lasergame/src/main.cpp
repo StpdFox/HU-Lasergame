@@ -1,22 +1,21 @@
+///@file
 // simple IR signal detector
-#include "hwlib.hpp"
 #include "ir/transmitter.hpp"
 #include "ir/gameParameters.hpp"
 #include "ir/messageLogic.hpp"
 #include "ir/receiverController.hpp"
 
-#include "ir/game.hpp"
-#include "test.hpp"
 #include "InitGameController.hpp"
 #include "KeypadController.hpp"
 #include "RunGameController.hpp"
 #include "SpeakerController.hpp"
 #include "GameParamsController.hpp"
-#include <array>
 
-#include "rtos.hpp"
 #include "OLEDBoundary.hpp"
-//#include "TestTask.hpp"
+
+#include "hwlib.hpp"
+#include "rtos.hpp"
+#include <array>
 
 int main( void ){
    
@@ -64,20 +63,21 @@ int main( void ){
     char16_t compiledMessage = messageLogic.encode(1,1);
 	
 	//Set the playerInformation according to the message
-    playerInformation playerInformation;
-    playerInformation.setCompiledBits(compiledMessage);
+    playerInformation playerInfo;
+    playerInfo.setCompiledBits(compiledMessage);
 	
 	//Set receivercontroller
-    auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
+    receiverController receiver{ data,gnd,vcc,messageLogic,0 };
+	transmitterController trans{ playerInfo, 1 };
 	
-	struct IREntity IRE(button,led,playerInformation,messageLogic,receiver);
+	irentity IRE(button,led,trans,messageLogic,receiver);
 
 	KeypadController kpC = KeypadController(keypad, 15);
 	OLEDBoundary oledBoundary{ 17 };
 	auto sC = SpeakerController(lsp, 14);
-	auto rGC = RunGameController(kpC, sC, oledBoundary, playerInformation, IRE, 19);
-	auto iGC = InitGameController(kpC, rGC, oledBoundary, playerInformation, IRE, 13);
-	auto gPC = GameParamsController(kpC, iGC, rGC, oledBoundary, playerInformation, IRE, 16);
+	auto rGC = RunGameController(kpC, sC, oledBoundary, playerInfo, IRE, 19);
+	auto iGC = InitGameController(kpC, rGC, oledBoundary, playerInfo, IRE, 13);
+	auto gPC = GameParamsController(kpC, iGC, rGC, oledBoundary, playerInfo, IRE, 16);
 
 	kpC.registerNext(&gPC);
 	

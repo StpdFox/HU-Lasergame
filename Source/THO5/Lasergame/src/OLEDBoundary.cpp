@@ -1,5 +1,7 @@
-#include "OLEDBoundary.hpp"
+///@file
 #include "hwlib.hpp"
+#include "OLEDBoundary.hpp"
+#include "glcd_oled_part_buffered.hpp"
 
 OLEDBoundary::OLEDBoundary(unsigned int priority) :
 	rtos::task<>{ priority, "OLEDBoundary" },
@@ -16,19 +18,13 @@ OLEDBoundary::OLEDBoundary(unsigned int priority) :
 		},
 	flushFlag{ this, "flushFlag" },
 	flushPartsFlag{ this, "flushPartsFlag" },
-	playerHealthField{i2c_bus, 0x03c},
-	hitNotificationField{i2c_bus,0x03c},
-	statusMessageField{ i2c_bus, 0x3c},
-	confirmMessageField{ i2c_bus, 0x03c},
-	playerNumberInputField{ i2c_bus, 0x3c },
-	firePowerInputField{ i2c_bus, 0x3c },
-	gameDurationInputField{ i2c_bus, 0x3c },
-	gameTimeField{ i2c_bus, 0x3c },
-	scoreField{ i2c_bus, 0x3c }
-{
-}
-
-OLEDBoundary::~OLEDBoundary()
+	statusMessageField{ i2c_bus },
+	confirmMessageField{ i2c_bus },
+	playerNumberInputField{ i2c_bus },
+	firePowerInputField{ i2c_bus },
+	gameDurationInputField{ i2c_bus },
+	gameTimeField{ i2c_bus },
+	scoreField{ i2c_bus }
 {
 }
 

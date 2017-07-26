@@ -33,10 +33,6 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	
 }
 
-RunGameController::~RunGameController()
-{
-}
-
 void RunGameController::main()
 {
 

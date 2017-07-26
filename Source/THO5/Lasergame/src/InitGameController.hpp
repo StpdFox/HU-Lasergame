@@ -20,15 +20,45 @@ class OLEDBoundary;
 class KeypadController;
 class transmitterController;
 
-/// \author Ferdi Stoeltie
-/// \author Peter Bonnema
-/// \brief Controller class that handles the initialize of the game settings
+/**
+ * @author Ferdi Stoeltie
+ * @author Peter Bonnema
+ * @author Matthijs Vos
+ * @date 25/07/2017
+ * 
+ * @brief This class enables the game master to input commands (the time command is the only command for now) and send them to other players. It also sends a start command afterwards.
+ * 
+ * The task first waits for C to be pressed and then lets the user input a command number in the range [1..15].
+ * The user has to confirm the command with a press on #.
+ * Then the user can send the command to one player at a time by repeatedly pressing # and * when he is done.
+ * After that the user can send the start command to a player at a time by repeatedly pressing #.
+ * Lastly, pressing C activates the RunGameController.
+ */
 class InitGameController : public rtos::task<>, public KeypadListener, private KeyConsume  {
 public:
+    /**
+     * @brief Constructs an instance with the specified controllers and boundaries along with a reference to the playerInformation instance, the irentity instance and a priority.
+     * @param kpC
+     * @param runGameController
+     * @param oledBoundary
+	 * @param playerInfo The shared playerInformation instance through which controllers communicate the player id and weapon id.
+	 * @param irEntity
+	 * @param priority The task priority. Lower is higher priority. See the documentation of the rtos.
+     */
     InitGameController(KeypadController& kpC, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority); 
  
+	/**
+	 * @brief This method is called by the KeyPadController when a key is pressed.
+	 * It writes the c to an internal mailbox which is read in the main() function of the task in a loop.
+	 * @param c The pressed key
+	 */
     void handleMessageKey(char c);
+	
+	/**
+	 * @brief This sets the start flag. The main function first waits for this flag to be set before doing anything else. Calling this function constitutes activating the task. The task will never wait again on this flag.
+	 */
 	void start();
+	
 private:
 	enum STATE
 	{

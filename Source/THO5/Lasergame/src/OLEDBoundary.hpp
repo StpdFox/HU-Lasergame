@@ -1,163 +1,84 @@
+///@file
 #ifndef OLEDBOUNDARY_HPP
 #define OLEDBOUNDARY_HPP
 
 #include "rtos.hpp"
 #include "defines.h"
+#include "glcd_oled_part_buffered.hpp"
 
-class OLEDBoundary;
-
-/// Oled B/W graphics LCD, buffered
-//
-/// This class implements a *buffered* interface to an 128 x 64 pixel
-/// monochrome (on/off) OLED display. Buffering means that all writes
-/// are buffered in memory until flush() is called.
-///
-/// These displays are available
-/// in various colcors (green, red, white, etc.).
-/// The interface is I2C.
-/// The driver chip is an SSD1306.
-///
-/// When the PCB has regulator (3-legged component) the power can be 3 - 5V. 
-/// If it hasn't, you can use only 3.3V.
-///
-/// There are variations of this display with more pins, which 
-/// have more interface options (SPI as alternative interface).
-///
-/// This type of display is reasonably priced 
-/// and available from lots of sources.
-///
-/// \image html lcdoled-empty.jpg
-///
-template<unsigned int width, unsigned int height>
-class glcd_oled_part_buffered : public hwlib::window {
-private:
-	bool dirty;
-	hwlib::i2c_bus& bus;
-
-	// the 7-bit i2c address of the controller
-	fast_byte address;
-
-	// current cursor setting in the controller;
-	// used to avoid explicit cursor updates when such are not needed
-	fast_byte cursor_x, cursor_y;
-
-	// SSD1306 commands
-	static constexpr const uint8_t COLUMNADDR	= 0x21;
-	static constexpr const uint8_t PAGEADDR		= 0x22;
-
-	hwlib::location start;
-	uint8_t buffer[width * height / 8];   
-   
-	void command(byte d){
-		byte data[] = { 0x80, d };
-		bus.write( 
-			address, 
-			data, 
-			sizeof(data) / sizeof(byte) 
-		);
-		rtos::current_task()->release();
-	} 	
-
-	void command(byte d0, byte d1){
-		byte data[] = { 0x80, d0, 0x80, d1 };
-		bus.write( 
-			address, 
-			data, 
-			sizeof(data) / sizeof(byte) 
-		);
-		rtos::current_task()->release();
-	} 	
-
-	void command(byte d0, byte d1, byte d2){
-		byte data[] = { 0x80, d0, 0x80, d1, 0x80, d2 };
-		bus.write( 
-			address, 
-			data, 
-			sizeof(data) / sizeof(byte) 
-		);
-		rtos::current_task()->release();
-	}
-
-   void write_implementation(hwlib::location pos, hwlib::color col) override {
-		unsigned int a = pos.x + ( pos.y / 8 ) * width;
-
-		if(col == foreground){ 
-			buffer[a] |=  (0x01 << (pos.y % 8));
-		} else {
-			buffer[a] &= ~(0x01 << (pos.y % 8));
-		}
-		dirty = true;
-   }
-   
-	/// write the pixel buffer to the oled
-	//
-	/// All write (and clear) calls change only the in-memory pixel
-	/// buffer. This call writes this pixel buffer to the oled.
-	void flush() {
-		if(dirty)
-		{
-			command( COLUMNADDR,  start.x,		width + start.x - 1);
-			command( PAGEADDR,    start.y / 8,	(height + start.y) / 8 - 1 );			
-			for(unsigned int y = 0; y < height / 8; y++)
-			{
-				for(unsigned int x = 0; x < width; x++)
-				{
-					byte d = buffer[ x + width * y ];
-					byte data[] = { 0x40, d };
-					bus.write( 
-						address, 
-						data, 
-						sizeof(data) / sizeof(byte) 
-					);
-					rtos::current_task()->release();
-				}
-			}
-			dirty = false;
-		}
-	}
-	
-	friend OLEDBoundary;
-public:
-	glcd_oled_part_buffered(hwlib::i2c_bus & bus, fast_byte address = 0x3C, hwlib::location start = { 0, 0 }):
-		hwlib::window{ { width, height }, hwlib::black, hwlib::white },
-		dirty{ false },
-		bus(bus),
-		address(address),
-		cursor_x(255), 
-		cursor_y(255),
-		start(start)
-	{ }
-   
-	virtual void clear() override {
-		for(unsigned int i = 0; i < sizeof(buffer) / sizeof(uint8_t); i++) {
-			buffer[i] = 0x00;
-		}
-		dirty = true;
-	}
-	
-	void setLocation(const hwlib::location& loc)
-	{
-		start = loc;
-	}
-}; // class glcd_oled_part_buffered
-
+/**
+ * @class OLEDBoundary
+ * @author Peter Bonnema
+ * @date 24/07/2017
+ * 
+ * @brief This task simply reacts to two flags that are set by flush() and flushParts() and in response
+ * either flushes the whole screen (but no window parts) or flushes all window parts, respectively.
+ * 
+ * Note that flushing glcd_oled_part_buffered only does something when the part is marked dirty by some write or clear action on it.
+ * You can retrieve the interal glcd_oled_buffered object to base a window_ostream upon but it is
+ * higly discouraged to call glcd_oled_buffered::flush() on this object to prevent it from interfering with other tasks as
+ * flushing an lcd takes a considerable amount of time. Flushing it should always be done through this class.
+ * The same goes for the window parts.
+ * 
+ * The defines used in the template parameters of the glcd_oled_part_buffered objects are defined in defines.h and specify the size of the parts.
+ */
 class OLEDBoundary : public rtos::task<>
 {
 public:
+    /**
+     * @brief Constructs a new OLEDBoundary object with the given priority.
+     * @param priority The priority of this task.
+     */
     OLEDBoundary(unsigned int priority);
-	~OLEDBoundary();
 	
+    /**
+     * @brief Sets a flag that will cause the task to call flush() on the internal glcd_oled_buffered object.
+     */
     void flush();
+	
+    /**
+     * @brief Sets a flag that will cause the task to call flush() on the internal glcd_oled_part_buffered objects.
+     */
     void flushParts();
+	
+	/**
+	 * @brief Returns a reference to the internal glcd_oled_buffered object.
+	 */
 	hwlib::glcd_oled_buffered& getBufferedLCD();
-	glcd_oled_part_buffered<PLAYERHEALTHFIELD_WIDTH * 8, PLAYERHEALTHFIELD_HEIGHT * 8>& getPlayerHealthField();
-	glcd_oled_part_buffered<HITNOTIFICATION_WIDTH * 8, HITNOTIFICATION_HEIGHT *8>& getHitNotificationField();
-	glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT *8>& getStatusMessageField();
-	glcd_oled_part_buffered<CONFIRMMESSAGEFIELD_WIDTH * 8, CONFIRMMESSAGEFIELD_HEIGHT *8>& getConfirmMessageField();
+	
+	/**
+	* @brief Returns a reference to the internal glcd_oled_part_buffered object that represents the status message field.
+	*/
+	glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT * 8>& getStatusMessageField();
+	
+	/**
+	* @brief Returns a reference to the internal glcd_oled_part_buffered object that represents the confirm message field.
+	*/
+	glcd_oled_part_buffered<CONFIRMMESSAGEFIELD_WIDTH * 8, CONFIRMMESSAGEFIELD_HEIGHT * 8>& getConfirmMessageField();
+	
+	/**
+	* @brief Returns a reference to the internal glcd_oled_part_buffered object that represents the player number input field.
+	*/
 	glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8>& getPlayerNumberInputField();
+	
+	/**
+	* @brief Returns a reference to the internal glcd_oled_part_buffered object that represents the fire power input field.
+	*/
 	glcd_oled_part_buffered<FIREPOWERINPUT_WIDTH * 8, FIREPOWERINPUT_HEIGHT * 8>& getFirePowerInputField();
+	
+	/**
+	* @brief Returns a reference to the internal glcd_oled_part_buffered object that represents the game duration input field.
+	*/
 	glcd_oled_part_buffered<GAMEDURATIONINPUT_WIDTH * 8, GAMEDURATIONINPUT_HEIGHT * 8>& getGameDurationInputField();
+	
+	/**
+	* @brief Returns a reference to the internal glcd_oled_part_buffered object that represents the game time field.
+	*/
 	glcd_oled_part_buffered<GAMETIME_WIDTH * 8, GAMETIME_HEIGHT * 8>& getGameTimeField();
+	
+	/**
+	* @brief Returns a reference to the internal glcd_oled_part_buffered object that represents the score field.
+	*/
 	glcd_oled_part_buffered<SCORE_WIDTH * 8, SCORE_HEIGHT * 8>& getScoreField();
 
 private:
