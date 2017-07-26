@@ -109,6 +109,7 @@ void SpeakerController::playSound(Sounds sounds){
 		case Sounds::SHOOT : peew(lsp); break;
 		case Sounds::START_GAME : click(lsp);  break;
 		case Sounds::END_GAME : uhoh(lsp); break;
+    case Sounds::WAIT : noise(lsp); break;
 		default : break;
 	}
 	

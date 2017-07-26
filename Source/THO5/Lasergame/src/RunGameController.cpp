@@ -65,7 +65,7 @@ void RunGameController::main()
 	doCountDown(countdownSec);
 	irE.receive.setReceiveListener(this);
 	playerInfo.setCompiledBits(irE.logic.encode(playerInfo.getPlayerID(), playerInfo.getWeaponID()));
-	sound.setSound(Sounds::START_GAME);
+	
 
 	
 	int startOfGameTimestamp = hwlib::now_us();
@@ -88,6 +88,7 @@ void RunGameController::main()
 			if(remainingTimeSec <= 0)
 			{
 				sound.setSound(Sounds::END_GAME);
+				statusMessageStream <<"Game\n Over!";
 				HWLIB_TRACE << "Game over!";
 				suspend();
 			}
@@ -103,8 +104,9 @@ void RunGameController::doCountDown(int seconds)
 		remainingTimeSec = seconds - (hwlib::now_us() - startOfGameTimestamp) / 1'000'000;
 		gameTimeStream << "\f" << remainingTimeSec / 60 << ":" << remainingTimeSec % 60;
 		oledBoundary.flushParts();
-		sound.setSound(Sounds::END_GAME);
+		
 	}
+	sound.setSound(Sounds::END_GAME);
 }
 
 void RunGameController::handleMessageKey(char c)  {
@@ -115,14 +117,12 @@ void RunGameController::handleMessageKey(char c)  {
 void RunGameController::consumeChar(char c) {}
 void RunGameController::consumeHashTag() {}
 void RunGameController::consumeWildcard() {
+	sound.setSound(Sounds::SHOOT);
 	irE.led.set(true);
 	irE.receive.suspend();
 	irE.trans.enableFlag();
-	
 	sleep(1000 * rtos::ms);
-
 	irE.receive.resume();
-	sound.setSound(Sounds::SHOOT);
 	irE.led.set(false);
 }
 void RunGameController::consumeDigits(char c) {}
@@ -136,14 +136,20 @@ void RunGameController::handleReceivedMessage(const std::array<char, 2>& msg)
 
 		statusMessageStream << "Hit!";
 		oledBoundary.flushParts();
-		sound.setSound(Sounds::HIT);
+		
 		playerInfo.setPlayerHealth(playerInfo.getPlayerHealth() - msg[1]);
 		hwlib::cout << "Player health: " << playerInfo.getPlayerHealth() << "\n";
 		playerHealthStream <<"\fHP:"<<playerInfo.getPlayerHealth();
+		
 		oledBoundary.flushParts();
 		sleep_non_block(1*rtos::s);
 		statusMessageStream << "\f";
-	
+		sound.setSound(Sounds::HIT);
+		if(playerInfo.getPlayerHealth()<=0){
+			statusMessageStream << "Game\n Over!";
+			suspend();
+		}
+
 }
 
 void RunGameController::receivedMsgstd(const std::array<char, 2>& msg)

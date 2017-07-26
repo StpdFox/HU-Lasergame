@@ -16,7 +16,7 @@
 /// \author Marianne Delmaar
 /// \author Ferdi Stoeltie
 /// \brief Enum for sound types
-enum class Sounds {HIT = 0x01, END_GAME = 0x02, START_GAME = 0x04, SHOOT = 0x08};
+enum class Sounds {HIT = 0x01, END_GAME = 0x02, START_GAME = 0x04, SHOOT = 0x08, WAIT = 0x10};
 
 /// \author Marianne Delmaar en Ferdi Stoeltie
 /// \brief Interface to provide the setSound method
