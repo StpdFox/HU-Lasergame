@@ -1,13 +1,10 @@
-import asyncio
 import serial_asyncio
 import asyncio
 import os
 
 global new_data
 import binascii
-import time
 import serial
-
 
 class ParseMsg():
     def parse_data_struct(self, msg):
@@ -23,8 +20,6 @@ class ParseMsg():
             file_object.write(i + "\n")
         file_object.flush()
         file_object.close()
-        # def __init__(self):
-
 
 class Output(asyncio.Protocol):
     msg = bytes();
