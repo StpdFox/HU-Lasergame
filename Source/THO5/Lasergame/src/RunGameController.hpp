@@ -53,9 +53,17 @@ private:
 public:
 	void printByteArray()	{
 		unsigned int index = 0;
+		//unsigned int testCounter = 0;
 		while(index != bytesFilled && index < BUFFER_SIZE )	{
 			hwlib::cout << bytearray[index++];
+			//hwlib::cout.write(bytearray, 80);
+			
+			//testCounter++;
+/*			if(testCounter % 32 == 0)	{
+				hwlib::wait_ms(100);
+			}*/
 		}
+		hwlib::cout.flush();
 	}
 	
 	void fillheader(MESSAGE_TYPES type)	{
@@ -100,7 +108,6 @@ public:
 		while(xtraconvert != 0)	{
 			size++;
 			xtraconvert = (xtraconvert / 10);
-			hwlib::cout << xtraconvert << hwlib::endl;
 		}
 		
 		if(size <= 1)	{
@@ -119,9 +126,8 @@ public:
 			int counter = size;
 			
 			while(nextDigit != 0)	{
-				bytearray[bytesFilled + counter--] = (nextDigit % 10) + '0';
+				bytearray[bytesFilled + --counter] = (nextDigit % 10) + '0';
 				//buffer[counter--] = (nextDigit % 10) + '0';
-				hwlib::cout << "convert:\t" << convert << hwlib::endl;
 				convert /= 10;
 				
 				nextDigit = convert;
@@ -135,7 +141,6 @@ public:
 		//return buffer;
 	}
 	void writeKeyValuePair(const char* key, const char* value)	{
-		hwlib::cout << "I AM NOT SOO WISE" << hwlib::endl;
 		bytesFilled = msgSize + MSG_BODY_OFFSET; // jump to offset of body
 		if(msgSize > 0)	{
 			fillBodyMsg("&");
@@ -145,7 +150,6 @@ public:
 		fillBodyMsg(value);
 	}
 	void writeKeyValuePair(const char* key, unsigned int value)	{
-		hwlib::cout << "I AM WISE" << hwlib::endl;
 		bytesFilled = msgSize + MSG_BODY_OFFSET; // jump to offset of body
 		if(msgSize > 0)	{
 			fillBodyMsg("&");
@@ -185,9 +189,19 @@ private:
 		MessageHandler& mh = MessageHandler::getInstance();
 		
 		//ToDo make fillkeypair instead of fillbytearray and fillbufferwithuint each and every time... Done?
-		const unsigned int pID =  0;//playerInfo.getPlayerID();
+		const unsigned int pID =  playerInfo.getPlayerID();
+		const unsigned int pHealth = healthPoints;
+		//mh.writeKeyValuePair("hallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallo", "hey");
 		mh.writeKeyValuePair("Player_ID", pID);
-		mh.writeKeyValuePair("Player_Name", "zoro");
+		mh.writeKeyValuePair("Player_Health", pHealth);
+		for(int i = 0; i < 10; i++)	{
+			const unsigned int ii = i;
+			const unsigned int other_player_key = other_players[i].first;
+			const unsigned int other_player_hits = other_players[i].second;
+			mh.writeKeyValuePair("Other_Player_ID", ii);
+			mh.writeKeyValuePair("Player_WeaponType", other_player_key);
+			mh.writeKeyValuePair("Player_Hits", other_player_hits);
+		}
 		mh.fillheader(MESSAGE_TYPES::PD);
 		mh.setEnd();
 		mh.printByteArray();
