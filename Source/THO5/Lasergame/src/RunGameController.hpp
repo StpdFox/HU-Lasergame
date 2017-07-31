@@ -39,29 +39,7 @@ class Player : data_struct	{
 private:
 	friend class FormattedGameStats; // They are bff's!
 	
-	void toByteBuffer() override {
-		MessageHandler& mh = MessageHandler::getInstance();
-		
-		//ToDo make fillkeypair instead of fillbytearray and fillbufferwithuint each and every time... Done?
-		const unsigned int pID =  playerInfo.getPlayerID();
-		const unsigned int pHealth = healthPoints;
-		
-		mh.writeKeyValuePair("Player_ID", pID);
-		mh.writeKeyValuePair("Player_Health", pHealth);
-		for(int i = 0; i < 10; i++)	{
-			const unsigned int ii = i;
-			const unsigned int other_player_key = other_players[i].first;
-			const unsigned int other_player_hits = other_players[i].second;
-			mh.writeKeyValuePair("Other_Player_ID", ii);
-			mh.writeKeyValuePair("Player_WeaponType", other_player_key);
-			mh.writeKeyValuePair("Player_Hits", other_player_hits);
-		}
-		mh.fillheader(MESSAGE_TYPES::PD);
-		mh.setEnd();
-		mh.printByteArray();
-		
-		mh.clearBuffer(); // Should be renamed to clear?
-	}
+
 public:
 bool playerisAlive = true;
 	playerInformation& playerInfo;
@@ -90,6 +68,30 @@ bool playerisAlive = true;
 	void takeDamage(uint8_t, uint8_t);
 	void doDamage();
 	bool playerIsAlive();
+	
+	void toByteBuffer() override {
+		MessageHandler& mh = MessageHandler::getInstance();
+		
+		//ToDo make fillkeypair instead of fillbytearray and fillbufferwithuint each and every time... Done?
+		const unsigned int pID =  playerInfo.getPlayerID();
+		const unsigned int pHealth = healthPoints;
+		
+		mh.writeKeyValuePair("Player_ID", pID);
+		mh.writeKeyValuePair("Player_Health", pHealth);
+		for(int i = 0; i < 10; i++)	{
+			const unsigned int ii = i;
+			const unsigned int other_player_key = other_players[i].first;
+			const unsigned int other_player_hits = other_players[i].second;
+			mh.writeKeyValuePair("Other_Player_ID", ii);
+			mh.writeKeyValuePair("Player_WeaponType", other_player_key);
+			mh.writeKeyValuePair("Player_Hits", other_player_hits);
+		}
+		mh.fillheader(MESSAGE_TYPES::PD);
+		mh.setEnd();
+		mh.printByteArray();
+		
+		mh.clearBuffer(); // Should be renamed to clear?
+	}
 };
 //typedef struct IREntity {
 	

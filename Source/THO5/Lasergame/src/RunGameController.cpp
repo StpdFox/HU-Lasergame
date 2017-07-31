@@ -167,15 +167,16 @@ void RunGameController::main()
 			{
 				sound.setSound(Sounds::END_GAME);
 				HWLIB_TRACE << "Game over!";
-/*<<<<<<< HEAD
+
 				//while(true) sleep(1);
+				// This should print the player score information
 				char c = '0';
 				hwlib::cin >> c;
 				if(c == 'r')	{
-					player.getResultsXml();
+					player.toByteBuffer();
 				}
 				while(true) sleep(1);
-=======*/
+
 				suspend();
 //>>>>>>> master
 			}
