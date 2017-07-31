@@ -53,6 +53,8 @@
       <File Name="src/KeyConsumer.h"/>
       <File Name="src/Player.hpp"/>
       <File Name="src/Player.cpp"/>
+      <File Name="src/MessageHandler.hpp"/>
+      <File Name="src/MessageHandler.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libs">
       <VirtualDirectory Name="hwlib">

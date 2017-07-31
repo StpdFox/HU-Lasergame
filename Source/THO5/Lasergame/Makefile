@@ -76,6 +76,8 @@ SOURCES				+= transmitterController.cpp
 HEADERS				+= messageLogic.hpp
 SOURCES 			+= messageLogic.cpp
 
+HEADERS				+= MessageHandler.hpp
+SOURCES				+= MessageHandler.cpp
 OS ?= $(shell uname)
 
 # set BMPTK to the bmptk subdirectory
