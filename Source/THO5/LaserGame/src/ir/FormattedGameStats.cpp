@@ -6,7 +6,7 @@ FormattedGameStats::FormattedGameStats()
 
 void FormattedGameStats::getResultsXml(Player& player)	{
 	hwlib::cout << "<player_game_info>\n";
-	hwlib::cout << "\t<player_id>" << player.playerInfo.playerID << "</player_id>\n" << "\t<player_healthpoints>";
+	hwlib::cout << "\t<player_id>" << player.playerInfo.getPlayerID() << "</player_id>\n" << "\t<player_healthpoints>";
 	hwlib::cout << "\t<player_healthpoints>" << player.healthPoints << "</player_healthpoints>\n";
 	hwlib::cout << "\t<other_players amount=\"" << player.other_players.size() << "\">\n";
 	for(unsigned int i = 0; i < player.other_players.size() - 1; i++)	{

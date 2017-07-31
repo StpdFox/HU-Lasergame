@@ -29,8 +29,6 @@ HEADERS           += coroutine.hpp switch_to.hpp
 SOURCES           += coroutine.cpp switch_to.asm
 HEADERS           += rtos.hpp
 SOURCES           += rtos.cpp
-HEADERS			+= src/test.hpp
-SOURCES 		+= src/test.cpp
 HEADERS			+= src/RunGameController.hpp
 SOURCES			+= src/RunGameController.cpp
 
@@ -41,13 +39,13 @@ HEADERS			+= src/InitGameController.hpp
 SOURCES			+= src/InitGameController.cpp
 
 HEADERS			+= src/KeypadListener.hpp
-HEADERS				+= src/ir/game.hpp
-SOURCES				+= src/ir/game.cpp
+#HEADERS				+= src/ir/game.hpp
+#SOURCES				+= src/ir/game.cpp
 HEADERS			+= src/SpeakerController.hpp
 SOURCES			+= src/SpeakerController.cpp
 
 HEADERS			+= src/GameParamsController.hpp
-SOURCES			+=src/GameParamsController.cpp
+SOURCES			+= src/GameParamsController.cpp
 
 # the source and header files
 

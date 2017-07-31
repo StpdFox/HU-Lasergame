@@ -55,6 +55,7 @@
       <File Name="src/Player.cpp"/>
       <File Name="src/MessageHandler.hpp"/>
       <File Name="src/MessageHandler.cpp"/>
+      <File Name="src/ReceiveListener.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libs">
       <VirtualDirectory Name="hwlib">
@@ -173,7 +174,8 @@
       <CustomBuild Enabled="yes">
         <RebuildCommand>mingw32-make clean build</RebuildCommand>
         <CleanCommand>mingw32-make build clean</CleanCommand>
-        <BuildCommand>mingw32-make build</BuildCommand>
+        <BuildCommand>bmptk-make build
+</BuildCommand>
         <PreprocessFileCommand/>
         <SingleFileCommand/>
         <MakefileGenerationCommand/>

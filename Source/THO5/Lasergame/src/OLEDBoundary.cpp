@@ -1,5 +1,7 @@
-#include "OLEDBoundary.hpp"
+///@file
 #include "hwlib.hpp"
+#include "OLEDBoundary.hpp"
+#include "glcd_oled_part_buffered.hpp"
 
 OLEDBoundary::OLEDBoundary(unsigned int priority) :
 	rtos::task<>{ priority, "OLEDBoundary" },
@@ -9,22 +11,20 @@ OLEDBoundary::OLEDBoundary(unsigned int priority) :
 	//bufferedLCD{ i2c_bus, 0x3c }, //wont work because of the necessary 200 ms init time for the OLED and there is no default constructor
 	bufferedLCD{
 			[this](){
-				hwlib::wait_ms(200);
+				// hwlib::wait_ms(200);
 				// use the buffered version
 				return hwlib::glcd_oled_buffered{ i2c_bus, 0x3c };
 			}()
 		},
 	flushFlag{ this, "flushFlag" },
 	flushPartsFlag{ this, "flushPartsFlag" },
-	playerNumberInputField{ i2c_bus, 0x3c },
-	firePowerInputField{ i2c_bus, 0x3c },
-	gameDurationInputField{ i2c_bus, 0x3c },
-	gameTimeField{ i2c_bus, 0x3c },
-	scoreField{ i2c_bus, 0x3c }
-{
-}
-
-OLEDBoundary::~OLEDBoundary()
+	statusMessageField{ i2c_bus },
+	confirmMessageField{ i2c_bus },
+	playerNumberInputField{ i2c_bus },
+	firePowerInputField{ i2c_bus },
+	gameDurationInputField{ i2c_bus },
+	gameTimeField{ i2c_bus },
+	scoreField{ i2c_bus }
 {
 }
 
@@ -42,7 +42,14 @@ hwlib::glcd_oled_buffered& OLEDBoundary::getBufferedLCD()
 {
 	return bufferedLCD;
 }
-
+glcd_oled_part_buffered<STATUSMESSAGEFIELD_WIDTH * 8, STATUSMESSAGEFIELD_HEIGHT * 8>& OLEDBoundary::getStatusMessageField()
+{
+	return statusMessageField;
+}
+glcd_oled_part_buffered<CONFIRMMESSAGEFIELD_WIDTH * 8, CONFIRMMESSAGEFIELD_HEIGHT * 8>& OLEDBoundary::getConfirmMessageField()
+{
+	return confirmMessageField;
+}
 glcd_oled_part_buffered<PLAYERNUMBERINPUT_WIDTH * 8, PLAYERNUMBERINPUT_HEIGHT * 8>& OLEDBoundary::getPlayerNumberInputField()
 {
 	return playerNumberInputField;
@@ -79,10 +86,12 @@ void OLEDBoundary::main()
 		}
 		else if(event == flushPartsFlag)
 		{
+			gameTimeField.flush();
+			confirmMessageField.flush();
 			playerNumberInputField.flush();
 			firePowerInputField.flush();
 			gameDurationInputField.flush();
-			gameTimeField.flush();
+			statusMessageField.flush();
 			scoreField.flush();
 		}
 	}

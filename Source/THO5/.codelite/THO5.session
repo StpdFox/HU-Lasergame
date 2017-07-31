@@ -1,44 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Session Name="C:\HBO\leerjaar_2\Lasergame\Source\THO5\THO5.workspace">
-  <int Value="4" Name="m_selectedTab"/>
+  <int Value="0" Name="m_selectedTab"/>
   <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\THO5.workspace" Name="m_workspaceName"/>
-  <TabInfoArray Name="TabInfoArray">
-    <TabInfo>
-      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\RunGameController.hpp" Name="FileName"/>
-      <int Value="118" Name="FirstVisibleLine"/>
-      <int Value="100" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\RunGameController.cpp" Name="FileName"/>
-      <int Value="132" Name="FirstVisibleLine"/>
-      <int Value="50" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\main.cpp" Name="FileName"/>
-      <int Value="84" Name="FirstVisibleLine"/>
-      <int Value="96" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\ir\FormattedGameStats.hpp" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="2" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\HBO\leerjaar_2\Lasergame\Source\THO5\LaserGame\src\ir\FormattedGameStats.cpp" Name="FileName"/>
-      <int Value="12" Name="FirstVisibleLine"/>
-      <int Value="31" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-  </TabInfoArray>
+  <TabInfoArray Name="TabInfoArray"/>
   <SerializedObject Name="m_breakpoints">
     <long Value="0" Name="Count"/>
   </SerializedObject>

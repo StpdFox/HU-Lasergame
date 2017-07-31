@@ -1,21 +1,30 @@
+///@file
 // simple IR signal detector
-#include "hwlib.hpp"
 #include "ir/transmitter.hpp"
 #include "ir/gameParameters.hpp"
 #include "ir/messageLogic.hpp"
 #include "ir/receiverController.hpp"
-#include "ir/game.hpp"
-#include "test.hpp"
+/*<<<<<<< HEAD*/
+//#include "ir/game.hpp"
+//#include "test.hpp"
+/*=======
+
+>>>>>>> master*/
 #include "InitGameController.hpp"
 #include "KeypadController.hpp"
 #include "RunGameController.hpp"
 #include "SpeakerController.hpp"
 #include "GameParamsController.hpp"
-#include <array>
 
-#include "rtos.hpp"
 #include "OLEDBoundary.hpp"
+/*<<<<<<< HEAD*/
 #include "FormattedGameStats.hpp"
+/*=======*/
+
+#include "hwlib.hpp"
+#include "rtos.hpp"
+#include <array>
+/*>>>>>>> master*/
 
 //#include "TestTask.hpp"
 int main( void ){
@@ -80,21 +89,28 @@ int main( void ){
     char16_t compiledMessage = messageLogic.encode(1,1);
 	
 	//Set the playerInformation according to the message
-    playerInformation playerInformation;
-    playerInformation.setCompiledBits(compiledMessage);
+    playerInformation playerInfo;
+    playerInfo.setCompiledBits(compiledMessage);
 	
 	//Set receivercontroller
-    auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
+    receiverController receiver{ data,gnd,vcc,messageLogic,0 };
+	transmitterController trans{ playerInfo, 1 };
 	
-	struct IREntity IRE(button,led,playerInformation,messageLogic,receiver);
+//<<<<<<< HEAD
+	//struct IREntity IRE(button,led,playerInformation,messageLogic,receiver);
 	
+//=======
+	irentity IRE(button,led,trans,messageLogic,receiver);
+
+//>>>>>>> master*/
 	KeypadController kpC = KeypadController(keypad, 15);
-	OLEDBoundary oledBoundary{ 10 };
+	OLEDBoundary oledBoundary{ 17 };
 	auto sC = SpeakerController(lsp, 14);
-	auto rGC = RunGameController(kpC, sC, oledBoundary, IRE, playerInformation, 12);
-	auto iGC = InitGameController(kpC, &rGC, oledBoundary, playerInformation, IRE, 13);
-	auto gPC = GameParamsController(kpC, &iGC, &rGC, oledBoundary, playerInformation, IRE, 16);
-	Player testPlayer(playerInformation, rGC);
+//<<<<<<< HEAD
+	//auto rGC = RunGameController(kpC, sC, oledBoundary, IRE, playerInformation, 12);
+	//auto iGC = InitGameController(kpC, &rGC, oledBoundary, playerInformation, IRE, 13);
+	//auto gPC = GameParamsController(kpC, &iGC, &rGC, oledBoundary, playerInformation, IRE, 16);
+	//Player testPlayer(playerInformation, rGC);
 	//FormattedGameStats FGS;
 	//std::string lotsofaids;
 	
@@ -103,20 +119,25 @@ int main( void ){
 		buffedasfuck[i] = lotsofaids.at(i);
 	}*/
 	
+//=======
+	auto rGC = RunGameController(kpC, sC, oledBoundary, playerInfo, IRE, 19);
+	auto iGC = InitGameController(kpC, rGC, oledBoundary, playerInfo, IRE, 13);
+	auto gPC = GameParamsController(kpC, iGC, rGC, oledBoundary, playerInfo, IRE, 16);
+	Player testPlayer(playerInfo, rGC);
+//>>>>>>> master
 	kpC.registerNext(&gPC);
 	
 	// set IR receiver
 	receiver.setReceiveListener(&rGC);
 	
-	
-	while(true)	{
+/*	while(true)	{
 		char c;
 		hwlib::cin >> c;
 		if(c == 'r')	{
-			testPlayer.getResultsXml();
+			//testPlayer.getResultsXml();
 			//hwlib::cout <<  << hwlib::endl;
 		}
-	}
+	}*/
 	
 //   TestTask tt{ 2 };
 //   tt.setOledBoundary(&oledBoundary);

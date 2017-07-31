@@ -1,30 +1,32 @@
-#include "hwlib.hpp"
 #ifndef GAMEPARAMETERS_HPP
 #define GAMEPARAMETERS_HPP
 
+#include "hwlib.hpp"
+
 class playerInformation{
 private:
-
 	char16_t compiledBits;
+	int playerHealth = 100;
+	byte playerID;
+	byte weaponID;
+	
 public:
 	playerInformation():
 	compiledBits(0)
 	{}
-	byte playerID;
-	byte weaponID;
 	
 	// health is hier niet nodig? deze klasse wordt alleen gebruikt om data over te sturen.
 	// Bevat alleen constante die na 1x setten niet meer veranderen? Dus playerID, weaponID.
 	// in Player (rungamecontroller.hpp / cpp) zit het echte player object,
 	// waar logica aan verbonden is over de implementatie binnen het spel.
-	int playerHealth = 100;
+	//int playerHealth = 100;
 	
 	char16_t getCompiledBits(){
 		return compiledBits;
 	}
 
 	void setCompiledBits(char16_t value){
-		compiledBits = value;
+		this->compiledBits = value;
 	}
 	
 	byte getPlayerID(){
@@ -32,7 +34,7 @@ public:
 	}
 	
 	void setPlayerID(byte playerID){
-		playerID = playerID;
+		this->playerID = playerID;
 	}
 	
 	byte getWeaponID(){
@@ -40,36 +42,36 @@ public:
 	}
 	
 	void setWeaponID(byte weaponID){
-		weaponID = weaponID;
+		this->weaponID = weaponID;
 	}
 	
 	int getPlayerHealth(){
 		return playerHealth;
 	}
 	void setPlayerHealth(int playerHealth){
-		playerHealth = playerHealth;
+		this->playerHealth = playerHealth;
 	}
 };
 
 class gameInformation{
 private:
-	int gameTimeRemaning;
+	int gameTimeRemaining;
 	bool gameRunning;
 public:
-	gameInformation(int gameTimeRemaning):
-	gameTimeRemaning(gameTimeRemaning),
+	gameInformation(int gameTimeRemaining):
+	gameTimeRemaining(gameTimeRemaining),
 	gameRunning(0)
 	{}
 
 	int getGameTime(){
-		return gameTimeRemaning;
+		return gameTimeRemaining;
 	}
 	bool getGameRunning(){
 		return gameRunning;
 	}
 
 	void setGameTime(int time){
-		gameTimeRemaning = time;
+		gameTimeRemaining = time;
 	}
 	void setGameRunning(bool state){
 		gameRunning = state;
