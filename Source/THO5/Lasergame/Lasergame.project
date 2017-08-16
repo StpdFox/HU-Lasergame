@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="LaserGame" Version="10.0.0" InternalType="">
+<CodeLite_Project Name="Lasergame" Version="10.0.0" InternalType="">
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
@@ -16,7 +16,7 @@
   </Reconciliation>
   <Description/>
   <Dependencies/>
-  <VirtualDirectory Name="LaserGame">
+  <VirtualDirectory Name="Lasergame">
     <File Name="Makefile"/>
     <VirtualDirectory Name="src">
       <File Name="src/main.cpp"/>

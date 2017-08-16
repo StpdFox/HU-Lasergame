@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="THO5" Database="" Version="10.0.0">
-  <Project Name="LaserGame" Path="LaserGame/LaserGame.project" Active="yes"/>
+  <Project Name="Lasergame" Path="LaserGame/LaserGame.project" Active="yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
-      <Project Name="LaserGame" ConfigName="Debug"/>
+      <Project Name="Lasergame" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
-      <Project Name="LaserGame" ConfigName="Release"/>
+      <Project Name="Lasergame" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
