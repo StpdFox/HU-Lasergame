@@ -1,17 +1,17 @@
 Archive member included to satisfy reference by file (symbol)
 
-/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
+c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
                               src/SpeakerController.o (__aeabi_i2d)
-/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_muldivdf3.o)
+c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivdf3.o)
                               src/SpeakerController.o (__aeabi_dmul)
-/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_fixdfsi.o)
+c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixdfsi.o)
                               src/SpeakerController.o (__aeabi_d2iz)
-/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_aeabi_ldivmod.o)
+c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_aeabi_ldivmod.o)
                               hwlib.o (__aeabi_ldivmod)
-/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_udivmoddi4.o)
-                              /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_aeabi_ldivmod.o) (__udivmoddi4)
-/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_dvmd_tls.o)
-                              /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_aeabi_ldivmod.o) (__aeabi_ldiv0)
+c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_udivmoddi4.o)
+                              c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_aeabi_ldivmod.o) (__udivmoddi4)
+c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_dvmd_tls.o)
+                              c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_aeabi_ldivmod.o) (__aeabi_ldiv0)
 
 Allocating common symbols
 Common symbol       size              file
@@ -380,8 +380,6 @@ Discarded input sections
  .group         0x00000000        0x8 src/RunGameController.o
  .group         0x00000000        0x8 src/RunGameController.o
  .group         0x00000000        0x8 src/RunGameController.o
- .group         0x00000000        0x8 src/RunGameController.o
- .group         0x00000000        0x8 src/RunGameController.o
  .text          0x00000000        0x0 src/RunGameController.o
  .data          0x00000000        0x0 src/RunGameController.o
  .bss           0x00000000        0x0 src/RunGameController.o
@@ -403,8 +401,6 @@ Discarded input sections
                 0x00000000        0x4 src/RunGameController.o
  .text._ZN5hwlib7ostream5flushEv
                 0x00000000        0x2 src/RunGameController.o
- .text._ZN4rtos8callback6cancelEv
-                0x00000000        0xa src/RunGameController.o
  .text._ZN5hwlib20cout_using_uart_putc4putcEc
                 0x00000000        0x6 src/RunGameController.o
  .text._ZN5hwlib19cin_using_uart_getc4getcEv
@@ -463,8 +459,6 @@ Discarded input sections
                 0x00000000       0xaa src/RunGameController.o
  .text._ZN5hwlib6now_usEv
                 0x00000000        0x8 src/RunGameController.o
- .text._ZN17RunGameControllerD2Ev
-                0x00000000       0x64 src/RunGameController.o
  .rodata._ZTVN5hwlib19_pin_in_dummy_classE
                 0x00000000        0xc src/RunGameController.o
  .rodata._ZTVN5hwlib20_pin_out_dummy_classE
@@ -481,8 +475,6 @@ Discarded input sections
                 0x00000000        0xc src/RunGameController.o
  .rodata._ZTVN5hwlib6circleE
                 0x00000000        0xc src/RunGameController.o
- .rodata._ZTVN4rtos8callbackE
-                0x00000000       0x10 src/RunGameController.o
  .data._ZN5hwlib3cinE
                 0x00000000        0x4 src/RunGameController.o
  .data._ZN5hwlib12pin_in_dummyE
@@ -2139,19 +2131,19 @@ Discarded input sections
  .bss           0x00000000        0x0 bmptk_fixed_size_stack.o
  .text.bmptk_stack_used
                 0x00000000        0xc bmptk_fixed_size_stack.o
- .data          0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
- .bss           0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
- .data          0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_muldivdf3.o)
- .bss           0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_muldivdf3.o)
- .data          0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_fixdfsi.o)
- .bss           0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_fixdfsi.o)
- .data          0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_aeabi_ldivmod.o)
- .bss           0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_aeabi_ldivmod.o)
- .data          0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_udivmoddi4.o)
- .bss           0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_udivmoddi4.o)
- .ARM.extab     0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_udivmoddi4.o)
- .data          0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_dvmd_tls.o)
- .bss           0x00000000        0x0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_dvmd_tls.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivdf3.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivdf3.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixdfsi.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixdfsi.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_aeabi_ldivmod.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_aeabi_ldivmod.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_udivmoddi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_udivmoddi4.o)
+ .ARM.extab     0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_udivmoddi4.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_dvmd_tls.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_dvmd_tls.o)
 
 Memory Configuration
 
@@ -2163,7 +2155,7 @@ nul              0x20000000         0x00000000         xrw
 
 Linker script and memory map
 
-LOAD /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a
 LOAD hwlib.o
 LOAD coroutine.o
 LOAD switch_to.o
@@ -2182,11 +2174,11 @@ LOAD src/main.o
 LOAD bmptk_cortex.o
 LOAD bmptk_heap_bmptk.o
 LOAD bmptk_fixed_size_stack.o
-LOAD /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m/libstdc++.a
-LOAD /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m/libm.a
+LOAD c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libstdc++.a
+LOAD c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a
 START GROUP
-LOAD /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a
-LOAD /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m/libc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libc.a
 END GROUP
                 0x00000000                __rom_start = ORIGIN (rom)
                 0x00080000                __rom_size = LENGTH (rom)
@@ -2201,7 +2193,7 @@ END GROUP
                 [!provide]                PROVIDE (__ram_size, __ram_size)
                 [!provide]                PROVIDE (__ram_end, __ram_end)
 
-.text           0x00000000     0x7a34
+.text           0x00000000     0x7a1c
                 0x00000000                . = ALIGN (0x4)
                 0x00000000                __text_start = .
                 [!provide]                PROVIDE (__text_start, __text_start)
@@ -2492,8 +2484,8 @@ END GROUP
                 0x0000177e                non-virtual thunk to RunGameController::consumeHashTag()
  .text._ZN17RunGameController13consumeDigitsEc
                 0x0000178a        0x2 src/RunGameController.o
-                0x0000178a                RunGameController::consumeChar(char)
                 0x0000178a                RunGameController::consumeDigits(char)
+                0x0000178a                RunGameController::consumeChar(char)
  .text._ZThn4236_N17RunGameController11consumeCharEc
                 0x0000178c        0xc src/RunGameController.o
                 0x0000178c                non-virtual thunk to RunGameController::consumeChar(char)
@@ -2945,283 +2937,284 @@ END GROUP
                 0x00004de0       0x98 src/main.o
                 0x00004de0                hwlib::keypad<16>::char_available()
  .text.startup.main
-                0x00004e78      0x2c0 src/main.o
+                0x00004e78      0x2c8 src/main.o
                 0x00004e78                main
  .text.Int27_Handler
-                0x00005138        0x2 bmptk_cortex.o
-                0x00005138                Int27_Handler
- *fill*         0x0000513a        0x2 
+                0x00005140        0x2 bmptk_cortex.o
+                0x00005140                Int27_Handler
+ *fill*         0x00005142        0x2 
  .text.__startup
-                0x0000513c       0x48 bmptk_cortex.o
-                0x0000513c                __startup
+                0x00005144       0x48 bmptk_cortex.o
+                0x00005144                __startup
  .text.SysTick_Handler
-                0x00005184        0x2 bmptk_cortex.o
-                0x00005184                SysTick_Handler
+                0x0000518c        0x2 bmptk_cortex.o
+                0x0000518c                SysTick_Handler
  .text.__cxa_pure_virtual
-                0x00005186        0x2 bmptk_cortex.o
-                0x00005186                __cxa_pure_virtual
- .text.malloc   0x00005188       0x24 bmptk_heap_bmptk.o
-                0x00005188                malloc
+                0x0000518e        0x2 bmptk_cortex.o
+                0x0000518e                __cxa_pure_virtual
+ .text.malloc   0x00005190       0x24 bmptk_heap_bmptk.o
+                0x00005190                malloc
  .text.bmptk_heap_free
-                0x000051ac       0x14 bmptk_heap_bmptk.o
-                0x000051ac                bmptk_heap_free
+                0x000051b4       0x14 bmptk_heap_bmptk.o
+                0x000051b4                bmptk_heap_free
  .text.bmptk_heap_used
-                0x000051c0       0x14 bmptk_heap_bmptk.o
-                0x000051c0                bmptk_heap_used
+                0x000051c8       0x14 bmptk_heap_bmptk.o
+                0x000051c8                bmptk_heap_used
  .text.bmptk_heap_size
-                0x000051d4       0x10 bmptk_heap_bmptk.o
-                0x000051d4                bmptk_heap_size
+                0x000051dc       0x10 bmptk_heap_bmptk.o
+                0x000051dc                bmptk_heap_size
  .text.bmptk_stack_size
-                0x000051e4        0x6 bmptk_fixed_size_stack.o
-                0x000051e4                bmptk_stack_size
- *fill*         0x000051ea        0x2 
+                0x000051ec        0x6 bmptk_fixed_size_stack.o
+                0x000051ec                bmptk_stack_size
+ *fill*         0x000051f2        0x2 
  .text.bmptk_stack_free
-                0x000051ec       0x18 bmptk_fixed_size_stack.o
-                0x000051ec                bmptk_stack_free
- .text          0x00005204      0x370 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
-                0x00005204                __aeabi_drsub
-                0x0000520c                __aeabi_dsub
-                0x0000520c                __subdf3
-                0x00005210                __adddf3
-                0x00005210                __aeabi_dadd
-                0x00005488                __aeabi_ui2d
-                0x00005488                __floatunsidf
-                0x000054a8                __floatsidf
-                0x000054a8                __aeabi_i2d
-                0x000054cc                __extendsfdf2
-                0x000054cc                __aeabi_f2d
-                0x00005508                __aeabi_ul2d
-                0x00005508                __floatundidf
-                0x00005518                __floatdidf
-                0x00005518                __aeabi_l2d
- .text          0x00005574      0x424 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_muldivdf3.o)
-                0x00005574                __aeabi_dmul
-                0x00005574                __muldf3
-                0x000057c8                __aeabi_ddiv
-                0x000057c8                __divdf3
- .text          0x00005998       0x50 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_fixdfsi.o)
-                0x00005998                __fixdfsi
-                0x00005998                __aeabi_d2iz
- .text          0x000059e8       0xa0 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_aeabi_ldivmod.o)
-                0x000059e8                __aeabi_ldivmod
- .text          0x00005a88      0x2ec /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_udivmoddi4.o)
-                0x00005a88                __udivmoddi4
- .text          0x00005d74        0x4 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_dvmd_tls.o)
-                0x00005d74                __aeabi_ldiv0
-                0x00005d78                . = ALIGN (0x4)
+                0x000051f4       0x18 bmptk_fixed_size_stack.o
+                0x000051f4                bmptk_stack_free
+ .text          0x0000520c      0x370 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
+                0x0000520c                __aeabi_drsub
+                0x00005214                __aeabi_dsub
+                0x00005214                __subdf3
+                0x00005218                __aeabi_dadd
+                0x00005218                __adddf3
+                0x00005490                __floatunsidf
+                0x00005490                __aeabi_ui2d
+                0x000054b0                __floatsidf
+                0x000054b0                __aeabi_i2d
+                0x000054d4                __aeabi_f2d
+                0x000054d4                __extendsfdf2
+                0x00005510                __floatundidf
+                0x00005510                __aeabi_ul2d
+                0x00005520                __floatdidf
+                0x00005520                __aeabi_l2d
+ .text          0x0000557c      0x424 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivdf3.o)
+                0x0000557c                __aeabi_dmul
+                0x0000557c                __muldf3
+                0x000057d0                __divdf3
+                0x000057d0                __aeabi_ddiv
+ .text          0x000059a0       0x50 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixdfsi.o)
+                0x000059a0                __aeabi_d2iz
+                0x000059a0                __fixdfsi
+ .text          0x000059f0       0xa0 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_aeabi_ldivmod.o)
+                0x000059f0                __aeabi_ldivmod
+ .text          0x00005a90      0x2ec c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_udivmoddi4.o)
+                0x00005a90                __udivmoddi4
+ .text          0x00005d7c        0x4 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_dvmd_tls.o)
+                0x00005d7c                __aeabi_ldiv0
+                0x00005d80                . = ALIGN (0x4)
  *(.glue_7t .glue_7)
- .glue_7        0x00005d78        0x0 linker stubs
- .glue_7t       0x00005d78        0x0 linker stubs
-                0x00005d78                . = ALIGN (0x4)
+ .glue_7        0x00005d80        0x0 linker stubs
+ .glue_7t       0x00005d80        0x0 linker stubs
+                0x00005d80                . = ALIGN (0x4)
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata._ZTVN5hwlib19_pin_in_dummy_classE
-                0x00005d78        0xc hwlib.o
-                0x00005d78                vtable for hwlib::_pin_in_dummy_class
+                0x00005d80        0xc hwlib.o
+                0x00005d80                vtable for hwlib::_pin_in_dummy_class
  .rodata._ZTVN5hwlib19_pin_oc_dummy_classE
-                0x00005d84       0x10 hwlib.o
-                0x00005d84                vtable for hwlib::_pin_oc_dummy_class
+                0x00005d8c       0x10 hwlib.o
+                0x00005d8c                vtable for hwlib::_pin_oc_dummy_class
  .rodata._ZTVN5hwlib20cout_using_uart_putcE
-                0x00005d94       0x10 hwlib.o
-                0x00005d94                vtable for hwlib::cout_using_uart_putc
+                0x00005d9c       0x10 hwlib.o
+                0x00005d9c                vtable for hwlib::cout_using_uart_putc
  .rodata._ZTVN5hwlib9image_8x8E
-                0x00005da4        0xc hwlib.o
-                0x00005da4                vtable for hwlib::image_8x8
+                0x00005dac        0xc hwlib.o
+                0x00005dac                vtable for hwlib::image_8x8
  .rodata._ZTVN3due6pin_inE
-                0x00005db0        0xc hwlib.o
-                0x00005db0                vtable for due::pin_in
+                0x00005db8        0xc hwlib.o
+                0x00005db8                vtable for due::pin_in
  .rodata._ZTVN3due7pin_outE
-                0x00005dbc        0xc hwlib.o
-                0x00005dbc                vtable for due::pin_out
+                0x00005dc4        0xc hwlib.o
+                0x00005dc4                vtable for due::pin_out
  .rodata._ZN5hwlibL5blackE
-                0x00005dc8        0x4 hwlib.o
+                0x00005dd0        0x4 hwlib.o
  .rodata._ZN5hwlibL5whiteE
-                0x00005dcc        0x4 hwlib.o
+                0x00005dd4        0x4 hwlib.o
  .rodata._ZN5hwlib16font_default_8x86imagesE
-                0x00005dd0      0xa00 hwlib.o
-                0x00005dd0                hwlib::font_default_8x8::images
+                0x00005dd8      0xa00 hwlib.o
+                0x00005dd8                hwlib::font_default_8x8::images
  .rodata.str1.1
-                0x000067d0       0x1f hwlib.o
+                0x000067d8       0x1f hwlib.o
                                  0x21 (size before relaxing)
  .rodata._ZZN3due8pin_infoENS_4pinsEE14pin_info_array
-                0x000067ef       0xa4 hwlib.o
- *fill*         0x00006893        0x1 
+                0x000067f7       0xa4 hwlib.o
+ *fill*         0x0000689b        0x1 
  .rodata._ZTVN4rtos8waitableE
-                0x00006894        0xc rtos.o
-                0x00006894                vtable for rtos::waitable
+                0x0000689c        0xc rtos.o
+                0x0000689c                vtable for rtos::waitable
  .rodata._ZTVN4rtos4flagE
-                0x000068a0        0xc rtos.o
-                0x000068a0                vtable for rtos::flag
+                0x000068a8        0xc rtos.o
+                0x000068a8                vtable for rtos::flag
  .rodata._ZTVN4rtos8callbackE
-                0x000068ac       0x10 rtos.o
-                0x000068ac                vtable for rtos::callback
+                0x000068b4       0x10 rtos.o
+                0x000068b4                vtable for rtos::callback
  .rodata._ZTVN4rtos12channel_baseE
-                0x000068bc        0xc rtos.o
-                0x000068bc                vtable for rtos::channel_base
+                0x000068c4        0xc rtos.o
+                0x000068c4                vtable for rtos::channel_base
  .rodata._ZTVN4rtos5clockE
-                0x000068c8       0x20 rtos.o
-                0x000068c8                vtable for rtos::clock
+                0x000068d0       0x20 rtos.o
+                0x000068d0                vtable for rtos::clock
  .rodata.str1.1
-                0x000068e8      0x344 rtos.o
+                0x000068f0      0x344 rtos.o
                                 0x368 (size before relaxing)
  .rodata._ZTVN4rtos5timerE
-                0x00006c2c       0x24 rtos.o
-                0x00006c2c                vtable for rtos::timer
+                0x00006c34       0x24 rtos.o
+                0x00006c34                vtable for rtos::timer
  .rodata._ZTVN4rtos9task_baseE
-                0x00006c50       0x14 rtos.o
-                0x00006c50                vtable for rtos::task_base
+                0x00006c58       0x14 rtos.o
+                0x00006c58                vtable for rtos::task_base
  .rodata._ZTVN5hwlib14window_ostreamE
-                0x00006c64       0x10 src/RunGameController.o
-                0x00006c64                vtable for hwlib::window_ostream
+                0x00006c6c       0x10 src/RunGameController.o
+                0x00006c6c                vtable for hwlib::window_ostream
  .rodata._ZTVN5hwlib16font_default_8x8E
-                0x00006c74        0xc src/RunGameController.o
-                0x00006c74                vtable for hwlib::font_default_8x8
+                0x00006c7c        0xc src/RunGameController.o
+                0x00006c7c                vtable for hwlib::font_default_8x8
  .rodata._ZTV17RunGameController
-                0x00006c80       0x5c src/RunGameController.o
-                0x00006c80                vtable for RunGameController
+                0x00006c88       0x5c src/RunGameController.o
+                0x00006c88                vtable for RunGameController
  .rodata.str1.1
-                0x00006cdc      0x228 src/RunGameController.o
-                                0x260 (size before relaxing)
+                0x00006ce4      0x207 src/RunGameController.o
+                                0x22d (size before relaxing)
+ *fill*         0x00006eeb        0x1 
  .rodata._ZTV16KeypadController
-                0x00006f04       0x14 src/KeypadController.o
-                0x00006f04                vtable for KeypadController
+                0x00006eec       0x14 src/KeypadController.o
+                0x00006eec                vtable for KeypadController
  .rodata.str1.1
-                0x00006f18       0x31 src/KeypadController.o
+                0x00006f00       0x31 src/KeypadController.o
                                  0x4c (size before relaxing)
- .rodata        0x00006f49        0x2 src/InitGameController.o
+ .rodata        0x00006f31        0x2 src/InitGameController.o
  .rodata.str1.1
-                0x00006f4b      0x31f src/InitGameController.o
+                0x00006f33      0x31f src/InitGameController.o
                                 0x388 (size before relaxing)
- *fill*         0x0000726a        0x2 
+ *fill*         0x00007252        0x2 
  .rodata._ZTV18InitGameController
-                0x0000726c       0x4c src/InitGameController.o
-                0x0000726c                vtable for InitGameController
+                0x00007254       0x4c src/InitGameController.o
+                0x00007254                vtable for InitGameController
  .rodata._ZTV17SpeakerController
-                0x000072b8       0x24 src/SpeakerController.o
-                0x000072b8                vtable for SpeakerController
+                0x000072a0       0x24 src/SpeakerController.o
+                0x000072a0                vtable for SpeakerController
  .rodata.str1.1
-                0x000072dc       0x33 src/SpeakerController.o
+                0x000072c4       0x33 src/SpeakerController.o
                                  0x4f (size before relaxing)
- *fill*         0x0000730f        0x1 
+ *fill*         0x000072f7        0x1 
  .rodata._ZTVN4rtos7channelIN20GameParamsController9irMessageELi1EEE
-                0x00007310        0xc src/GameParamsController.o
-                0x00007310                vtable for rtos::channel<GameParamsController::irMessage, 1>
+                0x000072f8        0xc src/GameParamsController.o
+                0x000072f8                vtable for rtos::channel<GameParamsController::irMessage, 1>
  .rodata._ZTV20GameParamsController
-                0x0000731c       0x5c src/GameParamsController.o
-                0x0000731c                vtable for GameParamsController
+                0x00007304       0x5c src/GameParamsController.o
+                0x00007304                vtable for GameParamsController
  .rodata.str1.1
-                0x00007378      0x30b src/GameParamsController.o
+                0x00007360      0x30b src/GameParamsController.o
                                 0x3d1 (size before relaxing)
- *fill*         0x00007683        0x1 
+ *fill*         0x0000766b        0x1 
  .rodata._ZTVN5hwlib26i2c_bus_bit_banged_scl_sdaE
-                0x00007684       0x10 OLEDBoundary.o
-                0x00007684                vtable for hwlib::i2c_bus_bit_banged_scl_sda
+                0x0000766c       0x10 OLEDBoundary.o
+                0x0000766c                vtable for hwlib::i2c_bus_bit_banged_scl_sda
  .rodata._ZTVN5hwlib18glcd_oled_bufferedE
-                0x00007694       0x10 OLEDBoundary.o
-                0x00007694                vtable for hwlib::glcd_oled_buffered
+                0x0000767c       0x10 OLEDBoundary.o
+                0x0000767c                vtable for hwlib::glcd_oled_buffered
  .rodata._ZTVN3due6pin_ocE
-                0x000076a4       0x10 OLEDBoundary.o
-                0x000076a4                vtable for due::pin_oc
+                0x0000768c       0x10 OLEDBoundary.o
+                0x0000768c                vtable for due::pin_oc
  .rodata._ZTV23glcd_oled_part_bufferedILj48ELj8EE
-                0x000076b4       0x10 OLEDBoundary.o
-                0x000076b4                vtable for glcd_oled_part_buffered<48u, 8u>
+                0x0000769c       0x10 OLEDBoundary.o
+                0x0000769c                vtable for glcd_oled_part_buffered<48u, 8u>
  .rodata._ZTV23glcd_oled_part_bufferedILj40ELj24EE
-                0x000076c4       0x10 OLEDBoundary.o
-                0x000076c4                vtable for glcd_oled_part_buffered<40u, 24u>
+                0x000076ac       0x10 OLEDBoundary.o
+                0x000076ac                vtable for glcd_oled_part_buffered<40u, 24u>
  .rodata._ZTV23glcd_oled_part_bufferedILj80ELj16EE
-                0x000076d4       0x10 OLEDBoundary.o
-                0x000076d4                vtable for glcd_oled_part_buffered<80u, 16u>
+                0x000076bc       0x10 OLEDBoundary.o
+                0x000076bc                vtable for glcd_oled_part_buffered<80u, 16u>
  .rodata._ZTV23glcd_oled_part_bufferedILj96ELj16EE
-                0x000076e4       0x10 OLEDBoundary.o
-                0x000076e4                vtable for glcd_oled_part_buffered<96u, 16u>
+                0x000076cc       0x10 OLEDBoundary.o
+                0x000076cc                vtable for glcd_oled_part_buffered<96u, 16u>
  .rodata._ZTV23glcd_oled_part_bufferedILj8ELj8EE
-                0x000076f4       0x10 OLEDBoundary.o
-                0x000076f4                vtable for glcd_oled_part_buffered<8u, 8u>
+                0x000076dc       0x10 OLEDBoundary.o
+                0x000076dc                vtable for glcd_oled_part_buffered<8u, 8u>
  .rodata._ZTV23glcd_oled_part_bufferedILj40ELj8EE
-                0x00007704       0x10 OLEDBoundary.o
-                0x00007704                vtable for glcd_oled_part_buffered<40u, 8u>
+                0x000076ec       0x10 OLEDBoundary.o
+                0x000076ec                vtable for glcd_oled_part_buffered<40u, 8u>
  .rodata._ZTV23glcd_oled_part_bufferedILj16ELj8EE
-                0x00007714       0x10 OLEDBoundary.o
-                0x00007714                vtable for glcd_oled_part_buffered<16u, 8u>
+                0x000076fc       0x10 OLEDBoundary.o
+                0x000076fc                vtable for glcd_oled_part_buffered<16u, 8u>
  .rodata._ZZN5hwlib18glcd_oled_bufferedC4ERNS_7i2c_busEjE13init_sequence
-                0x00007724       0x29 OLEDBoundary.o
-                0x00007724                hwlib::glcd_oled_buffered::glcd_oled_buffered(hwlib::i2c_bus&, unsigned int)::init_sequence
+                0x0000770c       0x29 OLEDBoundary.o
+                0x0000770c                hwlib::glcd_oled_buffered::glcd_oled_buffered(hwlib::i2c_bus&, unsigned int)::init_sequence
  .rodata.str1.1
-                0x0000774d       0x3d OLEDBoundary.o
+                0x00007735       0x3d OLEDBoundary.o
                                  0x6c (size before relaxing)
- *fill*         0x0000778a        0x2 
+ *fill*         0x00007772        0x2 
  .rodata._ZTV12OLEDBoundary
-                0x0000778c       0x14 OLEDBoundary.o
-                0x0000778c                vtable for OLEDBoundary
+                0x00007774       0x14 OLEDBoundary.o
+                0x00007774                vtable for OLEDBoundary
  .rodata._ZTV18receiverController
-                0x000077a0       0x14 receiverController.o
-                0x000077a0                vtable for receiverController
+                0x00007788       0x14 receiverController.o
+                0x00007788                vtable for receiverController
  .rodata.str1.1
-                0x000077b4      0x1c9 receiverController.o
+                0x0000779c      0x1c9 receiverController.o
                                 0x1f2 (size before relaxing)
  .rodata.str1.1
-                0x0000797d       0x1b transmitter.o
+                0x00007965       0x1b transmitter.o
                                  0x38 (size before relaxing)
  .rodata._ZTVN3due8d2_36kHzE
-                0x00007998        0xc transmitterController.o
-                0x00007998                vtable for due::d2_36kHz
+                0x00007980        0xc transmitterController.o
+                0x00007980                vtable for due::d2_36kHz
  .rodata._ZTV21transmitterController
-                0x000079a4       0x14 transmitterController.o
-                0x000079a4                vtable for transmitterController
+                0x0000798c       0x14 transmitterController.o
+                0x0000798c                vtable for transmitterController
  .rodata.str1.1
-                0x000079b8       0x19 transmitterController.o
+                0x000079a0       0x19 transmitterController.o
                                  0x34 (size before relaxing)
- *fill*         0x000079d1        0x3 
+ *fill*         0x000079b9        0x3 
  .rodata._ZTVN5hwlib17port_in_from_pinsE
-                0x000079d4       0x10 src/main.o
-                0x000079d4                vtable for hwlib::port_in_from_pins
+                0x000079bc       0x10 src/main.o
+                0x000079bc                vtable for hwlib::port_in_from_pins
  .rodata._ZTVN5hwlib17port_oc_from_pinsE
-                0x000079e4       0x14 src/main.o
-                0x000079e4                vtable for hwlib::port_oc_from_pins
+                0x000079cc       0x14 src/main.o
+                0x000079cc                vtable for hwlib::port_oc_from_pins
  .rodata._ZTVN5hwlib6keypadILi16EEE
-                0x000079f8       0x10 src/main.o
-                0x000079f8                vtable for hwlib::keypad<16>
+                0x000079e0       0x10 src/main.o
+                0x000079e0                vtable for hwlib::keypad<16>
  .rodata.str1.1
-                0x00007a08       0x2b src/main.o
+                0x000079f0       0x2b src/main.o
                                  0x71 (size before relaxing)
-                0x00007a34                . = ALIGN (0x4)
- *fill*         0x00007a33        0x1 
+                0x00007a1c                . = ALIGN (0x4)
+ *fill*         0x00007a1b        0x1 
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x00007a34                . = ALIGN (0x4)
+                0x00007a1c                . = ALIGN (0x4)
  *(.gcc_except_table)
-                0x00007a34                . = ALIGN (0x4)
+                0x00007a1c                . = ALIGN (0x4)
  *(.eh_frame_hdr)
-                0x00007a34                . = ALIGN (0x4)
+                0x00007a1c                . = ALIGN (0x4)
  *(.eh_frame)
-                0x00007a34                . = ALIGN (0x4)
-                0x00007a34                __text_end = .
+                0x00007a1c                . = ALIGN (0x4)
+                0x00007a1c                __text_end = .
                 [!provide]                PROVIDE (__text_end, __text_end)
 
-.vfp11_veneer   0x00007a34        0x0
- .vfp11_veneer  0x00007a34        0x0 linker stubs
+.vfp11_veneer   0x00007a1c        0x0
+ .vfp11_veneer  0x00007a1c        0x0 linker stubs
 
-.v4_bx          0x00007a34        0x0
- .v4_bx         0x00007a34        0x0 linker stubs
+.v4_bx          0x00007a1c        0x0
+ .v4_bx         0x00007a1c        0x0 linker stubs
 
-.iplt           0x00007a34        0x0
- .iplt          0x00007a34        0x0 hwlib.o
+.iplt           0x00007a1c        0x0
+ .iplt          0x00007a1c        0x0 hwlib.o
 
 .IF_YOU_SEE_THIS_YOU_HAVE_ONE_OR_MORE_GLOBAL_OBJECT_CONSTRUCTORS
  *(.init)
  *(.preinit_array)
  *(SORT(.init_array.*))
  *(.init_array)
-                0x00007a34                . = ALIGN (0x4)
-                0x00007a34                __exidx_start = .
+                0x00007a1c                . = ALIGN (0x4)
+                0x00007a1c                __exidx_start = .
                 [!provide]                PROVIDE (__exidx_start, __exidx_start)
 
-.ARM.exidx      0x00007a34        0x8
+.ARM.exidx      0x00007a1c        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x00007a34        0x8 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_udivmoddi4.o)
+ .ARM.exidx     0x00007a1c        0x8 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_udivmoddi4.o)
 
-.rel.dyn        0x00007a3c        0x0
- .rel.iplt      0x00007a3c        0x0 hwlib.o
-                0x00007a3c                . = ALIGN (0x4)
-                0x00007a3c                __exidx_end = .
+.rel.dyn        0x00007a24        0x0
+ .rel.iplt      0x00007a24        0x0 hwlib.o
+                0x00007a24                . = ALIGN (0x4)
+                0x00007a24                __exidx_end = .
                 [!provide]                PROVIDE (__exidx_end, __exidx_end)
 
 .bss            0x20000000    0x14068
@@ -3308,9 +3301,9 @@ END GROUP
                 0x20014068                __bss_end = .
                 [!provide]                PROVIDE (__bss_end, __bss_end)
 
-.data           0x20014068       0x2c load address 0x00007a3c
+.data           0x20014068       0x2c load address 0x00007a24
                 0x20014068                . = ALIGN (0x4)
-                0x00007a3c                __data_init_start = LOADADDR (.data)
+                0x00007a24                __data_init_start = LOADADDR (.data)
                 [!provide]                PROVIDE (__data_init_start, __data_init_start)
                 0x20014068                __data_start = .
                 [!provide]                PROVIDE (__data_start, __data_start)
@@ -3340,13 +3333,13 @@ END GROUP
                 0x20014094                . = ALIGN (0x4)
                 0x20014094                __data_end = .
                 [!provide]                PROVIDE (__data_end, __data_end)
-                0x00007a3c                __data_init_end = LOADADDR (.data)
+                0x00007a24                __data_init_end = LOADADDR (.data)
                 [!provide]                PROVIDE (__data_init_end, __data_init_end)
                 0x0000002c                PROVIDE (__data_size, (__data_end - __data_start))
                 0x0000002c                PROVIDE (__data_init_size, __data_size)
                 [!provide]                PROVIDE (__data_init_end, (__data_init_start + __data_init_size))
 
-.igot.plt       0x20014094        0x0 load address 0x00007a68
+.igot.plt       0x20014094        0x0 load address 0x00007a50
  .igot.plt      0x20014094        0x0 hwlib.o
                 0x20014094                . = ALIGN (0x4)
                 0x20014094                __heap_start = .
@@ -3390,8 +3383,8 @@ END GROUP
 
 .debug_frame    0x00000000       0x7c
  *(.debug_frame)
- .debug_frame   0x00000000       0x44 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_aeabi_ldivmod.o)
- .debug_frame   0x00000044       0x38 /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x00000000       0x44 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_aeabi_ldivmod.o)
+ .debug_frame   0x00000044       0x38 c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_udivmoddi4.o)
 
 .comment        0x00000000       0x6e
  .comment       0x00000000       0x6e hwlib.o
@@ -3477,17 +3470,17 @@ END GROUP
  .ARM.attributes
                 0x00000351       0x33 bmptk_fixed_size_stack.o
  .ARM.attributes
-                0x00000384       0x1d /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
+                0x00000384       0x1d c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x000003a1       0x1d /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_muldivdf3.o)
+                0x000003a1       0x1d c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivdf3.o)
  .ARM.attributes
-                0x000003be       0x1d /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_arm_fixdfsi.o)
+                0x000003be       0x1d c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixdfsi.o)
  .ARM.attributes
-                0x000003db       0x1d /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_aeabi_ldivmod.o)
+                0x000003db       0x1d c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_aeabi_ldivmod.o)
  .ARM.attributes
-                0x000003f8       0x2d /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_udivmoddi4.o)
+                0x000003f8       0x2d c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_udivmoddi4.o)
  .ARM.attributes
-                0x00000425       0x1d /usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/libgcc.a(_dvmd_tls.o)
+                0x00000425       0x1d c:/program files (x86)/gnu tools arm embedded/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_dvmd_tls.o)
 
 /DISCARD/
  *(.note.GNU-stack)

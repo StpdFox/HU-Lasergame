@@ -28,22 +28,14 @@ RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDB
 	irE{ irE },
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" },
 	playerInfo{ playerInfo }
-{
-
-
-}
-
-RunGameController::~RunGameController()
-{
-}
+{ }
 
 void RunGameController::main()
 {
-
 	wait(startFlag);
 	oledBoundary.getGameTimeField().setLocation({ 10 * 8, 6 * 8 });
-	oledBoundary.getHitNotificationField().setLocation({1 * 8, 1* 8});
-	oledBoundary.getPlayerHealthField().setLocation({1* 8, 6*8});
+	oledBoundary.getHitNotificationField().setLocation({ 1 * 8, 1 * 8 });
+	oledBoundary.getPlayerHealthField().setLocation({ 1 * 8, 6 * 8 });
 	int gameDurationMin = durationPool.read();
 	kpC.registerNext(this);
 
@@ -58,14 +50,14 @@ void RunGameController::main()
 	oledStream << "\n|       |      |";
 	oledStream << "\n*--------------*";
 	oledBoundary.flush();
+	
 	playerHealthStream <<"HP:"<<playerInfo.getPlayerHealth();
 	oledBoundary.flushParts();
+	
 	int countdownSec = 20;
 	doCountDown(countdownSec);
 	irE.receive.setReceiveListener(this);
 	playerInfo.setCompiledBits(irE.logic.encode(playerInfo.getPlayerID(), playerInfo.getWeaponID()));
-
-
 
 	int startOfGameTimestamp = hwlib::now_us();
 	while(true)

@@ -6,38 +6,31 @@
     </Plugin>
   </Plugins>
   <VirtualDirectory Name="src">
-    <VirtualDirectory Name="ir">
-      <File Name="src/ir/game.cpp"/>
-      <File Name="src/ir/game.hpp"/>
-      <File Name="src/ir/gameParameters.hpp"/>
-      <File Name="src/ir/messageLogic.cpp"/>
-      <File Name="src/ir/messageLogic.hpp"/>
-      <File Name="src/ir/receiverController.cpp"/>
-      <File Name="src/ir/receiverController.hpp"/>
-      <File Name="src/ir/runGame.hpp"/>
-      <File Name="src/ir/transmitter.cpp"/>
-      <File Name="src/ir/transmitter.hpp"/>
-      <File Name="src/ir/transmitterController.cpp"/>
-      <File Name="src/ir/transmitterController.hpp"/>
-    </VirtualDirectory>
     <File Name="src/defines.h"/>
+    <File Name="src/gameParameters.hpp"/>
     <File Name="src/GameParamsController.cpp"/>
     <File Name="src/GameParamsController.hpp"/>
     <File Name="src/InitGameController.cpp"/>
     <File Name="src/InitGameController.hpp"/>
-    <File Name="src/KeyConsumer.h"/>
     <File Name="src/KeypadController.cpp"/>
     <File Name="src/KeypadController.hpp"/>
-    <File Name="src/keypadListener.hpp"/>
+    <File Name="src/KeypadListener.hpp"/>
     <File Name="src/main.cpp"/>
+    <File Name="src/messageLogic.cpp"/>
+    <File Name="src/messageLogic.hpp"/>
     <File Name="src/OLEDBoundary.cpp"/>
     <File Name="src/OLEDBoundary.hpp"/>
     <File Name="src/ReceiveListener.hpp"/>
+    <File Name="src/receiverController.cpp"/>
+    <File Name="src/receiverController.hpp"/>
     <File Name="src/RunGameController.cpp"/>
     <File Name="src/RunGameController.hpp"/>
     <File Name="src/SpeakerController.cpp"/>
     <File Name="src/SpeakerController.hpp"/>
-    <File Name="Makefile"/>
+    <File Name="src/transmitter.cpp"/>
+    <File Name="src/transmitter.hpp"/>
+    <File Name="src/transmitterController.cpp"/>
+    <File Name="src/transmitterController.hpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="libs">
     <VirtualDirectory Name="hwlib">

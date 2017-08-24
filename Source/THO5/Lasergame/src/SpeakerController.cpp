@@ -97,17 +97,16 @@ void SpeakerController::main(){
 			hwlib::cout << "reading sound flag...\n";
 			playSound(soundPool.read());
 		}
-
     }
 }
 
 void SpeakerController::playSound(Sounds sounds){
 	switch(sounds){
-		case Sounds::HIT : ohhh(lsp);   break;
+		case Sounds::HIT : ohhh(lsp); break;
 		case Sounds::SHOOT : peew(lsp); break;
-		case Sounds::START_GAME : click(lsp);  break;
+		case Sounds::START_GAME : click(lsp); break;
 		case Sounds::END_GAME : uhoh(lsp); break;
-    case Sounds::WAIT : noise(lsp); break;
+		case Sounds::WAIT : noise(lsp); break;
 		default : break;
 	}
 
