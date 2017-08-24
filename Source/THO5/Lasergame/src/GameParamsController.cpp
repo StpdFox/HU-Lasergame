@@ -33,9 +33,6 @@ GameParamsController::GameParamsController(KeypadController& kpC, InitGameContro
 
 }
 
-GameParamsController::~GameParamsController(){
-}
-
 void GameParamsController::handleMessageKey(char c) {
 	msg.write(c);
 }

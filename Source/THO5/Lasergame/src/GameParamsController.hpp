@@ -24,31 +24,48 @@ class KeypadController;
 class transmitterController;
 class ReceiveListener;
 
-/// \author Marianne Delmaar
-/// \author Ferdi Stoeltie
-/// \author Peter Bonnema
-/// \date 11-07-2017
-/// \brief Controller task for game params like player id and weapon damage. Waits for 'start game' signal from IRReceiver.
-class GameParamsController : public rtos::task<>, public KeypadListener, public ReceiveListener, private KeyConsume{
-private:
-	void consumeChar(char c);
-	void consumeHashTag();
-	void consumeWildcard();
-	void consumeDigits(char c);
-
+/**
+ * @author Matthijs Vos
+ * @author Peter Bonnema
+ * @author Marianne Delmaar
+ * @author Ferdi Stoeltie
+ * @date 25/07/2017
+ * 
+ * @brief This task enables the user to input their data which is their player id and a weapon id (which is just the weapon damage for now).
+ * 
+ * The task first waits until A is pressed. Then the user can input his player number.
+ * After that the task waits for B and the player can input his fire power.
+ * Then if the player id equals 0 it means the player is the game master and the InitGameController is switched on.
+ * If the player isn't the game master the task will wait for a game time message from the game master via IR and subsequently a start message.
+ * When it has received a start message the RunGameController is activated.
+ */
+class GameParamsController : public rtos::task<>, public KeypadListener, public ReceiveListener, private KeyConsume
+{
 public:
-	/// \author Matthijs Vos
-	/// \author Marianne Delmaar
-	/// \author Ferdi Stoeltie
-	/// \author Peter Bonnema
-	/// \brief Controller task for game params like player id and weapon damage.
-	/// \param Priority of this rtos::task.
-
+	/**
+	 * @brief Constructs an instance with the specified controller and boundary object as well as a reference to the shared playerInformation instance, the shared irentity and a task priority.
+	 * @param kpC
+	 * @param initGameController
+	 * @param runGameController
+	 * @param oledBoundary
+	 * @param playerInfo The shared playerInformation instance through which controllers communicate the player id and weapon id.
+	 * @param irEntity
+	 * @param priority The task priority. Lower is higher priority. See the documentation of the rtos.
+	 */
 	GameParamsController(KeypadController& kpC, InitGameController& initGameController, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
-	~GameParamsController();
-
+	
+	/**
+	 * @brief This method is called by ReceiverController upon receiving an IR message. Simply writes `msg` to an internal channel
+	 * @param msg The message received. The first byte is the player id of the sender and the second byte is the weapon id (or other data in case of a special command).
+	 */
 	void receivedMsgstd(const std::array<char, 2>& msg) override;
-
+	
+	/**
+	 * @brief This method is called by the KeyPadController when a key is pressed. It writes the c to an internal mailbox which is read in the main() function of the task in a loop.
+	 * @param c The pressed key
+	 */
+	void handleMessageKey(char c);
+	
 private:
 	enum STATE
 	{
@@ -73,7 +90,11 @@ private:
 	typedef struct { byte receivedPlayerID; byte receivedWeaponID; } irMessage;
 	rtos::channel<irMessage, 1> irMessageChannel;
 
-	void handleMessageKey(char c);
+	void consumeChar(char c);
+	void consumeHashTag();
+	void consumeWildcard();
+	void consumeDigits(char c);
+	
 	void waitForCommands();
 	void main();
 };

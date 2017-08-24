@@ -31,6 +31,7 @@
     <File Name="src/transmitter.hpp"/>
     <File Name="src/transmitterController.cpp"/>
     <File Name="src/transmitterController.hpp"/>
+    <File Name="src/glcd_oled_part_buffered.hpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="libs">
     <VirtualDirectory Name="hwlib">

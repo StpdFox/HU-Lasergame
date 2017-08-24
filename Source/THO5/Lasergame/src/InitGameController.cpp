@@ -9,7 +9,6 @@
 #include "InitGameController.hpp"
 #include "KeypadListener.hpp"
 #include "KeypadController.hpp"
-
 #include "OLEDBoundary.hpp"
 #include "transmitterController.hpp"
 #include "messageLogic.hpp"
@@ -28,9 +27,7 @@ InitGameController::InitGameController(KeypadController& kpC, RunGameController&
 	msg("keypad char"),
 	runGameController{runGameController},
 	startFlag{ this, "startFlag" }
-{
-
-}
+{ }
 
 void InitGameController::handleMessageKey(char c)  {
    msg.write(c);

@@ -1,3 +1,4 @@
+///@file
 // simple IR signal detector
 #include "hwlib.hpp"
 #include "transmitter.hpp"
@@ -9,18 +10,16 @@
 #include "RunGameController.hpp"
 #include "SpeakerController.hpp"
 #include "GameParamsController.hpp"
+
+#include "OLEDBoundary.hpp"
+
+#include "hwlib.hpp"
+#include "rtos.hpp"
 #include <array>
 
-#include "rtos.hpp"
-#include "OLEDBoundary.hpp"
-//#include "TestTask.hpp"
-
 int main( void ){
-
-
    	// kill the watchdog
   	WDT->WDT_MR = WDT_MR_WDDIS;
-
 
 	namespace target = hwlib::target;
    	//Wait for hell freezing over
@@ -34,7 +33,6 @@ int main( void ){
     auto vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
     auto gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
     auto data = hwlib::target::pin_in(hwlib::target::pins::d8);
-
 
     //Set speaker pin
     auto lsp = target::pin_out( target::pins::d7);
@@ -55,34 +53,31 @@ int main( void ){
 	auto matrix   = hwlib::matrix_of_switches( out_port, in_port );
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
 
-
 	//Create a test message and encode it
 	messageLogic messageLogic;
     char16_t compiledMessage = messageLogic.encode(1,1);
 
 	//Set the playerInformation according to the message
-    playerInformation playerInformation;
-    playerInformation.setCompiledBits(compiledMessage);
+    playerInformation playerInfo;
+    playerInfo.setCompiledBits(compiledMessage);
 
 	//Set receivercontroller
-    auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
+    receiverController receiver{ data, gnd, vcc, messageLogic, 0 };
+	transmitterController transmitter{ playerInfo, 1};
 
-	struct IREntity IRE(button,led,playerInformation,messageLogic,receiver);
+	irentity IRE(button,led,transmitter,messageLogic,receiver);
 
 	KeypadController kpC = KeypadController(keypad, 15);
 	OLEDBoundary oledBoundary{ 17 };
 	auto sC = SpeakerController(lsp, 14);
-	auto rGC = RunGameController(kpC, sC, oledBoundary, playerInformation, IRE, 19);
-	auto iGC = InitGameController(kpC, rGC, oledBoundary, playerInformation, IRE, 13);
-	auto gPC = GameParamsController(kpC, iGC, rGC, oledBoundary, playerInformation, IRE, 16);
+	auto rGC = RunGameController(kpC, sC, oledBoundary, playerInfo, IRE, 19);
+	auto iGC = InitGameController(kpC, rGC, oledBoundary, playerInfo, IRE, 13);
+	auto gPC = GameParamsController(kpC, iGC, rGC, oledBoundary, playerInfo, IRE, 16);
 
 	kpC.registerNext(&gPC);
 
 	// set IR receiver
 	receiver.setReceiveListener(&rGC);
-//   TestTask tt{ 2 };
-//   tt.setOledBoundary(&oledBoundary);
-   //RunGameController runGameController{ 2, oledBoundary };
 
-   rtos::run();
+	rtos::run();
 }

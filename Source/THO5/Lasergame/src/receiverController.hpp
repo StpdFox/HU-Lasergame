@@ -14,10 +14,14 @@
 #ifndef RECEIVERCONTROLLER_HPP
 #define RECEIVERCONTROLLER_HPP
 
-/// \author Matthijs Vos
-/// \author Ferdi Stoeltie
-/// \brief Handles the receiving of IR messages by retrieving them, 
-///			decoding and afterwards sends the decoded message to the active l ReceiveListener.
+/**
+ * @author Peter Bonnema
+ * @author Mattijs Vos
+ * @author Ferdi Stoeltie
+ * @date 25/07/2017
+ * 
+ * @brief Handles the receiving of IR messages by retrieving them, decoding and afterwards sends the decoded message to the active ReceiveListener.
+ */
 class receiverController : public rtos::task<>{
 private:
 	rtos::timer poolReceiverTimer;
@@ -29,7 +33,7 @@ private:
 	void main(void) override;
 	ReceiveListener* rL;
 public:
-	/// author Matthijs Vos
+	/// \author Mattijs Vos
 	/// \brief Constructor that requires the pins that the IR receiver is connected to. 
 	///			This ensures correct setup of the receiver peripheral.
 	///			Messagelogic, The protocol that the message should follow.
@@ -40,14 +44,16 @@ public:
 	/// \param unsigned_int priority Priority that is passed to the underlying RTOS task.
 	receiverController(hwlib::pin_in & rPin, hwlib::pin_out & gnd, hwlib::pin_out & vcc, messageLogic & logic,unsigned int priority );
 	
-	/// author Ferdi Stoeltie
+	/// \author Ferdi Stoeltie
 	/// \brief Sets the ReceiveListener that the received messages should be passed to and handled in.
 	/// \param ReceiveListener* newRL The new ReceiveListener that should be set as active listener.
 	void setReceiveListener(ReceiveListener* newRL);
 	
 	/// \author Peter Bonnema
-	/// \brief Gets the bit value that is determined by the pin being HIGH or LOW.
-	/// \return int Bit within message byte.
+	/// \brief Waits until a bit is read or until `maxDelayUs` us have passed. The method checks for a bit every `intervalUs` us.
+	/// \param maxDelayUs The timeout in us for reading a bit. On timeout the max value of uint16_t is returned.
+	/// \param intervalUs The interval in us between checks. The function will always wait an integer mulitple of intervalUs before timing out.
+	/// \return int The value of a single bit (0 or 1) or max value of uint16_t upon timeout.
 	uint16_t readBit(unsigned int maxDelayUs = 0, unsigned int intervalUs = 0);
 
 	/// \author Peter Bonnema

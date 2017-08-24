@@ -12,19 +12,19 @@
 
 RunGameController::RunGameController(KeypadController& kpC, ISound& sound, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irE, unsigned int priority) :
 	rtos::task<>{ priority, "RunGameController" },
-	kpC{kpC}, sound{sound},
+	kpC{ kpC }, sound{ sound },
 	oledBoundary{ oledBoundary },
 	font{ },
 	oledStream{ oledBoundary.getBufferedLCD(), font },
 	gameTimeStream{ oledBoundary.getGameTimeField(), font },
-	statusMessageStream{ oledBoundary.getHitNotificationField(),font},
-	playerHealthStream{ oledBoundary.getPlayerHealthField(),font},
+	statusMessageStream{ oledBoundary.getHitNotificationField(),font },
+	playerHealthStream{ oledBoundary.getPlayerHealthField(),font },
 	keypadMsgPool{ "keypadMsgPool" },
 	irMsgPool{ "irMsgPool" },
 	durationPool{ "durationPool" },
 	startFlag{ this, "startFlag" },
-	keypadFlag{this, "keypadInputFlag"},
-	irMsgFlag{this, "irMsgFlag"},
+	keypadFlag{ this, "keypadInputFlag" },
+	irMsgFlag{ this, "irMsgFlag" },
 	irE{ irE },
 	gameTimeSecondsClock{ this, 1 * rtos::s, "gameTimeSecondsClock" },
 	playerInfo{ playerInfo }
@@ -122,25 +122,23 @@ void RunGameController::handleReceivedMessage(const std::array<char, 2>& msg)
 {
 	hwlib::cout << "byte01: " << (int)msg[0] << " | byte02: " << (int)msg[1] << " end of msg\n";
 
-		HWLIB_TRACE << "\n true ";
+	HWLIB_TRACE << "\n true ";
+	statusMessageStream << "Hit!";
+	oledBoundary.flushParts();
 
-
-		statusMessageStream << "Hit!";
-		oledBoundary.flushParts();
-
-		playerInfo.setPlayerHealth(playerInfo.getPlayerHealth() - msg[1]);
-		hwlib::cout << "Player health: " << playerInfo.getPlayerHealth() << "\n";
-		playerHealthStream <<"\fHP:"<<playerInfo.getPlayerHealth();
-
-		oledBoundary.flushParts();
-		sleep_non_block(1*rtos::s);
-		statusMessageStream << "\f";
-		sound.setSound(Sounds::HIT);
-		if(playerInfo.getPlayerHealth()<=0){
-			statusMessageStream << "Game\n Over!";
-			suspend();
-		}
-
+	playerInfo.setPlayerHealth(playerInfo.getPlayerHealth() - msg[1]);
+	hwlib::cout << "Player health: " << playerInfo.getPlayerHealth() << "\n";
+	playerHealthStream <<"\fHP:"<<playerInfo.getPlayerHealth();
+	oledBoundary.flushParts();
+	
+	sleep_non_block(1*rtos::s);
+	statusMessageStream << "\f";
+	sound.setSound(Sounds::HIT);
+	
+	if(playerInfo.getPlayerHealth()<=0) {
+		statusMessageStream << "Game\n Over!";
+		suspend();
+	}
 }
 
 void RunGameController::receivedMsgstd(const std::array<char, 2>& msg)
