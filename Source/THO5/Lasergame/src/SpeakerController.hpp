@@ -20,18 +20,27 @@ enum class Sounds {HIT = 0x01, END_GAME = 0x02, START_GAME = 0x04, SHOOT = 0x08,
 
 /// \author Marianne Delmaar en Ferdi Stoeltie
 /// \brief Interface to provide the setSound method
-class ISound  {
+class ISound {
 public:
-    ISound() {};
     virtual void setSound(Sounds s) = 0;
-private:
 };
 
 /// \author Marianne Delmaar
 /// \author Ferdi Stoeltie
 /// \brief SpeakerController that handles the playing of sounds
-class SpeakerController : public rtos::task<>, public ISound{
+class SpeakerController : public rtos::task<>, public ISound {
+public:	
+	SpeakerController(hwlib::pin_out& lsp, unsigned int priority);
+	void main();
+	
+	/**
+	 * @brief Specify which sound is to be played next by this controller. This method only sets a flag and writes the argument to a pool.
+	 * @param soundType
+	 */
+	void setSound(Sounds soundType); // inherit from ISound
+	
 private:
+	void playSound(Sounds soundType);
 	
 	rtos::pool<Sounds> soundPool;
 	rtos::flag playSoundFlag;
@@ -40,13 +49,6 @@ private:
 	
 	int frequency = 0; 
 	int duration = 0;
-	
-public:	
-	SpeakerController(hwlib::pin_out& lsp, unsigned int priority);
-	void main();
-	void setSound(Sounds soundType); // inherit from ISound
-	void playSound(Sounds soundType);
-
 };
 
 #endif //SPEAKER_CONTROLLER_HPP

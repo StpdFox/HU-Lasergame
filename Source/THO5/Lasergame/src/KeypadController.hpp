@@ -12,10 +12,24 @@
 #include "rtos.hpp"
 #include "hwlib.hpp"
 #include "KeypadListener.hpp"
+
 /// \author Marianne Delmaar
 /// \author Ferdi Stoeltie
-/// \brief Rtos task that handles the input given by a keypad. This is then passed in to a keypadlistener
-class KeypadController : public rtos::task<>   {
+/// \brief Rtos task that handles the input given by a keypad. This is then passed in to a keypadlistener.
+class KeypadController : public rtos::task<> {
+public:
+	/// \author Marianne Delmaar
+	/// \brief KeypadController constructor that takes in an existing keypad device and a task priority.
+	/// \param hwlib::keypad<16>& keypad The keypad device
+	/// \param Priority of this rtos::task.
+    KeypadController(hwlib::keypad< 16 >& keypad, unsigned int priority);
+    
+	/// \author Marianne Delmaar
+	/// \author Ferdi Stoeltie
+	/// \brief Use to register a new keypadlistener as the listener where the keypad input should be passed to.
+	/// \param KeypadListener* nextListener Pointer to the KeypadListener to register as active KeypadListener.
+    void registerNext(KeypadListener* nextListener);
+	
 private:
 	// Time that the task activates at, to poll the keypad peripheral.
 	int waitTime = 100; // 100 ms
@@ -28,19 +42,6 @@ private:
 	
 	// RTOS main implementation
 	void main();
-public:
-	
-	/// \author Marianne Delmaar
-	/// \brief KeypadController constructor that takes in an existing keypad device and a task priority.
-	/// \param hwlib::keypad<16>& keypad The keypad device
-	/// \param Priority of this rtos::task.
-    KeypadController(hwlib::keypad< 16 >& keypad, unsigned int priority);
-    
-	/// \author Marianne Delmaar
-	/// \author Ferdi Stoeltie
-	/// \brief Use to register a new keypadlistener as the listener where the keypad input should be passed to.
-	/// \param KeypadListener* nextListener Pointer to the KeypadListener to register as active KeypadListener.
-    void registerNext(KeypadListener* nextListener);
 };
 
 #endif //KEYPAD_HANDLER_HPP

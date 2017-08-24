@@ -1,27 +1,30 @@
 #include "transmitterController.hpp"
+#include "rtos.hpp"
 
-transmitterController::transmitterController(playerInformation & playerinformation, unsigned int priority ) :
+transmitterController::transmitterController(unsigned int priority) :
  	task{ priority, "sendTask" },
  	irTransmit{},
- 	messageToSend{ playerinformation },
- 	sendMessageFlag{ this, "sendMessageFlag" }
+ 	messagePoolMutex{ "messagePoolMutex" },
+	messagePoolFlag{ this, "messagePoolFlag" },
+ 	messagePool{ "messagePool" }
 { }
 
 void transmitterController::main()
 {
 	for(;;)
 	{
- 		wait(sendMessageFlag);
- 		sendMessage();
+ 		wait();
+		messagePoolMutex.wait();
+		char16_t message = messagePool.read();
+		messagePoolMutex.signal();
+		irTransmit.sendMessage(message);
  	}
 }
 
-void transmitterController::sendMessage()
+void transmitterController::sendMessage(char16_t message)
 {
- 	irTransmit.sendMessage(messageToSend.getCompiledBits());
-}
-
-void transmitterController::enableFlag()
-{
-	sendMessageFlag.set();
+	messagePoolMutex.wait();
+	messagePool.write(message);
+	messagePoolMutex.signal();
+	messagePoolFlag.set();
 }

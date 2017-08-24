@@ -71,7 +71,7 @@ void InitGameController::sendMessage() {
 	// Send the message over the air with apple update system
 	HWLIB_TRACE << "InitGameController sendMessage";
 	irEntity.receive.suspend();
-	irEntity.trans.enableFlag();
+	irEntity.trans.sendMessage(playerInfo.getCompiledBits());
 	hwlib::wait_ms(1000);
 	irEntity.receive.resume();
 }
@@ -81,7 +81,7 @@ void InitGameController::sendStartMessage() {
 	// Deregisters self and registers other keypadlistener
 	HWLIB_TRACE << "InitGameController sendStartMessage";
 	irEntity.receive.suspend();
-	irEntity.trans.enableFlag();
+	irEntity.trans.sendMessage(playerInfo.getCompiledBits());
 	hwlib::wait_ms(1000);
 	irEntity.receive.resume();
 }

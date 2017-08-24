@@ -111,11 +111,12 @@ void RunGameController::consumeWildcard() {
 	sound.setSound(Sounds::SHOOT);
 	irE.led.set(true);
 	irE.receive.suspend();
-	irE.trans.enableFlag();
+	irE.trans.sendMessage(playerInfo.getCompiledBits());
 	sleep(1000 * rtos::ms);
 	irE.receive.resume();
 	irE.led.set(false);
 }
+
 void RunGameController::consumeDigits(char c) {}
 
 void RunGameController::handleReceivedMessage(const std::array<char, 2>& msg)

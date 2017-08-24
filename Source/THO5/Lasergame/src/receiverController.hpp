@@ -22,21 +22,12 @@
  * 
  * @brief Handles the receiving of IR messages by retrieving them, decoding and afterwards sends the decoded message to the active ReceiveListener.
  */
-class receiverController : public rtos::task<>{
-private:
-	rtos::timer poolReceiverTimer;
-	hwlib::pin_in & rPin;
-	hwlib::pin_out & gnd;
-	hwlib::pin_out & vcc;
-	messageLogic & logic;
-	
-	void main(void) override;
-	ReceiveListener* rL;
+class receiverController : public rtos::task<> {
 public:
 	/// \author Mattijs Vos
 	/// \brief Constructor that requires the pins that the IR receiver is connected to. 
-	///			This ensures correct setup of the receiver peripheral.
-	///			Messagelogic, The protocol that the message should follow.
+	/// This ensures correct setup of the receiver peripheral.
+	///	Messagelogic, The protocol that the message should follow.
 	/// \param hwlib::pin_in& rPin Read Pin.
 	/// \param hwlib::pin_out & gnd Ground Pin.
 	/// \param hwlib::pin_out & vcc Voltage pin.
@@ -60,5 +51,15 @@ public:
 	/// \brief Returns the entire message that has been retrieved by the ReceiverController.
 	/// \return char16_t Message 
 	uint16_t readMessage();
+	
+private:
+	rtos::timer poolReceiverTimer;
+	hwlib::pin_in & rPin;
+	hwlib::pin_out & gnd;
+	hwlib::pin_out & vcc;
+	messageLogic & logic;
+	
+	void main(void) override;
+	ReceiveListener* rL;
 };
 #endif

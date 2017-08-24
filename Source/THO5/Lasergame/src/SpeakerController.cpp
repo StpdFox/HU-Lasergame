@@ -9,19 +9,23 @@
 #include "SpeakerController.hpp"
 #include "hwlib.hpp"
 
-SpeakerController::SpeakerController(hwlib::pin_out &lsp, unsigned int priority) : task(priority, "SpeakerController task"), playSoundFlag(this, "flag"), lsp{lsp} {
-}
+SpeakerController::SpeakerController(hwlib::pin_out &lsp, unsigned int priority) :
+	task{ priority, "SpeakerController task" },
+	playSoundFlag{ this, "flag" },
+	lsp{ lsp }
+{ }
 
-void SpeakerController::setSound(Sounds soundType)	{
+void SpeakerController::setSound(Sounds soundType) {
 	// write a sound to play in the speakercontroller pool and set flag to start playing
 	soundPool.write(soundType);
 	playSoundFlag.set();
 }
-void await (long long int t){
+
+void await (long long int t) {
 	while(t > hwlib::now_us()){}
 }
 
-void beep( hwlib::pin_out & lsp, int f, int d, int fd = 1000 ){
+void beep( hwlib::pin_out & lsp, int f, int d, int fd = 1000 ) {
    auto t = hwlib::now_us();
    auto end = t + d;
    while( end > hwlib::now_us() ){
@@ -54,7 +58,6 @@ void ohhh( hwlib::pin_out & lsp ) {
    }
 }
 
-
 void uhoh( hwlib::pin_out & lsp ) {
    for (int i=1000; i<1244; i=i*1.01) {
       beep(lsp,i,10'000);
@@ -72,7 +75,7 @@ void noise( hwlib::pin_out & lsp ) {
    }
 }
 
-void noise2( hwlib::pin_out & lsp ){
+void noise2( hwlib::pin_out & lsp ) {
    for (int i = 0; i < 200; i++ ){
       lsp.set( 1 );
       hwlib::wait_us( hwlib::random_in_range( 500, 2000 ));
@@ -81,8 +84,8 @@ void noise2( hwlib::pin_out & lsp ){
    }
 }
 
-void click( hwlib::pin_out & lsp ){
-   for (int i = 0; i < 200; i++ ){
+void click( hwlib::pin_out & lsp ) {
+   for (int i = 0; i < 200; i++ ) {
       lsp.set( 1 );
       hwlib::wait_us( hwlib::random_in_range( 500, 600 ));
       lsp.set( 0 );
@@ -90,17 +93,17 @@ void click( hwlib::pin_out & lsp ){
    }
 }
 
-void SpeakerController::main(){
+void SpeakerController::main() {
 	for(;;) {
         auto s = wait(playSoundFlag);
-		if(s == playSoundFlag)	{
+		if(s == playSoundFlag) {
 			hwlib::cout << "reading sound flag...\n";
 			playSound(soundPool.read());
 		}
     }
 }
 
-void SpeakerController::playSound(Sounds sounds){
+void SpeakerController::playSound(Sounds sounds) {
 	switch(sounds){
 		case Sounds::HIT : ohhh(lsp); break;
 		case Sounds::SHOOT : peew(lsp); break;
@@ -109,5 +112,4 @@ void SpeakerController::playSound(Sounds sounds){
 		case Sounds::WAIT : noise(lsp); break;
 		default : break;
 	}
-
 }

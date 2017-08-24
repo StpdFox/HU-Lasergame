@@ -9,6 +9,7 @@ void transmitter::sendOne()
 	sendPin.set(0);
 	block_wait(800 * rtos::us);
 }
+
 void transmitter::sendZero()
 {
 	sendPin.set(1);
@@ -16,10 +17,7 @@ void transmitter::sendZero()
 	sendPin.set(0);
 	block_wait(1600 * rtos::us);
 }
-void transmitter::setZero()
-{
-	sendPin.set(0);
-}
+
 void transmitter::sendMessage(char16_t message)
 {
 	hwlib::cout.base(2);
@@ -31,12 +29,10 @@ void transmitter::sendMessage(char16_t message)
 			if((message & (1 <<i)) !=0)
 			{
 				sendOne();
-				
 			}
 			else
 			{
 				sendZero();
-
 			}
 		}
 		sleep_non_block(3 * rtos::ms);

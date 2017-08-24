@@ -63,9 +63,9 @@ int main( void ){
 
 	//Set receivercontroller
     receiverController receiver{ data, gnd, vcc, messageLogic, 0 };
-	transmitterController transmitter{ playerInfo, 1};
+	transmitterController transmitter{ 1 };
 
-	irentity IRE(button,led,transmitter,messageLogic,receiver);
+	irentity IRE(button, led, transmitter, messageLogic, receiver);
 
 	KeypadController kpC = KeypadController(keypad, 15);
 	OLEDBoundary oledBoundary{ 17 };

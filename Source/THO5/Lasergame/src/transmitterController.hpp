@@ -17,31 +17,25 @@
 /// \author Matthijs Vos
 /// \brief This class contains the required logic to transmit data over the IR using the required protocol.
 /// 		Usage:
-class transmitterController : public rtos::task<>{
+class transmitterController : public rtos::task<> {
+public:
+	/// \brief Constructor that takes in the priority for the rtos task.
+	/// \param unsigned_int priority Passed to RTOS as a task priority.
+	transmitterController(unsigned int priority);
+
+	/**
+	* @brief Sets the message to be send by the controller. This only writes the message to a pool and sets a flag.
+	* @param message
+	*/
+ 	void sendMessage(char16_t message);
+	
 private:
-	// Transmitter boundary object
  	transmitter irTransmit;
 
- 	playerInformation & messageToSend;
+	rtos::mutex messagePoolMutex;
+	rtos::flag messagePoolFlag;
+ 	rtos::pool<char16_t> messagePool;
 
-	// Flag that is set when a message should be transmitted
- 	rtos::flag sendMessageFlag;
-
-	// implementation from rtos::task
  	void main();
-
-	// Sending of the message
- 	void sendMessage();
-
-public:
-	/// \author Matthijs Vos
-	/// \brief Constructor that takes in a playerInformation object and priority for the rtos task.
-	/// \param playerInformation& playerInformation The player information that is required as a source when sending.
-	/// \param unsigned_int priority Passed to RTOS as a task priority.
-	transmitterController(playerInformation & playerInformation,unsigned int priority);
-
-	/// \author Matthijs Vos
-	/// \brief Calling this method will set the flag that activates this task to send a message.
- 	void enableFlag();
  };
  #endif
