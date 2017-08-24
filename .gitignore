@@ -1,4 +1,5 @@
-
+Source\THO5\Lasergame\libs\bmptk\Makefile.custom
+Source\THO5\Lasergame\libs\bmptk\Makefile.inc
 Source/THO5/cmake-build-Debug/
 
 *.workspace

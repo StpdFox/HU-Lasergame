@@ -9,41 +9,41 @@
 #############################################################################
 
 # settings for Arduino Due projects
-TARGET            ?= arduino_due
-SERIAL_PORT       ?= COM5
-CONSOLE_BAUDRATE  ?= 38400
-STACK_SIZE        ?= 81920
-HEAP              ?= BMPTK
+TARGET          	?= arduino_due
+SERIAL_PORT     	?= COM5
+CONSOLE_BAUDRATE	?= 38400
+STACK_SIZE      	?= 81920
+HEAP            	?= BMPTK
 
-PROJECT 	  	  ?= src/main
+PROJECT 	  		?= src/main
 
 # use hwlib
-SEARCH            += ./libs/hwlib
-SOURCES           += hwlib.cpp
+SEARCH          	+= ./libs/hwlib
+SOURCES         	+= hwlib.cpp
 
 # use the rtos
-SEARCH            += ./libs/rtos
-HEADERS           += coroutine.hpp switch_to.hpp
-SOURCES           += coroutine.cpp switch_to.asm
-HEADERS           += rtos.hpp
-SOURCES           += rtos.cpp
-HEADERS			+= src/RunGameController.hpp
-SOURCES			+= src/RunGameController.cpp
+SEARCH          	+= ./libs/rtos
+HEADERS         	+= coroutine.hpp switch_to.hpp
+SOURCES         	+= coroutine.cpp switch_to.asm
+HEADERS         	+= rtos.hpp
+SOURCES         	+= rtos.cpp
+HEADERS				+= src/RunGameController.hpp
+SOURCES				+= src/RunGameController.cpp
 
 
-HEADERS			+= src/KeypadController.hpp
-SOURCES			+= src/KeypadController.cpp
+HEADERS				+= src/KeypadController.hpp
+SOURCES				+= src/KeypadController.cpp
 
-HEADERS			+= src/InitGameController.hpp
-SOURCES			+= src/InitGameController.cpp
+HEADERS				+= src/InitGameController.hpp
+SOURCES				+= src/InitGameController.cpp
 
-HEADERS			+= src/KeypadListener.hpp
+HEADERS				+= src/KeypadListener.hpp
 
-HEADERS			+= src/SpeakerController.hpp
-SOURCES			+= src/SpeakerController.cpp
+HEADERS				+= src/SpeakerController.hpp
+SOURCES				+= src/SpeakerController.cpp
 
-HEADERS			+= src/GameParamsController.hpp
-SOURCES			+=src/GameParamsController.cpp
+HEADERS				+= src/GameParamsController.hpp
+SOURCES				+=src/GameParamsController.cpp
 
 # the source and header files
 
@@ -51,12 +51,6 @@ SEARCH				+= ./src/
 HEADERS				+= defines.h
 HEADERS				+= OLEDBoundary.hpp
 SOURCES				+= OLEDBoundary.cpp
-
-
-#HEADERS				+= TestTask.hpp
-#SOURCES				+= TestTask.cpp
-
-
 
 HEADERS				+= receiverController.hpp
 SOURCES				+= receiverController.cpp
