@@ -1,6 +1,6 @@
 ///	\file RunGameController.hpp
 /// The RunGameController file,
-/// contains the RunGameController class declaration only. 
+/// contains the RunGameController class declaration only.
 /// Date file created:
 /// \date 07-07-2017
 /// Date Last Update:
@@ -23,7 +23,6 @@
 class OLEDBoundary;
 
 typedef struct IREntity {
-	//auto & button,auto & led,auto & playerInformation,auto & logic,auto & receiver
 	hwlib::pin_in & button;
 	hwlib::pin_out & led;
 	transmitterController trans;
@@ -62,13 +61,13 @@ private:
 
 	//get and set gameParameters
 	playerInformation& playerInfo;
-	
+
 	void doCountDown(int seconds);
-   
+
 public:
 
 	/// \author Matthijs Vos
-	/// \author Peter Bonnema 
+	/// \author Peter Bonnema
 	/// \author Marianne Delmaar
 	/// \author Ferdi Stoeltie
 	/// \brief Constructor that needs to be called to initialize the \c RunGameController \c instance.

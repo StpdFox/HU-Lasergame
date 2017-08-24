@@ -1,6 +1,6 @@
 ///	\file transmitterController.hpp
 /// The transmitterController file,
-/// contains the transmitterController class declaration only. 
+/// contains the transmitterController class declaration only.
 /// Date file created:
 /// \date 11-07-2017
 /// Date Last Update:
@@ -16,17 +16,17 @@
 
 /// \author Matthijs Vos
 /// \brief This class contains the required logic to transmit data over the IR using the required protocol.
-/// 		Usage: 
+/// 		Usage:
 class transmitterController : public rtos::task<>{
 private:
 	// Transmitter boundary object
  	transmitter irTransmit;
-	
+
  	playerInformation & messageToSend;
-	
+
 	// Flag that is set when a message should be transmitted
  	rtos::flag sendMessageFlag;
-	
+
 	// implementation from rtos::task
  	void main();
 

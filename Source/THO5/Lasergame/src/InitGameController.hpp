@@ -20,6 +20,7 @@ class OLEDBoundary;
 class KeypadController;
 class transmitterController;
 
+/// \autohr Matthijs Vos
 /// \author Ferdi Stoeltie
 /// \author Peter Bonnema
 /// \brief Controller class that handles the initialize of the game settings

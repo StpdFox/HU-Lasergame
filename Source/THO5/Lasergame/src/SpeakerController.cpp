@@ -1,6 +1,6 @@
 ///	\file SpeakerController.cpp
 /// The SpeakerController file,
-/// contains the SpeakerController class implementation only. 
+/// contains the SpeakerController class implementation only.
 /// Date file created:
 /// \date 07-07-2017
 /// Date Last Update:
@@ -14,8 +14,6 @@ SpeakerController::SpeakerController(hwlib::pin_out &lsp, unsigned int priority)
 
 void SpeakerController::setSound(Sounds soundType)	{
 	// write a sound to play in the speakercontroller pool and set flag to start playing
-//	hwlib::cout << "writing in sound pool...\n";
-//	hwlib::cout << "setting flag...\n";
 	soundPool.write(soundType);
 	playSoundFlag.set();
 }
@@ -24,7 +22,7 @@ void await (long long int t){
 }
 
 void beep( hwlib::pin_out & lsp, int f, int d, int fd = 1000 ){
-   auto t = hwlib::now_us();    
+   auto t = hwlib::now_us();
    auto end = t + d;
    while( end > hwlib::now_us() ){
        auto p = 500'000 / f;
@@ -33,7 +31,7 @@ void beep( hwlib::pin_out & lsp, int f, int d, int fd = 1000 ){
        await( t += p );
        lsp.set( 0 );
        await( t += p );
-   }   
+   }
 }
 
 void peew( hwlib::pin_out & lsp ){
@@ -48,9 +46,9 @@ void beep3( hwlib::pin_out & lsp ){
 }
 
 void ohhh( hwlib::pin_out & lsp ) {
-   for (int i=1000; i<2000; i=i*1.02) { 
-      beep(lsp,i,10'000); 
-   } 
+   for (int i=1000; i<2000; i=i*1.02) {
+      beep(lsp,i,10'000);
+   }
    for (int i=2000; i>1000; i=i*.98) {
       beep(lsp,i,10'000);
    }
@@ -58,9 +56,9 @@ void ohhh( hwlib::pin_out & lsp ) {
 
 
 void uhoh( hwlib::pin_out & lsp ) {
-   for (int i=1000; i<1244; i=i*1.01) { 
-      beep(lsp,i,10'000); 
-   } 
+   for (int i=1000; i<1244; i=i*1.01) {
+      beep(lsp,i,10'000);
+   }
    hwlib::wait_us( 30'000 );
    for (int i=1244; i>1108; i=i*.99) {
       beep(lsp,i,10'000);
@@ -70,27 +68,27 @@ void uhoh( hwlib::pin_out & lsp ) {
 void noise( hwlib::pin_out & lsp ) {
    for (int i = 0; i < 200; i++ ){
       lsp.set( ( hwlib::rand() & 0x01 ) == 0);
-      hwlib::wait_us( 1'000 ); 
-   }     
-}    
+      hwlib::wait_us( 1'000 );
+   }
+}
 
 void noise2( hwlib::pin_out & lsp ){
    for (int i = 0; i < 200; i++ ){
       lsp.set( 1 );
-      hwlib::wait_us( hwlib::random_in_range( 500, 2000 )); 
+      hwlib::wait_us( hwlib::random_in_range( 500, 2000 ));
       lsp.set( 0 );
-      hwlib::wait_us( hwlib::random_in_range( 500, 2000 )); 
-   }     
-}    
+      hwlib::wait_us( hwlib::random_in_range( 500, 2000 ));
+   }
+}
 
 void click( hwlib::pin_out & lsp ){
    for (int i = 0; i < 200; i++ ){
       lsp.set( 1 );
-      hwlib::wait_us( hwlib::random_in_range( 500, 600 )); 
+      hwlib::wait_us( hwlib::random_in_range( 500, 600 ));
       lsp.set( 0 );
-      hwlib::wait_us( hwlib::random_in_range( 500, 600 )); 
-   }     
-} 
+      hwlib::wait_us( hwlib::random_in_range( 500, 600 ));
+   }
+}
 
 void SpeakerController::main(){
 	for(;;) {
@@ -99,7 +97,7 @@ void SpeakerController::main(){
 			hwlib::cout << "reading sound flag...\n";
 			playSound(soundPool.read());
 		}
-		
+
     }
 }
 
@@ -112,5 +110,5 @@ void SpeakerController::playSound(Sounds sounds){
     case Sounds::WAIT : noise(lsp); break;
 		default : break;
 	}
-	
+
 }

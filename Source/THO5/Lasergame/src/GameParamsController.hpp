@@ -1,6 +1,6 @@
 ///	\file GameParamsController.hpp
 /// The GameParamsController file,
-/// contains the GameParamsController class decleration only. 
+/// contains the GameParamsController class decleration only.
 /// Date file created:
 /// \date 11-07-2017
 /// Date Last Update:
@@ -35,19 +35,20 @@ private:
 	void consumeHashTag();
 	void consumeWildcard();
 	void consumeDigits(char c);
-	
+
 public:
+	/// \author Matthijs Vos
 	/// \author Marianne Delmaar
 	/// \author Ferdi Stoeltie
 	/// \author Peter Bonnema
 	/// \brief Controller task for game params like player id and weapon damage.
 	/// \param Priority of this rtos::task.
-	
+
 	GameParamsController(KeypadController& kpC, InitGameController& initGameController, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority);
 	~GameParamsController();
-	
+
 	void receivedMsgstd(const std::array<char, 2>& msg) override;
-	
+
 private:
 	enum STATE
 	{
@@ -58,7 +59,7 @@ private:
 		WAITING_FOR_HASHTAG,
 		WAITING_FOR_COMMANDS,
 	} state;
-	
+
 	irentity& irEntity;
 	playerInformation& playerInfo;
 	hwlib::font_default_8x8 font;
@@ -68,10 +69,10 @@ private:
     rtos::mailbox<char> msg;
     InitGameController& initGameController;
 	RunGameController& runGameController;
-	
+
 	typedef struct { byte receivedPlayerID; byte receivedWeaponID; } irMessage;
 	rtos::channel<irMessage, 1> irMessageChannel;
-	
+
 	void handleMessageKey(char c);
 	void waitForCommands();
 	void main();
