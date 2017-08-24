@@ -1,12 +1,9 @@
 // simple IR signal detector
 #include "hwlib.hpp"
-#include "ir/transmitter.hpp"
-#include "ir/gameParameters.hpp"
-#include "ir/messageLogic.hpp"
-#include "ir/receiverController.hpp"
-
-#include "ir/game.hpp"
-#include "test.hpp"
+#include "transmitter.hpp"
+#include "gameParameters.hpp"
+#include "messageLogic.hpp"
+#include "receiverController.hpp"
 #include "InitGameController.hpp"
 #include "KeypadController.hpp"
 #include "RunGameController.hpp"
@@ -19,7 +16,7 @@
 //#include "TestTask.hpp"
 
 int main( void ){
-   
+
 
    	// kill the watchdog
   	WDT->WDT_MR = WDT_MR_WDDIS;
@@ -28,11 +25,11 @@ int main( void ){
 	namespace target = hwlib::target;
    	//Wait for hell freezing over
 	hwlib::wait_ms(1000);
-	
+
    	//Set button and led pins
 	auto button = hwlib::target::pin_in(hwlib::target::pins::d22);
 	auto led = hwlib::target::pin_out(hwlib::target::pins::d24);
-   
+
 	//Set IR receiver pins
     auto vcc = hwlib::target::pin_out(hwlib::target::pins::d10);
     auto gnd = hwlib::target::pin_out(hwlib::target::pins::d9);
@@ -58,18 +55,18 @@ int main( void ){
 	auto matrix   = hwlib::matrix_of_switches( out_port, in_port );
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
 
-	
+
 	//Create a test message and encode it
 	messageLogic messageLogic;
     char16_t compiledMessage = messageLogic.encode(1,1);
-	
+
 	//Set the playerInformation according to the message
     playerInformation playerInformation;
     playerInformation.setCompiledBits(compiledMessage);
-	
+
 	//Set receivercontroller
     auto receiver = receiverController(data,gnd,vcc,messageLogic,0);
-	
+
 	struct IREntity IRE(button,led,playerInformation,messageLogic,receiver);
 
 	KeypadController kpC = KeypadController(keypad, 15);
@@ -80,7 +77,7 @@ int main( void ){
 	auto gPC = GameParamsController(kpC, iGC, rGC, oledBoundary, playerInformation, IRE, 16);
 
 	kpC.registerNext(&gPC);
-	
+
 	// set IR receiver
 	receiver.setReceiveListener(&rGC);
 //   TestTask tt{ 2 };
@@ -89,4 +86,3 @@ int main( void ){
 
    rtos::run();
 }
-

@@ -1,6 +1,6 @@
 ///	\file GameParamsController.cpp
 /// The GameParamsController file,
-/// contains the GameParamsController class implementation only. 
+/// contains the GameParamsController class implementation only.
 /// Date file created:
 /// \date 11-07-2017
 /// Date Last Update:
@@ -9,10 +9,10 @@
 #include "GameParamsController.hpp"
 #include "OLEDBoundary.hpp"
 #include "ReceiveListener.hpp"
-#include "ir/transmitterController.hpp"
-#include "ir/messageLogic.hpp"
+#include "transmitterController.hpp"
+#include "messageLogic.hpp"
 
-GameParamsController::GameParamsController(KeypadController& kpC, InitGameController& initGameController, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) : 
+GameParamsController::GameParamsController(KeypadController& kpC, InitGameController& initGameController, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) :
 	rtos::task<>{ priority, "GameParamsController" },
 	state{ STATE::WAITING_FOR_A },
 	irEntity{ irEntity },
@@ -35,7 +35,7 @@ GameParamsController::GameParamsController(KeypadController& kpC, InitGameContro
 
 GameParamsController::~GameParamsController(){
 }
-	
+
 void GameParamsController::handleMessageKey(char c) {
 	msg.write(c);
 }
@@ -58,8 +58,8 @@ void GameParamsController::main()
 	// playerInfo.setWeaponID(1);
 
 	// suspend();
-	irEntity.receive.setReceiveListener(this);	
-	
+	irEntity.receive.setReceiveListener(this);
+
 	oledStream << "\f*--------------*";
 	oledStream << "\n|   Welcome!   |";
 	oledStream << "\n|   Press A    |";
@@ -86,7 +86,7 @@ void GameParamsController::waitForCommands()
 	HWLIB_TRACE << "timeCMD received: " << int(gameDuration);
 	statusStream << "\fWaiting\nfor start";
 	oledBoundary.flushParts();
-	
+
 	do {
 		message = irMessageChannel.read();
 	} while(!(message.receivedPlayerID == 0 && message.receivedWeaponID == 0));
@@ -96,7 +96,7 @@ void GameParamsController::waitForCommands()
 }
 
 void GameParamsController::consumeChar(char c) {
-	
+
 	if(state == STATE::WAITING_FOR_A && c == 'A')
 	{
 		statusStream << "\fEnter\nPlayerID";

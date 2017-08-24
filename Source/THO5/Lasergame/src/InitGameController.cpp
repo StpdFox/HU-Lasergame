@@ -1,6 +1,6 @@
 ///	\file InitgameController.cpp
 /// The InitgameController file,
-/// contains the InitgameController class implementation only. 
+/// contains the InitgameController class implementation only.
 /// Date file created:
 /// \date 07-07-2017
 /// Date Last Update:
@@ -11,11 +11,11 @@
 #include "KeypadController.hpp"
 #include "KeyConsumer.h"
 #include "OLEDBoundary.hpp"
-#include "ir/transmitterController.hpp"
-#include "ir/messageLogic.hpp"
+#include "transmitterController.hpp"
+#include "messageLogic.hpp"
 #include "RunGameController.hpp"
 
-InitGameController::InitGameController(KeypadController& kpC, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) : 
+InitGameController::InitGameController(KeypadController& kpC, RunGameController& runGameController, OLEDBoundary& oledBoundary, playerInformation& playerInfo, irentity& irEntity, unsigned int priority) :
     task(priority, "initGame task"),
 	state{ STATE::WAITING_FOR_C },
 	irEntity{ irEntity },
@@ -62,7 +62,7 @@ void InitGameController::initNewCommand() {
 }
 
 bool InitGameController::validateCommand() {
-	if(    commandCode[0] >= '0' && commandCode[0] <= '9' 
+	if(    commandCode[0] >= '0' && commandCode[0] <= '9'
 		&& commandCode[1] >= '0' && commandCode[1] <= '9')  {
 		byte command = (commandCode[0] - '0') * 10 + (commandCode[1] - '0');
 		return command >= 1 && command <= 15;
@@ -88,7 +88,7 @@ void InitGameController::sendStartMessage() {
 	hwlib::wait_ms(1000);
 	irEntity.receive.resume();
 }
-	
+
 // Keypad Methods
 void InitGameController::consumeChar(char c) {
 	if(state == STATE::WAITING_FOR_C && c == 'C')
@@ -124,7 +124,7 @@ void InitGameController::consumeHashTag() {
 			state = STATE::SENDING_CMD;
 		} else {
 			HWLIB_TRACE << "command is not valid";
-			statusStream << "\finvalid"; 
+			statusStream << "\finvalid";
 			initNewCommand();
 			HWLIB_TRACE << "state = STATE::INPUTTING_CMD";
 			state = STATE::INPUTTING_CMD;
@@ -144,7 +144,7 @@ void InitGameController::consumeWildcard() {
 		statusStream << "\fC to start\nGame";
 		timeStream << "\f";
 		oledBoundary.flushParts();
-		
+
 		char16_t commandBits = irEntity.logic.encode(0, 0);
 		playerInfo.setCompiledBits(commandBits);
 		HWLIB_TRACE << "state = STATE::SENDING_START_CMD";
@@ -169,7 +169,7 @@ void InitGameController::consumeDigits(char c) {
 		{
 			timeStream << "\f" << commandCode[0] << c;
 			confirmStream << "\f\n# to confirm";
-		
+
 			HWLIB_TRACE << "state = STATE::WAITING_FOR_HASHTAG";
 			state = STATE::WAITING_FOR_HASHTAG;
 		}
