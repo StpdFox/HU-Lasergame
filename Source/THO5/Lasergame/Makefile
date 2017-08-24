@@ -27,13 +27,9 @@ HEADERS           += coroutine.hpp switch_to.hpp
 SOURCES           += coroutine.cpp switch_to.asm
 HEADERS           += rtos.hpp
 SOURCES           += rtos.cpp
-HEADERS			+= src/test.hpp
-SOURCES 		+= src/test.cpp
 HEADERS			+= src/RunGameController.hpp
 SOURCES			+= src/RunGameController.cpp
 
-HEADERS			+= src/RunGameController.hpp
-SOURCES			+= src/RunGameController.cpp
 
 HEADERS			+= src/KeypadController.hpp
 SOURCES			+= src/KeypadController.cpp
