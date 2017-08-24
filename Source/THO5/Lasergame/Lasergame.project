@@ -12,6 +12,7 @@
     <File Name="src/GameParamsController.hpp"/>
     <File Name="src/InitGameController.cpp"/>
     <File Name="src/InitGameController.hpp"/>
+    <File Name="src/KeyConsumer.h"/>
     <File Name="src/KeypadController.cpp"/>
     <File Name="src/KeypadController.hpp"/>
     <File Name="src/KeypadListener.hpp"/>
