@@ -112,7 +112,7 @@ void RunGameController::consumeWildcard() {
 	irE.led.set(true);
 	irE.receive.suspend();
 	irE.trans.sendMessage(playerInfo.getCompiledBits());
-	sleep(1000 * rtos::ms);
+	sleep(100 * rtos::ms);
 	irE.receive.resume();
 	irE.led.set(false);
 }
@@ -138,6 +138,7 @@ void RunGameController::handleReceivedMessage(const std::array<char, 2>& msg)
 	
 	if(playerInfo.getPlayerHealth()<=0) {
 		statusMessageStream << "Game\n Over!";
+		oledBoundary.flushParts();
 		suspend();
 	}
 }
